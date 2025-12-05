@@ -1,2 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #2563eb;
+  --color-success: #10b981;
+  --color-accent: #38bdf8;
+  --color-secondary: #1e293b;
+  --color-warning: #c69f2e;
+  --color-base-200: #e5edf0;
+}
+* {
+  font-family: "Urbanist", sans-serif;
+}
+
+/* Primary: #2563eb
+Secondary: #10b981
+Accent: #38bdf8
+Background: #e5edf0
+Heading: #1e293b */
+
+/* 1. Text Colors
+Primary Text (main paragraphs): #1e293b
+Secondary / Subtext: #475569
+Muted Text: #64748b */
+
+/* 2. Headings (H1–H6)
+Heading Color: #1e293b
+Weight: bold or semi-bold
+Slight spacing: letter-spacing -0.2px */
+
+/* 3. Links
+Default Link: #2563eb (Primary Blue)
+Hover: #1d4ed8 (slightly deeper blue)
+Visited: #1e40af */
+
+/* A) Primary Button (Call-To-Action)
+Background: #2563eb
+Text: #ffffff
+Hover: #1d4ed8
+This is for the main actions: “Report Issue”, “Submit”. */
+
+/* B) Success / Accept Button
+(Used for Accept, Confirm Pickup, Confirm Delivery)
+Background: #10b981
+Text: #ffffff
+Border: none
+Hover: #0d8a68
+Psychology: green = progress, go, trusted action. */
+
+/* C) Danger / Reject Button
+Background: #ef4444
+Text: #ffffff
+Hover: #dc2626
+Reject always needs red. Govt UI te clarity insanely important. */
+
+/* D) View Details Button
+Details = info category → uses Accent Blue.
+Background: #38bdf8
+Text: #0f172a (dark text; better contrast)
+Hover: #0ea5e9
+Friendly, informational, not aggressive. */
+
+/* E) Outlined / Minimal Button
+(Secondary “Just look / not action-heavy”)
+Border: #2563eb
+Text: #2563eb
+Background: transparent
+Hover Background: rgba(37, 99, 235, 0.1)
+Helpful for subtle actions. */
+
+/* 5. CTA Buttons (Homepage, Big Actions)
+Primary CTA = Primary Blue
+Secondary CTA = Green
+CTA always stays blue for trust.
+CTA Primary: #2563eb
+CTA Hover: #1d4ed8 */
+
+/* 6. Cards & Containers
+Card Background: #ffffff
+Card Border: #cbd5e1
+Card Shadow: rgba(0,0,0,0.05) */
+
+/* 7. Status Tags (Badges)
+Pending: #f59e0b (amber)
+In-Progress: #2563eb
+Resolved: #10b981
+Closed: #475569 (grey) */
