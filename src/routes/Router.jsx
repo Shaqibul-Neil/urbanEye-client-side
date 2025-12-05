@@ -7,6 +7,10 @@ import SignUp from "../pages/auth/SignUp";
 import DashboardLayout from "../layout/DashboardLayout";
 import Dashboard from "../pages/dashboard/dashboard/Dashboard";
 import ForgetPassword from "../pages/auth/ForgetPassword";
+import ReportedIssues from "../pages/dashboard/citizen/ReportedIssues";
+import ReportIssues from "../pages/dashboard/citizen/ReportIssues";
+import MyPayments from "../pages/dashboard/citizen/MyPayments";
+import Profile from "../pages/dashboard/profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +39,26 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <DashboardLayout />,
-    children: [{ index: true, element: <Dashboard /> }],
+    children: [
+      { index: true, element: <Dashboard /> },
+      //Citizen Routes
+      {
+        path: "my-reported-issues",
+        element: <ReportedIssues />,
+      },
+      {
+        path: "report-issues",
+        element: <ReportIssues />,
+      },
+      {
+        path: "my-payments-history",
+        element: <MyPayments />,
+      },
+      {
+        path: "my-profile",
+        element: <Profile />,
+      },
+    ],
   },
 ]);
 

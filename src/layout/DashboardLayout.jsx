@@ -1,11 +1,12 @@
-import { Link, Outlet } from "react-router";
-import { FaBell, FaChevronDown, FaHome } from "react-icons/fa";
+import { Outlet } from "react-router";
+import { FaHome } from "react-icons/fa";
 import { AiOutlineMenu } from "react-icons/ai";
-import { MdOutlineDashboard } from "react-icons/md";
+import { MdIntegrationInstructions, MdOutlineDashboard } from "react-icons/md";
 import SideBarLinks from "../components/common/sidebarLinks/SideBarLinks";
 import useAuth from "../hooks/auth & role/useAuth";
 import { useState } from "react";
 import avatarImg from "../assets/placeholder.jpg";
+import { CreditCard, Home, Mic, Speaker, User } from "lucide-react";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -53,7 +54,7 @@ const DashboardLayout = () => {
             <div className="mx-auto bg-[#1e4ec4] w-full rounded-tr-4xl pb-8">
               <div className="flex flex-col items-center justify-center gap-3 pt-12">
                 {/* Avatar */}
-                <div className="w-20 h-20 border border-white flex justify-center items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition">
+                <div className="w-20 h-20 border border-white flex justify-center items-center rounded-full">
                   <img
                     className="rounded-full w-16 h-16"
                     referrerPolicy="no-referrer"
@@ -76,8 +77,9 @@ const DashboardLayout = () => {
               </h2>
               {/* Sidebar content here */}
               <ul className="w-full grow flex flex-col gap-1">
-                {/* List item */}
-                {/* Our Dashboard Links */}
+                {/* Dashboard Links */}
+                {/* Role === Citizens */}
+                {/* Dashboard */}
                 <li>
                   <SideBarLinks
                     to={"/dashboard"}
@@ -85,11 +87,49 @@ const DashboardLayout = () => {
                     label={"Dashboard"}
                   />
                 </li>
+                {/* Post Issues */}
+                <li>
+                  <SideBarLinks
+                    to={"report-issues"}
+                    icon={Mic}
+                    label={"Report Issues"}
+                  />
+                </li>
+                {/* Reported Issues */}
+                <li>
+                  <SideBarLinks
+                    to={"my-reported-issues"}
+                    icon={MdIntegrationInstructions}
+                    label={"My Reported Issues"}
+                  />
+                </li>
+                {/* My Payments */}
+                <li>
+                  <SideBarLinks
+                    to={"my-payments-history"}
+                    icon={CreditCard}
+                    label={"My Payments History"}
+                  />
+                </li>
               </ul>
-              <h2 className="text-base-200 font-semibold leading-tight my-1">
+              <h2 className="text-base-200 font-semibold leading-tight my-4">
                 General
               </h2>
-              <ul className="flex flex-col w-full grow gap-1"></ul>
+              <ul className="flex flex-col w-full grow gap-1">
+                {/* General Links */}
+                {/* Home */}
+                <li>
+                  <SideBarLinks to={"/"} icon={Home} label={"Home"} />
+                </li>
+                {/* Profile */}
+                <li>
+                  <SideBarLinks
+                    to={"my-profile"}
+                    icon={User}
+                    label={"My Profile"}
+                  />
+                </li>
+              </ul>
             </div>
           </div>
         </div>
