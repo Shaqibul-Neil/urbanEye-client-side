@@ -2,24 +2,28 @@ import toast from "react-hot-toast";
 
 import { useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/auth & role/useAuth";
+import useCreateUser from "../../hooks/auth & role/useCreateUser";
 
 const GoogleLogin = () => {
   const { signInWithGoogle, setUserLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
+  //mutation function
+  const { mutateAsync: createSaveUser } = useCreateUser();
+
   const handleSignInWithGoogle = async () => {
     try {
       setUserLoading(true);
       const result = await signInWithGoogle();
       // Prepare DB user object
-      //   const userInfo = {
-      //     email: result?.user?.email,
-      //     displayName: result?.user?.displayName,
-      //     photoURL: result?.user?.photoURL,
-      //   };
-      //   //save user in the database
-      //   await mutateAsync(userInfo);
+      const userInfo = {
+        email: result?.user?.email,
+        displayName: result?.user?.displayName,
+        photoURL: result?.user?.photoURL,
+      };
+      //save user in the database
+      await createSaveUser(userInfo);
 
       toast.success("Successfully logged with Google");
       navigate(location?.state || "/");

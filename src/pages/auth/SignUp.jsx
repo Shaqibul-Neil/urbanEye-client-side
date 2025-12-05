@@ -4,6 +4,7 @@ import useAuth from "../../hooks/auth & role/useAuth";
 import GoogleLogin from "../../components/socialLogin/GoogleLogin";
 import toast from "react-hot-toast";
 import imageUpload from "../../utilities/imageUpload";
+import useCreateUser from "../../hooks/auth & role/useCreateUser";
 
 const SignUp = () => {
   //dependencies
@@ -12,10 +13,12 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signUpUser, updateUser, signOutUser, setUserLoading, setUser, user } =
+  const { signUpUser, updateUser, signOutUser, setUserLoading, setUser } =
     useAuth();
   const navigate = useNavigate();
 
+  //mutation function
+  const { mutateAsync: createSaveUser } = useCreateUser();
   //user registration
   const handleRegistration = async (data) => {
     //store the image and get the link
@@ -28,14 +31,14 @@ const SignUp = () => {
       const result = await signUpUser(data?.email, data?.password);
 
       // Prepare DB user object
-      // const userInfo = {
-      //   email: data?.email,
-      //   displayName: data?.name,
-      //   photoURL: photoURL,
-      // };
+      const userInfo = {
+        email: data?.email,
+        displayName: data?.name,
+        photoURL: photoURL,
+      };
 
-      // //save user in the database
-      // await mutateAsync(userInfo);
+      // save user in the database
+      await createSaveUser(userInfo);
 
       // Update Firebase profile
       const userProfile = {
