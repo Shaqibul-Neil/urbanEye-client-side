@@ -12,13 +12,14 @@
   --color-accent: #38bdf8;
   --color-secondary: #1e293b;
   --color-ghost: #475569;
-  --color-warning: #c69f2e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
   --color-base-200: #e5edf0;
 }
 * {
   font-family: "Urbanist", sans-serif;
 }
-
+/* form text-gray-400 */
 /* Primary: #2563eb
 Secondary: #10b981
 Accent: #38bdf8
