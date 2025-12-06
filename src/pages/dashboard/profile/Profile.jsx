@@ -72,13 +72,13 @@ const Profile = () => {
                 </p>
               </div>
               <div className="flex flex-col gap-1">
-                {myInfo.isBlocked ? (
+                {myInfo?.isBlocked ? (
                   <div className="btn btn-warning text-secondary rounded-lg cursor-default">
                     Blocked
                   </div>
                 ) : (
                   <>
-                    {myInfo.isPremium ? (
+                    {myInfo?.isPremium ? (
                       <div className="btn btn-primary text-white rounded-lg cursor-default">
                         Subscribed
                       </div>

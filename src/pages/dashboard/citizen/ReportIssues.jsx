@@ -168,7 +168,7 @@ const ReportIssues = () => {
               )}
             </p>
 
-            {myInfo?.countIssues <= 3 && (
+            {(myInfo?.countIssues ?? 0) <= 3 && (
               <button
                 type="submit"
                 className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"

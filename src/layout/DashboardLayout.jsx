@@ -1,16 +1,28 @@
-import { Outlet } from "react-router";
-import { FaHome } from "react-icons/fa";
-import { AiOutlineMenu } from "react-icons/ai";
-import { MdIntegrationInstructions, MdOutlineDashboard } from "react-icons/md";
+import { Outlet, useNavigate } from "react-router";
+import {
+  MdIntegrationInstructions,
+  MdLogout,
+  MdOutlineDashboard,
+} from "react-icons/md";
 import SideBarLinks from "../components/common/sidebarLinks/SideBarLinks";
 import useAuth from "../hooks/auth & role/useAuth";
-import { useState } from "react";
 import avatarImg from "../assets/placeholder.jpg";
 import { CreditCard, Home, Mic, Speaker, User } from "lucide-react";
+import toast from "react-hot-toast";
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
+  const { user, signOutUser, setUser } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    try {
+      signOutUser();
+      setUser(null);
+      toast.success("Successfully Logged Out");
+      navigate("/signIn");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <div className="bg-base-200">
       {/* Sidebar */}
@@ -127,6 +139,14 @@ const DashboardLayout = () => {
                     to={"my-profile"}
                     icon={User}
                     label={"My Profile"}
+                  />
+                </li>
+                {/* Logout */}
+                <li>
+                  <SideBarLinks
+                    icon={MdLogout}
+                    label={"Logout"}
+                    onClick={handleLogout}
                   />
                 </li>
               </ul>

@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
-  const [paymentInfo, setPaymentInfo] = useState();
+  const [paymentInfo, setPaymentInfo] = useState("");
   const sessionId = searchParams.get("session_id");
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
