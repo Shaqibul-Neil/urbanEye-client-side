@@ -12,7 +12,7 @@ const useGetIssues = () => {
   } = useQuery({
     queryKey: ["my-issues", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/issues/${user?.email}`);
+      const res = await axiosSecure.get("/issues");
       return res.data.issue;
     },
   });

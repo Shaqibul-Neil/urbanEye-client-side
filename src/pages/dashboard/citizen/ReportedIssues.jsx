@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 const ReportedIssues = () => {
   //dependencies
   const { issues, isLoading, isError } = useGetIssues();
+  console.log(issues);
   const [currentIssue, setCurrentIssue] = useState({});
   const editIssueRef = useRef();
   //delete mutation

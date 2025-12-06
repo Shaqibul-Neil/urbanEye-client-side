@@ -13,6 +13,9 @@ import MyPayments from "../pages/dashboard/citizen/MyPayments";
 import Profile from "../pages/dashboard/profile/Profile";
 import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
 import PrivateRoutes from "./PrivateRoutes";
+import AllReportedIssues from "../pages/dashboard/admin/AllReportedIssues";
+import ManageStaff from "../pages/dashboard/admin/ManageStaff";
+import ManageCitizens from "../pages/dashboard/admin/ManageCitizens";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +50,19 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Dashboard /> },
+      //Admin Routes
+      {
+        path: "all-reported-issues",
+        element: <AllReportedIssues />,
+      },
+      {
+        path: "manage-staff",
+        element: <ManageStaff />,
+      },
+      {
+        path: "manage-citizens",
+        element: <ManageCitizens />,
+      },
       //Citizen Routes
       {
         path: "my-reported-issues",

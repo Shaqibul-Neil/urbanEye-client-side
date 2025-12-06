@@ -1,13 +1,17 @@
 import { Outlet, useNavigate } from "react-router";
-import {
-  MdIntegrationInstructions,
-  MdLogout,
-  MdOutlineDashboard,
-} from "react-icons/md";
+import { MdLogout, MdOutlineDashboard } from "react-icons/md";
 import SideBarLinks from "../components/common/sidebarLinks/SideBarLinks";
 import useAuth from "../hooks/auth & role/useAuth";
 import avatarImg from "../assets/placeholder.jpg";
-import { CreditCard, Home, Mic, Speaker, User } from "lucide-react";
+import {
+  CreditCard,
+  Home,
+  ListChecks,
+  Mic,
+  User,
+  UserCog,
+  Users,
+} from "lucide-react";
 import toast from "react-hot-toast";
 
 const DashboardLayout = () => {
@@ -111,7 +115,7 @@ const DashboardLayout = () => {
                 <li>
                   <SideBarLinks
                     to={"my-reported-issues"}
-                    icon={MdIntegrationInstructions}
+                    icon={ListChecks}
                     label={"My Reported Issues"}
                   />
                 </li>
@@ -121,6 +125,31 @@ const DashboardLayout = () => {
                     to={"my-payments-history"}
                     icon={CreditCard}
                     label={"My Payments History"}
+                  />
+                </li>
+                {/* Role === Admin */}
+                {/* All Reported Issues */}
+                <li>
+                  <SideBarLinks
+                    to={"all-reported-issues"}
+                    icon={ListChecks}
+                    label={"All Reported Issues"}
+                  />
+                </li>
+                {/* Manage Citizens */}
+                <li>
+                  <SideBarLinks
+                    to={"manage-citizens"}
+                    icon={Users}
+                    label={"Manage Citizens"}
+                  />
+                </li>
+                {/* Manage Staff */}
+                <li>
+                  <SideBarLinks
+                    to={"manage-staff"}
+                    icon={UserCog}
+                    label={"Manage Staff "}
                   />
                 </li>
               </ul>
