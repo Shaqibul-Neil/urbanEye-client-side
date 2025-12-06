@@ -11,6 +11,7 @@ import ReportedIssues from "../pages/dashboard/citizen/ReportedIssues";
 import ReportIssues from "../pages/dashboard/citizen/ReportIssues";
 import MyPayments from "../pages/dashboard/citizen/MyPayments";
 import Profile from "../pages/dashboard/profile/Profile";
+import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "my-profile",
         element: <Profile />,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
       },
     ],
   },
