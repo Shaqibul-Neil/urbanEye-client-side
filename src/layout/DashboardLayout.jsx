@@ -29,7 +29,7 @@ const DashboardLayout = () => {
       toast.error(error.message);
     }
   };
-  if (roleLoading) return <p>Role Loading....</p>;
+  //if (roleLoading) return <p>Role Loading....</p>;
   return (
     <div className="bg-base-200">
       {/* Static left bar
