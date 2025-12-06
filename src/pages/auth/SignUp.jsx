@@ -81,7 +81,7 @@ const SignUp = () => {
           >
             {/* Name */}
             <div className="relative">
-              <label className="block text-secondary mb-1">Name</label>
+              <label className="block text-secondary mb-1">Name *</label>
               <input
                 type="text"
                 {...register("name", {
@@ -97,13 +97,18 @@ const SignUp = () => {
 
             {/* Photo image field */}
             <div className="relative">
-              <label className="block text-secondary mb-1">Photo</label>
+              <label className="block text-secondary mb-1">Photo *</label>
               <input
                 type="file"
-                {...register("photo")}
+                {...register("photo", {
+                  required: "Photo is required",
+                })}
                 className="file-input w-full rounded-xl bg-gray-100"
                 placeholder="Your Photo"
               />{" "}
+              {errors.photo && (
+                <p className="text-red-500">{errors.photo.message}</p>
+              )}
             </div>
 
             {/* Email */}

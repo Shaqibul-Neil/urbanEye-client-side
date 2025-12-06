@@ -171,7 +171,18 @@ const ReportIssues = () => {
             {(myInfo?.countIssues ?? 0) <= 3 && (
               <button
                 type="submit"
-                className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"
+                className={`px-10 py-3 rounded-xl font-extrabold 
+    ${
+      myInfo?.isBlocked
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-primary text-white cursor-pointer"
+    }`}
+                disabled={myInfo?.isBlocked}
+                title={
+                  myInfo?.isBlocked
+                    ? "Your account is blocked. You cannot submit issues."
+                    : ""
+                }
               >
                 Submit Issue
               </button>

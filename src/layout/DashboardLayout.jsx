@@ -13,9 +13,11 @@ import {
   Users,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import useRole from "../hooks/auth & role/useRole";
 
 const DashboardLayout = () => {
   const { user, signOutUser, setUser } = useAuth();
+  const { role, roleLoading } = useRole();
   const navigate = useNavigate();
   const handleLogout = () => {
     try {
@@ -27,8 +29,13 @@ const DashboardLayout = () => {
       toast.error(error.message);
     }
   };
+  if (roleLoading) return <p>Role Loading....</p>;
   return (
     <div className="bg-base-200">
+      {/* Static left bar
+      <aside className="w-16 bg-white p-4 flex flex-col items-center border-r border-gray-100">
+        {/* Icons or anything you want 
+      </aside> */}
       {/* Sidebar */}
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -66,9 +73,11 @@ const DashboardLayout = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="flex min-h-full flex-col items-start md:w-1/3 w-2/3 lg:w-60 bg-primary rounded-r-4xl space-y-4">
+
+          <div className="flex min-h-full flex-col items-start md:w-1/3 w-2/3 lg:w-60 bg-primary rounded-r-4xl shadow-xl">
             <div className="mx-auto bg-[#1e4ec4] w-full rounded-tr-4xl pb-8">
-              <div className="flex flex-col items-center justify-center gap-3 pt-12">
+              {/* General Info */}
+              <div className="flex flex-col items-center justify-center gap-3 pt-12 ">
                 {/* Avatar */}
                 <div className="w-20 h-20 border border-white flex justify-center items-center rounded-full">
                   <img
@@ -87,14 +96,11 @@ const DashboardLayout = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full pl-4">
-              <h2 className="text-base-200 font-semibold leading-tight my-4">
-                Menu
-              </h2>
-              {/* Sidebar content here */}
+            {/* Sidebar content here */}
+            <div className="w-full ml-4">
               <ul className="w-full grow flex flex-col gap-1">
                 {/* Dashboard Links */}
-                {/* Role === Citizens */}
+
                 {/* Dashboard */}
                 <li>
                   <SideBarLinks
@@ -103,60 +109,80 @@ const DashboardLayout = () => {
                     label={"Dashboard"}
                   />
                 </li>
-                {/* Post Issues */}
-                <li>
-                  <SideBarLinks
-                    to={"report-issues"}
-                    icon={Mic}
-                    label={"Report Issues"}
-                  />
-                </li>
-                {/* Reported Issues */}
-                <li>
-                  <SideBarLinks
-                    to={"my-reported-issues"}
-                    icon={ListChecks}
-                    label={"My Reported Issues"}
-                  />
-                </li>
-                {/* My Payments */}
-                <li>
-                  <SideBarLinks
-                    to={"my-payments-history"}
-                    icon={CreditCard}
-                    label={"My Payments History"}
-                  />
-                </li>
+                {/* Role === Citizen */}
+                {role === "citizen" && (
+                  <>
+                    {/* Post Issues */}
+                    <li>
+                      <SideBarLinks
+                        to={"report-issues"}
+                        icon={Mic}
+                        label={"Report Issues"}
+                      />
+                    </li>
+                    {/* Reported Issues */}
+                    <li>
+                      <SideBarLinks
+                        to={"my-reported-issues"}
+                        icon={ListChecks}
+                        label={"My Reported Issues"}
+                      />
+                    </li>
+                    {/* My Payments */}
+                    <li>
+                      <SideBarLinks
+                        to={"my-payments-history"}
+                        icon={CreditCard}
+                        label={"My Payments History"}
+                      />
+                    </li>
+                  </>
+                )}
+
                 {/* Role === Admin */}
-                {/* All Reported Issues */}
-                <li>
-                  <SideBarLinks
-                    to={"all-reported-issues"}
-                    icon={ListChecks}
-                    label={"All Reported Issues"}
-                  />
-                </li>
-                {/* Manage Citizens */}
-                <li>
-                  <SideBarLinks
-                    to={"manage-citizens"}
-                    icon={Users}
-                    label={"Manage Citizens"}
-                  />
-                </li>
-                {/* Manage Staff */}
-                <li>
-                  <SideBarLinks
-                    to={"manage-staff"}
-                    icon={UserCog}
-                    label={"Manage Staff "}
-                  />
-                </li>
-              </ul>
-              <h2 className="text-base-200 font-semibold leading-tight my-4">
-                General
-              </h2>
-              <ul className="flex flex-col w-full grow gap-1">
+                {role === "admin" && (
+                  <>
+                    {/* All Reported Issues */}
+                    <li>
+                      <SideBarLinks
+                        to={"all-reported-issues"}
+                        icon={ListChecks}
+                        label={"All Reported Issues"}
+                      />
+                    </li>
+                    {/* Manage Citizens */}
+                    <li>
+                      <SideBarLinks
+                        to={"manage-citizens"}
+                        icon={Users}
+                        label={"Manage Citizens"}
+                      />
+                    </li>
+                    {/* Manage Staff */}
+                    <li>
+                      <SideBarLinks
+                        to={"manage-staff"}
+                        icon={UserCog}
+                        label={"Manage Staff "}
+                      />
+                    </li>
+                  </>
+                )}
+
+                {/* Role === Staff */}
+                {role === "staff" && (
+                  <>
+                    {/* Assigned Issues */}
+                    <li>
+                      <SideBarLinks
+                        to={"assigned-issues"}
+                        icon={ListChecks}
+                        label={"Assigned Issues"}
+                      />
+                    </li>
+                  </>
+                )}
+
                 {/* General Links */}
                 {/* Home */}
                 <li>

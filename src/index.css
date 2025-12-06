@@ -19,6 +19,28 @@
 * {
   font-family: "Urbanist", sans-serif;
 }
+/* ANIMATIONS */
+/* DASHBOARD SIDEBAR */
+@keyframes elastic {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-12px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.animate-elastic {
+  animation: elastic 3s ease-in-out infinite;
+}
 /* form text-gray-400 */
 /* Primary: #2563eb
 Secondary: #10b981

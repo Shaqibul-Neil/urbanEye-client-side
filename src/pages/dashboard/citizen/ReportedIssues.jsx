@@ -5,15 +5,16 @@ import useGetIssues from "../../../hooks/citizen related/useGetIssues";
 import EditIssueModal from "../../../components/modals/EditIssueModal";
 import useDeleteIssue from "../../../hooks/citizen related/useDeleteIssue";
 import Swal from "sweetalert2";
+import useMyInfo from "../../../hooks/citizen related/useMyInfo";
 
 const ReportedIssues = () => {
   //dependencies
   const { issues, isLoading, isError } = useGetIssues();
-  console.log(issues);
   const [currentIssue, setCurrentIssue] = useState({});
   const editIssueRef = useRef();
   //delete mutation
   const { mutateAsync: deleteIssue } = useDeleteIssue();
+  const { myInfo } = useMyInfo();
 
   //event handlers
   const handleEditIssues = (issue) => {
@@ -113,16 +114,36 @@ const ReportedIssues = () => {
                     </p>
                   </td>
                   <td className="space-x-1 flex">
-                    <button
-                      className="btn btn-accent btn-sm text-black"
-                      disabled={issue.status !== "pending"}
-                      onClick={() => handleEditIssues(issue)}
+                    {/* Edit Button */}
+                    <span
+                      className="tooltip-wrapper"
+                      title={
+                        myInfo?.isBlocked
+                          ? "Your account is blocked. You cannot edit issues."
+                          : issue.status !== "pending"
+                          ? "Only pending issues can be edited."
+                          : ""
+                      }
                     >
-                      Edit
-                    </button>
+                      <button
+                        className={`btn btn-sm ${
+                          issue.status !== "pending" || myInfo?.isBlocked
+                            ? "bg-gray-400 cursor-not-allowed opacity-70"
+                            : "btn-accent text-black"
+                        }`}
+                        disabled={
+                          issue.status !== "pending" || myInfo?.isBlocked
+                        }
+                        onClick={() => handleEditIssues(issue)}
+                      >
+                        Edit
+                      </button>
+                    </span>
+                    {/* Details Button */}
                     <button className="btn btn-warning btn-sm text-black">
                       Details
                     </button>
+                    {/* Delete Button */}
                     <button
                       className="btn btn-error btn-sm text-black"
                       onClick={() => handleDeleteIssue(issue._id)}
