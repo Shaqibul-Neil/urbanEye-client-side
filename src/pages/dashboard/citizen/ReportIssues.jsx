@@ -162,10 +162,13 @@ const ReportIssues = () => {
           <div className="space-y-2">
             <p className="text-sm text-secondary">
               Free users can report up to 3 issues. Upgrade to premium for
-              unlimited reports. Free Issue Left :{" "}
-              {3 - myInfo?.countIssues || 0}
+              unlimited reports.
+              {!myInfo?.isPremium && (
+                <> — Free Issue Left: {3 - (myInfo?.countIssues || 0)}</>
+              )}
             </p>
-            {myInfo?.countIssues < 3 && myInfo.isPremium === false && (
+
+            {myInfo?.countIssues <= 3 && (
               <button
                 type="submit"
                 className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"

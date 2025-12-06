@@ -72,15 +72,30 @@ const Profile = () => {
                 </p>
               </div>
               <div className="flex flex-col gap-1">
-                <button
-                  onClick={handleSubscription}
-                  className="btn btn-primary  rounded-lg text-white cursor-pointer"
-                >
-                  Subscribe
-                </button>
-                <button className="btn btn-ghost  rounded-lg text-secondary cursor-pointer border border-primary">
-                  Update Profile
-                </button>
+                {myInfo.isBlocked ? (
+                  <div className="btn btn-warning text-secondary rounded-lg cursor-default">
+                    Blocked
+                  </div>
+                ) : (
+                  <>
+                    {myInfo.isPremium ? (
+                      <div className="btn btn-primary text-white rounded-lg cursor-default">
+                        Subscribed
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleSubscription}
+                        className="btn btn-primary rounded-lg text-white cursor-pointer"
+                      >
+                        Subscribe
+                      </button>
+                    )}
+
+                    <button className="btn btn-ghost rounded-lg text-secondary cursor-pointer border border-primary">
+                      Update Profile
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
