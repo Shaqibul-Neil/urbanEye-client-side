@@ -1,11 +1,13 @@
-import { Navigate } from "react-router";
 import useAuth from "../hooks/auth & role/useAuth";
+import useRole from "../hooks/auth & role/useRole";
+import Forbidden from "../components/error/forbidden/Forbidden";
 
 const AdminRoutes = ({ children }) => {
-  const { user, userLoading } = useAuth();
+  const { userLoading } = useAuth();
+  const { role, roleLoading } = useRole();
 
-  if (userLoading) return <p>Loading....</p>;
-  if (!user) return <Navigate></Navigate>;
+  if (userLoading || roleLoading) return <p>Loading....</p>;
+  if (role !== "admin") return <Forbidden />;
   return <div>{children}</div>;
 };
 
