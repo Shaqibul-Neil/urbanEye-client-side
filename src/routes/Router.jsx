@@ -16,6 +16,10 @@ import PrivateRoutes from "./PrivateRoutes";
 import AllReportedIssues from "../pages/dashboard/admin/AllReportedIssues";
 import ManageStaff from "../pages/dashboard/admin/ManageStaff";
 import ManageCitizens from "../pages/dashboard/admin/ManageCitizens";
+import AdminRoutes from "./AdminRoutes";
+import CitizenRoutes from "./CitizenRoutes";
+import AssignedIssues from "../pages/dashboard/staff/AssignedIssues";
+import StaffRoutes from "./StaffRoutes";
 
 const router = createBrowserRouter([
   {
@@ -53,28 +57,61 @@ const router = createBrowserRouter([
       //Admin Routes
       {
         path: "all-reported-issues",
-        element: <AllReportedIssues />,
+        element: (
+          <AdminRoutes>
+            <AllReportedIssues />
+          </AdminRoutes>
+        ),
       },
       {
         path: "manage-staff",
-        element: <ManageStaff />,
+        element: (
+          <AdminRoutes>
+            <ManageStaff />
+          </AdminRoutes>
+        ),
       },
       {
         path: "manage-citizens",
-        element: <ManageCitizens />,
+        element: (
+          <AdminRoutes>
+            <ManageCitizens />
+          </AdminRoutes>
+        ),
+      },
+      //Staff Routes
+      {
+        path: "assigned-issues",
+        element: (
+          <StaffRoutes>
+            <AssignedIssues />
+          </StaffRoutes>
+        ),
       },
       //Citizen Routes
       {
         path: "my-reported-issues",
-        element: <ReportedIssues />,
+        element: (
+          <CitizenRoutes>
+            <ReportedIssues />
+          </CitizenRoutes>
+        ),
       },
       {
         path: "report-issues",
-        element: <ReportIssues />,
+        element: (
+          <CitizenRoutes>
+            <ReportIssues />
+          </CitizenRoutes>
+        ),
       },
       {
         path: "my-payments-history",
-        element: <MyPayments />,
+        element: (
+          <CitizenRoutes>
+            <MyPayments />
+          </CitizenRoutes>
+        ),
       },
       {
         path: "my-profile",
