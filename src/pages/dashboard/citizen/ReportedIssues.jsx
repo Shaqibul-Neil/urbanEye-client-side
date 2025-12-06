@@ -3,18 +3,52 @@ import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import useGetIssues from "../../../hooks/citizen related/useGetIssues";
 import EditIssueModal from "../../../components/modals/EditIssueModal";
+import useDeleteIssue from "../../../hooks/citizen related/useDeleteIssue";
+import Swal from "sweetalert2";
 
 const ReportedIssues = () => {
+  //dependencies
   const { issues, isLoading, isError } = useGetIssues();
   const [currentIssue, setCurrentIssue] = useState({});
   const editIssueRef = useRef();
+  //delete mutation
+  const { mutateAsync: deleteIssue } = useDeleteIssue();
 
+  //event handlers
   const handleEditIssues = (issue) => {
     setCurrentIssue(issue);
     editIssueRef.current.showModal();
   };
-
-  console.log(issues);
+  const handleDeleteIssue = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You cant revert this",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+        confirmButtonText: "Yes, Delete",
+      });
+      if (!result.isConfirmed) return;
+      const res = await deleteIssue(id);
+      console.log(res);
+      if (res?.issue?.deletedCount) {
+        //success popup
+        await Swal.fire({
+          title: "Deleted!",
+          text: "Your issue has been deleted",
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Something went wrong",
+        text: error?.response?.data?.message || "Server error!",
+        icon: "error",
+      });
+    }
+  };
   return (
     <div className="px-5">
       <div className="space-y-12">
@@ -88,7 +122,10 @@ const ReportedIssues = () => {
                     <button className="btn btn-warning btn-sm text-black">
                       Details
                     </button>
-                    <button className="btn btn-error btn-sm text-black">
+                    <button
+                      className="btn btn-error btn-sm text-black"
+                      onClick={() => handleDeleteIssue(issue._id)}
+                    >
                       Delete
                     </button>
                   </td>

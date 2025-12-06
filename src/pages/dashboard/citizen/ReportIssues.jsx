@@ -60,7 +60,7 @@ const ReportIssues = () => {
   };
   return (
     <div className="px-5">
-      <div className="space-y-12">
+      <div>
         {/* Title Section */}
         <div className="space-y-2">
           <Heading label={"Report a Public Infrastructure Issue"} />
@@ -73,7 +73,7 @@ const ReportIssues = () => {
         {/* Form Section */}
         <form
           autoComplete="off"
-          className="space-y-10 text-ghost"
+          className="space-y-10 text-ghost mb-6 mt-12"
           onSubmit={handleSubmit(handleReportIssues)}
         >
           {/* Issue Details */}
@@ -165,14 +165,7 @@ const ReportIssues = () => {
               unlimited reports. Free Issue Left :{" "}
               {3 - myInfo?.countIssues || 0}
             </p>
-            {myInfo?.countIssues >= 3 && myInfo.isPremium === false ? (
-              <Link
-                to={"/dashboard/my-profile"}
-                className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"
-              >
-                Subscribe to Report
-              </Link>
-            ) : (
+            {myInfo?.countIssues < 3 && myInfo.isPremium === false && (
               <button
                 type="submit"
                 className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"
@@ -182,6 +175,14 @@ const ReportIssues = () => {
             )}
           </div>
         </form>
+        {myInfo?.countIssues >= 3 && myInfo.isPremium === false && (
+          <Link
+            to={"/dashboard/my-profile"}
+            className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"
+          >
+            Subscribe to Report
+          </Link>
+        )}
       </div>
     </div>
   );
