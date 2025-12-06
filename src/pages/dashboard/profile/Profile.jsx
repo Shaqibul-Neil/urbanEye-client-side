@@ -36,19 +36,22 @@ const Profile = () => {
           <p className="text-xl font-medium text-gray-800 ">
             {user?.displayName}
           </p>
-          <div className="w-full p-2 mt-4 rounded-lg">
+          <div className="w-full rounded-lg">
             <div className="flex flex-wrap items-center justify-between text-sm text-gray-600 ">
-              <p className="flex flex-col">
-                Name
-                <span className="font-bold text-gray-600 ">
-                  {user?.displayName}
-                </span>
-              </p>
-              <p className="flex flex-col">
-                Email
-                <span className="font-bold text-gray-600 ">{user?.email}</span>
-              </p>
-
+              <div>
+                <p>
+                  Name :{" "}
+                  <span className="font-bold text-gray-600 ">
+                    {user?.displayName}
+                  </span>
+                </p>
+                <p>
+                  Email :{" "}
+                  <span className="font-bold text-gray-600 ">
+                    {user?.email}
+                  </span>
+                </p>
+              </div>
               <div className="flex flex-col gap-1">
                 <button className="btn btn-primary  rounded-lg text-white cursor-pointer">
                   Subscribe
