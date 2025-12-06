@@ -12,6 +12,7 @@ import ReportIssues from "../pages/dashboard/citizen/ReportIssues";
 import MyPayments from "../pages/dashboard/citizen/MyPayments";
 import Profile from "../pages/dashboard/profile/Profile";
 import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoutes>
+        <DashboardLayout />
+      </PrivateRoutes>
+    ),
     children: [
       { index: true, element: <Dashboard /> },
       //Citizen Routes
