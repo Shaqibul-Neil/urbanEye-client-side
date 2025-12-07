@@ -136,7 +136,7 @@ const ManageCitizens = () => {
                 <td className="py-3 px-4 space-x-2">
                   {user?.isBlocked ? (
                     <button
-                      className="btn btn-success btn-sm text-white flex items-center gap-1 transition-transform duration-200 hover:scale-105"
+                      className="btn btn-success btn-sm text-white w-24 flex items-center gap-1 transition-transform duration-200 hover:scale-105"
                       onClick={() => handleBlockUnblock(false, user)}
                     >
                       <CircleCheckBig
@@ -148,7 +148,7 @@ const ManageCitizens = () => {
                     </button>
                   ) : (
                     <button
-                      className="btn btn-error btn-sm text-white flex items-center gap-1 transition-transform duration-200 hover:scale-105"
+                      className="btn btn-error btn-sm text-white w-24 flex items-center gap-1 transition-transform duration-200 hover:scale-105"
                       onClick={() => handleBlockUnblock(true, user)}
                     >
                       <PencilOff size={16} color="#ffffff" strokeWidth={1.5} />{" "}

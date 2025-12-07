@@ -36,9 +36,9 @@ const EditIssueModal = ({ editIssueRef, currentIssue }) => {
   const { mutateAsync: updateIssue } = useUpdateIssue();
   const handleEditIssues = async (data) => {
     try {
-      const photoURL = currentIssue.photoURL;
+      let photoURL = currentIssue.photoURL;
       if (data.photo && data.photo[0]) {
-        await imageUpload(data.photo[0]);
+        photoURL = await imageUpload(data.photo[0]);
       }
       const issueData = {
         title: data.title,
@@ -171,7 +171,7 @@ const EditIssueModal = ({ editIssueRef, currentIssue }) => {
               type="submit"
               className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"
             >
-              Submit Issue
+              Update Issue
             </button>
           </form>
           <div className="modal-action">
