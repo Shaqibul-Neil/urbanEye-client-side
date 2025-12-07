@@ -24,6 +24,7 @@ const ManageStaff = () => {
     queryKey: ["all-staffs"],
     queryFn: async () => {
       const { data } = await axiosSecure.get("/staff");
+      console.log(data);
       return data.staff;
     },
   });
@@ -153,14 +154,20 @@ const ManageStaff = () => {
                     </span>
                   </td>
                   <td className="py-3 px-4">
-                    <span className="text-gray-700 font-medium">
+                    <span
+                      className={`uppercase font-bold ${
+                        staff?.workStatus === "available"
+                          ? "text-green-700"
+                          : "text-error"
+                      }`}
+                    >
                       {staff?.workStatus}
                     </span>
                   </td>
                   <td className="py-3 px-4 space-y-1">
                     {/* Update Button */}
                     <button
-                      className="btn btn-accent btn-sm text-white w-24 flex items-center gap-1 transition-transform duration-200 hover:scale-105"
+                      className="btn btn-success btn-sm text-white w-24 flex items-center gap-1 transition-transform duration-200 hover:scale-105"
                       onClick={() => handleUpdateStaff(staff)}
                     >
                       <PencilOff size={16} color="#ffffff" strokeWidth={1.5} />{" "}

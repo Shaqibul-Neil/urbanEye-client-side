@@ -2,16 +2,37 @@ import { UserPlus, XCircle } from "lucide-react";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import useGetIssues from "../../../hooks/citizen related/useGetIssues";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import AssignStaffModal from "../../../components/modals/AssignStaffModal";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 
 const AllReportedIssues = () => {
   const { issues, isLoading, isError } = useGetIssues();
+  const axiosSecure = useAxiosSecure();
+  const [assignedStaffIssue, setAssignedStaffIssue] = useState();
+
   const assignModalRef = useRef();
+
+  const {
+    data: staffs = [],
+    isLoading: staffLoading,
+    isError: staffError,
+    refetch: staffRefetch,
+  } = useQuery({
+    queryKey: ["all-staffs", "available"],
+    enabled: !!assignedStaffIssue,
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/staff?workStatus=available");
+      return data.staff;
+    },
+  });
   //assign staff modal
   const handleAssignStaffModal = (issue) => {
+    setAssignedStaffIssue(issue);
     assignModalRef.current.showModal();
   };
+
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">
@@ -27,24 +48,26 @@ const AllReportedIssues = () => {
 
         {/* Table Section */}
         <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
-          <table className="table w-full min-w-[900px]">
+          <table className="table table-zebra w-full min-w-[900px]">
             <thead className="bg-gray-50">
               <tr>
-                <th className="py-3 px-4 border-b-2 border-gray-200">#</th>
-                <th className="py-3 px-4 border-b-2 border-gray-200">
-                  Issue Details
+                <th className="py-3 px-4 border-b-2 border-gray-200 w-10">#</th>
+                <th className="py-3 px-4 border-b-2 border-gray-200 w-40">
+                  Issue Details & Location
                 </th>
-                <th className="py-3 px-4 border-b-2 border-gray-200">
+                <th className="py-3 px-4 border-b-2 border-gray-200 w-40">
                   Category
                 </th>
-                <th className="py-3 px-4 border-b-2 border-gray-200">
+                <th className="py-3 px-4 border-b-2 border-gray-200 w-36">
                   Priority
                 </th>
-                <th className="py-3 px-4 border-b-2 border-gray-200">Status</th>
-                <th className="py-3 px-4 border-b-2 border-gray-200">
+                <th className="py-3 px-4 border-b-2 border-gray-200 w-36">
+                  Status
+                </th>
+                <th className="py-3 px-4 border-b-2 border-gray-200 w-40">
                   Staff Assigned
                 </th>
-                <th className="py-3 px-4 border-b-2 border-gray-200">
+                <th className="py-3 px-4 border-b-2 border-gray-200 w-36">
                   Actions
                 </th>
               </tr>
@@ -72,16 +95,13 @@ const AllReportedIssues = () => {
                       {issue?.title}
                     </p>
                     <p className="text-gray-600 text-sm">
-                      <span className="font-semibold">Reported By : </span>
+                      <span className="font-semibold">By : </span>
                       {issue?.userEmail}
                     </p>
-                    <p className="text-gray-600 text-sm">
-                      <span className="font-semibold">Location: </span>
-                      {issue?.location}
-                    </p>
+                    <p className="text-gray-600 text-sm">{issue?.location}</p>
                   </td>
-                  <td className="py-3 px-4 font-medium text-gray-700">
-                    {issue?.category}
+                  <td className="py-3 px-4 font-medium text-gray-700 text-sm">
+                    <span> {issue?.category}</span>
                   </td>
                   <td className="py-3 px-4">
                     <span
@@ -108,13 +128,27 @@ const AllReportedIssues = () => {
                     </span>
                   </td>
                   <td className="py-3 px-4 font-medium text-gray-700">
-                    {issue?.assigned ? "Yes" : "No"}
+                    {issue?.isAssignedStaff ? (
+                      <>
+                        <p className="font-bold text-base">
+                          {issue?.assignedStaff?.staffName}
+                        </p>
+                        <p className="text-xs">
+                          {issue?.assignedStaff?.staffEmail || ""}
+                        </p>
+                        <p className="text-xs">
+                          {issue?.assignedStaff?.staffPhone || ""}
+                        </p>
+                      </>
+                    ) : (
+                      "No"
+                    )}
                   </td>
                   <td className="py-3 px-4 space-y-1">
                     {!issue?.isAssignedStaff && (
                       <button
                         className="btn btn-primary w-24 btn-sm text-white transition-transform duration-200 hover:scale-105"
-                        onClick={() => handleAssignStaffModal()}
+                        onClick={() => handleAssignStaffModal(issue)}
                       >
                         <UserPlus size={16} color="#ffffff" strokeWidth={1.5} />{" "}
                         Assign
@@ -135,7 +169,11 @@ const AllReportedIssues = () => {
         </div>
 
         {/* Modal Section */}
-        <AssignStaffModal assignModalRef={assignModalRef} />
+        <AssignStaffModal
+          assignModalRef={assignModalRef}
+          assignedStaffIssue={assignedStaffIssue}
+          staffs={staffs}
+        />
       </div>
     </div>
   );
