@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import AddStuffModal from "../../../components/modals/AddStuffModal";
@@ -7,13 +7,14 @@ import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import { Delete, PencilOff } from "lucide-react";
 import useStaffDelete from "../../../hooks/admin related/useStaffDelete";
 import Swal from "sweetalert2";
+import UpdateStuffModal from "../../../components/modals/UpdateStuffModal";
 
 const ManageStaff = () => {
   const staffModalRef = useRef();
+  const staffUpdateModalRef = useRef();
+  const [currentStaff, setCurrentStaff] = useState({});
   const axiosSecure = useAxiosSecure();
-  const handleAddStuffModal = () => {
-    staffModalRef.current.showModal();
-  };
+
   const {
     data: staffs = [],
     isLoading,
@@ -28,6 +29,7 @@ const ManageStaff = () => {
   });
   //staff delete mutation
   const { mutateAsync: staffDelete } = useStaffDelete();
+  //staff delete
   const handleDeleteStaff = async (staff) => {
     try {
       const result = await Swal.fire({
@@ -51,7 +53,15 @@ const ManageStaff = () => {
       console.log(error);
     }
   };
-  const handleUpdateStaff = () => {};
+  //add staff modal
+  const handleAddStuffModal = () => {
+    staffModalRef.current.showModal();
+  };
+  //staff update modal
+  const handleUpdateStaff = (staff) => {
+    setCurrentStaff(staff);
+    staffUpdateModalRef.current.showModal();
+  };
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">
@@ -165,8 +175,15 @@ const ManageStaff = () => {
           </table>
         </div>
         {/* Modal Section */}
+        {/* Add Stuff Modal */}
         <AddStuffModal
           staffModalRef={staffModalRef}
+          staffRefetch={staffRefetch}
+        />
+        {/* Update Stuff Modal */}
+        <UpdateStuffModal
+          currentStaff={currentStaff}
+          staffUpdateModalRef={staffUpdateModalRef}
           staffRefetch={staffRefetch}
         />
       </div>

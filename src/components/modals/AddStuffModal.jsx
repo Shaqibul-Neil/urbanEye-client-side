@@ -23,6 +23,7 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
         photoURL,
         password: data.password,
         email: data.email,
+        phone: data.phone,
       };
       //send data to backend
       const res = await axiosSecure.post("/staff", staffInfo);
@@ -98,6 +99,25 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
             />
             {errors.email && (
               <p className="text-red-500">{errors.email.message}</p>
+            )}
+          </div>
+          {/* Phone */}
+          <div className="relative">
+            <label className="block text-secondary mb-1">Staff Phone *</label>
+            <input
+              type="tel"
+              {...register("phone", {
+                required: "Phone is required",
+                pattern: {
+                  value: /^\+8801[3-9]\d{8}$/,
+                  message: "Please give a valid phone number (+8801XXXXXXXXX)",
+                },
+              })}
+              placeholder="+8801XXXXXXXXX"
+              className="w-full py-2 px-3 bg-gray-100 border border-gray-300 rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1"
+            />
+            {errors.phone && (
+              <p className="text-red-500">{errors.phone.message}</p>
             )}
           </div>
 
