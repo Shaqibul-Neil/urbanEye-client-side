@@ -26,6 +26,7 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
       };
       //send data to backend
       const res = await axiosSecure.post("/staff", staffInfo);
+      staffRefetch();
       staffModalRef.current.close();
       if (res.data.insertedId) {
         await Swal.fire({
@@ -36,7 +37,6 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
           timer: 2500,
         });
       }
-      staffRefetch();
     } catch (error) {
       console.log(error);
     }

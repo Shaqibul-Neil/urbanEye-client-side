@@ -5,6 +5,8 @@ import AddStuffModal from "../../../components/modals/AddStuffModal";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import { Delete, PencilOff } from "lucide-react";
+import useStaffDelete from "../../../hooks/admin related/useStaffDelete";
+import Swal from "sweetalert2";
 
 const ManageStaff = () => {
   const staffModalRef = useRef();
@@ -24,7 +26,31 @@ const ManageStaff = () => {
       return data.staff;
     },
   });
-  const handleDeleteStaff = () => {};
+  //staff delete mutation
+  const { mutateAsync: staffDelete } = useStaffDelete();
+  const handleDeleteStaff = async (staff) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+        confirmButtonText: "Yes",
+      });
+      if (!result.isConfirmed) return;
+      const res = await staffDelete(staff._id);
+      if (res?.staff?.deletedCount) {
+        await Swal.fire({
+          title: "Deleted",
+          text: `${staff?.staffName} has been deleted`,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleUpdateStaff = () => {};
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
