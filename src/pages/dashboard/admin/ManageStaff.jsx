@@ -96,6 +96,9 @@ const ManageStaff = () => {
                   Email
                 </th>
                 <th className="py-3 px-4 border-b-2 border-blue-600/20">
+                  Phone Number
+                </th>
+                <th className="py-3 px-4 border-b-2 border-blue-600/20">
                   Work Status
                 </th>
                 <th className="py-3 px-4 border-b-2 border-blue-600/20">
@@ -144,7 +147,11 @@ const ManageStaff = () => {
                     <span className="font-semibold text-gray-700">Email: </span>
                     <span className="text-gray-600">{staff?.staffEmail}</span>
                   </td>
-
+                  <td className="py-3 px-4">
+                    <span className="text-gray-700 font-medium">
+                      {staff?.staffPhone}
+                    </span>
+                  </td>
                   <td className="py-3 px-4">
                     <span className="text-gray-700 font-medium">
                       {staff?.workStatus}
@@ -153,7 +160,7 @@ const ManageStaff = () => {
                   <td className="py-3 px-4 space-y-1">
                     {/* Update Button */}
                     <button
-                      className="btn btn-info btn-sm text-white w-24 flex items-center gap-1 transition-transform duration-200 hover:scale-105"
+                      className="btn btn-accent btn-sm text-white w-24 flex items-center gap-1 transition-transform duration-200 hover:scale-105"
                       onClick={() => handleUpdateStaff(staff)}
                     >
                       <PencilOff size={16} color="#ffffff" strokeWidth={1.5} />{" "}

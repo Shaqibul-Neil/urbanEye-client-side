@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import imageUpload from "../../utilities/imageUpload";
+import useStaffUpdate from "../../hooks/admin related/useStaffUpdate";
+import Swal from "sweetalert2";
 
 const UpdateStuffModal = ({
   staffUpdateModalRef,
   staffRefetch,
   currentStaff,
 }) => {
-  console.log(currentStaff);
   //dependencies
   const {
     register,
@@ -17,13 +19,44 @@ const UpdateStuffModal = ({
     defaultValues: {
       staffName: currentStaff?.staffName,
       staffEmail: currentStaff?.staffEmail,
-      staffPhotoURL: currentStaff?.staffPhotoURL,
       staffPhone: currentStaff?.staffPhone,
     },
   });
-
-  const handleUpdateStuff = (data) => {
-    console.log(data);
+  useEffect(() => {
+    if (currentStaff) {
+      reset({
+        staffName: currentStaff?.staffName,
+        staffEmail: currentStaff?.staffEmail,
+        staffPhone: currentStaff?.staffPhone,
+      });
+    }
+  }, [currentStaff, reset]);
+  //staff update mutation
+  const { mutateAsync: staffUpdate } = useStaffUpdate();
+  const handleUpdateStuff = async (data) => {
+    try {
+      console.log("data", data);
+      const staffData = {
+        staffName: data.staffName,
+        staffEmail: data.staffEmail,
+        staffPhone: data.staffPhone,
+        staffId: currentStaff._id,
+      };
+      console.log("staffData", staffData);
+      const res = await staffUpdate(staffData);
+      staffUpdateModalRef.current.close();
+      if (res?.staff?.modifiedCount) {
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Staff Information has been updated",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <dialog
@@ -41,41 +74,21 @@ const UpdateStuffModal = ({
             <label className="block text-secondary mb-1">Staff Name *</label>
             <input
               type="text"
-              defaultValue={currentStaff?.staffName}
               {...register("staffName", {
                 required: "Staff Name is required",
               })}
               placeholder="Your full name"
               className="w-full py-2 px-3 bg-gray-100 border border-gray-300 rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1"
             />
-            {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
+            {errors.staffName && (
+              <p className="text-red-500">{errors.staffName.message}</p>
             )}
-          </div>
-
-          {/* Staff Photo image field */}
-          <div className="relative">
-            <div className="flex justify-between items-end">
-              <label className="block text-secondary mb-1">Staff Photo</label>
-              <img
-                src={currentStaff?.staffPhotoURL}
-                alt=""
-                className="w-16 h-16"
-              />
-            </div>
-            <input
-              type="file"
-              {...register("staffPhotoURL")}
-              className="file-input w-full rounded-xl bg-gray-100"
-              placeholder="Staff Photo"
-            />{" "}
           </div>
 
           {/* Email */}
           <div className="relative">
             <label className="block text-secondary mb-1">Staff Email *</label>
             <input
-              defaultValue={currentStaff?.staffEmail}
               type="email"
               {...register("staffEmail", {
                 required: "Staff Email is required",
@@ -97,7 +110,6 @@ const UpdateStuffModal = ({
             <label className="block text-secondary mb-1">Staff Phone *</label>
             <input
               type="tel"
-              defaultValue={currentStaff?.staffPhone}
               {...register("staffPhone", {
                 required: "Staff Phone is required",
                 pattern: {

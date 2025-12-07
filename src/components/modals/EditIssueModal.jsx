@@ -35,28 +35,32 @@ const EditIssueModal = ({ editIssueRef, currentIssue }) => {
   //patch mutation function
   const { mutateAsync: updateIssue } = useUpdateIssue();
   const handleEditIssues = async (data) => {
-    const photoURL = currentIssue.photoURL;
-    if (data.photo && data.photo[0]) {
-      await imageUpload(data.photo[0]);
-    }
-    const issueData = {
-      title: data.title,
-      description: data.description,
-      category: data.category,
-      location: data.location,
-      photoURL,
-      issueId: currentIssue._id,
-    };
-    const res = await updateIssue(issueData);
-    editIssueRef.current.close();
-    if (res?.issue?.modifiedCount) {
-      await Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Issue has been updated",
-        showConfirmButton: false,
-        timer: 2500,
-      });
+    try {
+      const photoURL = currentIssue.photoURL;
+      if (data.photo && data.photo[0]) {
+        await imageUpload(data.photo[0]);
+      }
+      const issueData = {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        location: data.location,
+        photoURL,
+        issueId: currentIssue._id,
+      };
+      const res = await updateIssue(issueData);
+      editIssueRef.current.close();
+      if (res?.issue?.modifiedCount) {
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Issue has been updated",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (

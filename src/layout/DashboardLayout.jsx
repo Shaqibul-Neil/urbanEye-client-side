@@ -167,6 +167,14 @@ const DashboardLayout = () => {
                         label={"Manage Staff "}
                       />
                     </li>
+                    {/* Payments History */}
+                    <li>
+                      <SideBarLinks
+                        to={"payments-history"}
+                        icon={CreditCard}
+                        label={"Payments History"}
+                      />
+                    </li>
                   </>
                 )}
 

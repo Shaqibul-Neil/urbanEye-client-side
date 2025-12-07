@@ -20,6 +20,7 @@ import AdminRoutes from "./AdminRoutes";
 import CitizenRoutes from "./CitizenRoutes";
 import AssignedIssues from "../pages/dashboard/staff/AssignedIssues";
 import StaffRoutes from "./StaffRoutes";
+import PaymentsHistory from "../pages/dashboard/admin/PaymentsHistory";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <ManageCitizens />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "payments-history",
+        element: (
+          <AdminRoutes>
+            <PaymentsHistory />
           </AdminRoutes>
         ),
       },

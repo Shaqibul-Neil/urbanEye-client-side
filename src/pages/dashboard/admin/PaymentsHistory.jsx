@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import useAuth from "../../../hooks/auth & role/useAuth";
-import { formatDate } from "../../../utilities/formatDate";
+import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 
-const MyPayments = () => {
+const PaymentsHistory = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {
@@ -18,7 +17,6 @@ const MyPayments = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get("/payments");
-      console.log(res);
       return res?.data?.payment;
     },
   });
@@ -26,13 +24,15 @@ const MyPayments = () => {
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">
         {/* Title Section */}
-        <div className="space-y-2">
-          <Heading label={"My Payment History"} />
-          <SubHeading
-            label={
-              "Track all your subscription payments. Each payment shows the transaction ID and payment date."
-            }
-          />
+        <div className="flex justify-between items-center gap-10 md:flex-row flex-col">
+          <div className="space-y-2">
+            <Heading label={"Payments History"} />
+            <SubHeading
+              label={
+                "Track all user payments, view details, and manage transactions—all from one centralized dashboard."
+              }
+            />
+          </div>
         </div>
 
         {/* Table Section */}
@@ -42,23 +42,26 @@ const MyPayments = () => {
               <tr>
                 <th className="py-3 px-4 border-b-2 border-blue-600/20">No</th>
                 <th className="py-3 px-4 border-b-2 border-blue-600/20 sticky left-0 z-10">
-                  Payment Name
+                  Citizen Email
                 </th>
                 <th className="py-3 px-4 border-b-2 border-blue-600/20">
-                  Payment Time
+                  Payment Type
+                </th>
+                <th className="py-3 px-4 border-b-2 border-blue-600/20">
+                  Amount
+                </th>
+                <th className="py-3 px-4 border-b-2 border-blue-600/20">
+                  Date
                 </th>
                 <th className="py-3 px-4 border-b-2 border-blue-600/20">
                   Transaction Id
-                </th>
-                <th className="py-3 px-4 border-b-2 border-blue-600/20">
-                  Tracking Id
                 </th>
               </tr>
             </thead>
             <tbody>
               {payments.map((payment, i) => (
                 <tr
-                  key={payment._id}
+                  key={payment?._id}
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
                     payment.status !== "completed"
                       ? "bg-[#FFF7F0] hover:bg-orange-100"
@@ -69,16 +72,20 @@ const MyPayments = () => {
                     {i + 1}
                   </th>
                   <td className="py-3 px-4 sticky left-0 z-10 text-gray-700 font-semibold">
-                    {payment.paymentName}
+                    <div className="">{payment?.citizenEmail}</div>
                   </td>
                   <td className="py-3 px-4 font-semibold text-gray-700">
-                    {formatDate(payment.paidAt)}
+                    {payment?.paymentName}
                   </td>
                   <td className="py-3 px-4 font-semibold text-gray-700">
-                    {payment.transactionId}
+                    ${payment?.amount}
+                  </td>
+
+                  <td className="py-3 px-4 text-gray-600">
+                    {new Date(payment?.paidAt).toLocaleDateString()}
                   </td>
                   <td className="py-3 px-4 text-gray-600">
-                    {payment.trackingId || "N/A"}
+                    {payment?.transactionId}
                   </td>
                 </tr>
               ))}
@@ -90,4 +97,4 @@ const MyPayments = () => {
   );
 };
 
-export default MyPayments;
+export default PaymentsHistory;
