@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import imageUpload from "../../utilities/imageUpload";
-import useAuth from "../../hooks/auth & role/useAuth";
+import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
+import Swal from "sweetalert2";
 
-const AddStuffModal = ({ staffModalRef }) => {
-  const { signUpUser, updateUser } = useAuth();
+const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -11,23 +12,34 @@ const AddStuffModal = ({ staffModalRef }) => {
     reset,
   } = useForm();
   const handleAddStuff = async (data) => {
-    //firebase signup
-    // const result = await signUpUser(data?.email, data?.password);
-    // //store the image and get the link
-    // const uploadedPhoto = data.photo[0];
-    // const photoURL = await imageUpload(uploadedPhoto);
-    // // Update Firebase profile
-    // const userProfile = {
-    //   displayName: data?.name,
-    //   photoURL: photoURL,
-    // };
-    // await updateUser(userProfile);
-    // //creating staff object
-    // const staffInfo = {
-    //   staffName: data.name,
-    //   staffPhotoURL: photoURL,
-    //   staffEmail: data.email,
-    // };
+    try {
+      //store the image and get the link
+      const uploadedPhoto = data.photo[0];
+      const photoURL = await imageUpload(uploadedPhoto);
+
+      //creating staff object
+      const staffInfo = {
+        name: data.name,
+        photoURL,
+        password: data.password,
+        email: data.email,
+      };
+      //send data to backend
+      const res = await axiosSecure.post("/staff", staffInfo);
+      staffModalRef.current.close();
+      if (res.data.insertedId) {
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "New Staff has been created",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+      staffRefetch();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <dialog ref={staffModalRef} className="modal modal-bottom sm:modal-middle">

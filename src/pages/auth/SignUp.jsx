@@ -29,7 +29,7 @@ const SignUp = () => {
       setUserLoading(true);
       //firebase signup
       const result = await signUpUser(data?.email, data?.password);
-
+      console.log(result.user);
       // Prepare DB user object
       const userInfo = {
         email: data?.email,

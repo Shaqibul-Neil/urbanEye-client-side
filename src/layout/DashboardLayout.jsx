@@ -18,6 +18,7 @@ import useRole from "../hooks/auth & role/useRole";
 const DashboardLayout = () => {
   const { user, signOutUser, setUser } = useAuth();
   const { role, roleLoading } = useRole();
+  console.log(role);
   const navigate = useNavigate();
   const handleLogout = () => {
     try {
@@ -29,7 +30,7 @@ const DashboardLayout = () => {
       toast.error(error.message);
     }
   };
-  //if (roleLoading) return <p>Role Loading....</p>;
+  if (roleLoading) return <p>Role Loading....</p>;
   return (
     <div className="bg-base-200">
       {/* Static left bar

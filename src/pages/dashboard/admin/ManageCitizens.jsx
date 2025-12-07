@@ -71,11 +71,17 @@ const ManageCitizens = () => {
           {/* head */}
           <thead className="bg-gray-50">
             <tr>
-              <th className="py-3 px-4">No</th>
-              <th className="py-3 px-4">Name</th>
-              <th className="py-3 px-4">Email</th>
-              <th className="py-3 px-4">Subscription</th>
-              <th className="py-3 px-4">Admin Actions</th>
+              <th className="py-3 px-4 border-b-2 border-blue-600/20">No</th>
+              <th className="py-3 px-4 border-b-2 border-blue-600/20 sticky left-0 z-10">
+                Name
+              </th>
+              <th className="py-3 px-4 border-b-2 border-blue-600/20">Email</th>
+              <th className="py-3 px-4 border-b-2 border-blue-600/20">
+                Subscription
+              </th>
+              <th className="py-3 px-4 border-b-2 border-blue-600/20">
+                Admin Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -83,17 +89,17 @@ const ManageCitizens = () => {
               <tr
                 key={user?._id}
                 className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
-                  user.isBlocked && "bg-red-50 hover:bg-red-100"
+                  user.isBlocked && "bg-[#F9E5E5] hover:bg-red-100"
                 }`}
               >
                 <th
                   className={`py-3 px-4 border-l-4 ${
-                    user.isBlocked ? " border-l-red-400" : "border-l-green-400"
+                    user.isBlocked ? " border-l-red-400" : "border-l-[#6EE7B7]"
                   }`}
                 >
                   {i + 1}
                 </th>
-                <td className="py-3 px-4">
+                <td className="py-3 px-4 sticky left-0 z-10">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="mask mask-squircle h-12 w-12 transition-transform duration-300 hover:scale-110">
@@ -105,7 +111,7 @@ const ManageCitizens = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-800">
+                      <div className="font-extrabold text-gray-800 text-base">
                         {user?.displayName}
                       </div>
                     </div>
