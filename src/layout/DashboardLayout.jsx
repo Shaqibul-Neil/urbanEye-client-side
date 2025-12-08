@@ -18,6 +18,7 @@ import useRole from "../hooks/auth & role/useRole";
 const DashboardLayout = () => {
   const { user, signOutUser, setUser } = useAuth();
   const { role, roleLoading } = useRole();
+  console.log(role);
   const navigate = useNavigate();
   const handleLogout = () => {
     try {

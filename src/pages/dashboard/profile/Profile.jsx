@@ -8,7 +8,7 @@ const Profile = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   //my info
-  const { myInfo } = useMyInfo();
+  const { myInfo, isLoading, isError } = useMyInfo();
   const handleSubscription = async () => {
     try {
       const paymentInfo = {
@@ -25,6 +25,8 @@ const Profile = () => {
       toast.error(error.message || "Something went wrong!");
     }
   };
+  if (isLoading) return <p>Loading profile...</p>;
+  if (isError) return <p>No profile data found!</p>;
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="bg-white shadow-lg rounded-2xl md:w-4/5">
@@ -41,13 +43,15 @@ const Profile = () => {
               className="mx-auto object-cover rounded-full h-40 w-40 border-2 border-white "
             />
           </div>
-          <p
-            className={`badge badge-lg ${
-              myInfo?.isPremium ? "badge-success" : "badge-ghost"
-            } font-semibold text-secondary absolute top-10 right-80`}
-          >
-            {myInfo?.isPremium ? "Premium" : "Normal"}
-          </p>
+          {myInfo?.role === "citizen" && (
+            <p
+              className={`badge badge-lg ${
+                myInfo?.isPremium ? "badge-success" : "badge-ghost"
+              } font-semibold text-secondary absolute top-10 right-80`}
+            >
+              {myInfo?.isPremium ? "Premium" : "Normal"}
+            </p>
+          )}
 
           <p className="p-2 px-4 text-xs text-primary font-extrabold uppercase">
             {myInfo?.role}
@@ -72,17 +76,14 @@ const Profile = () => {
                 </p>
               </div>
               <div className="flex flex-col gap-1">
-                {myInfo?.isBlocked ? (
+                {myInfo?.role !== "admin" && myInfo?.isBlocked ? (
                   <div className="btn btn-warning text-secondary rounded-lg cursor-default">
                     Blocked
                   </div>
                 ) : (
                   <>
-                    {myInfo?.isPremium ? (
-                      <div className="btn btn-primary text-white rounded-lg cursor-default">
-                        Subscribed
-                      </div>
-                    ) : (
+                    {/* Subscribe Button */}
+                    {myInfo?.role === "citizen" && !myInfo?.isPremium && (
                       <button
                         onClick={handleSubscription}
                         className="btn btn-primary rounded-lg text-white cursor-pointer"
@@ -91,7 +92,14 @@ const Profile = () => {
                       </button>
                     )}
 
-                    <button className="btn btn-ghost rounded-lg text-secondary cursor-pointer border border-primary">
+                    {/* Subscribed Badge (for premium citizens) */}
+                    {myInfo?.role === "citizen" && myInfo?.isPremium && (
+                      <div className="btn btn-primary text-white rounded-lg cursor-default">
+                        Subscribed
+                      </div>
+                    )}
+
+                    <button className="btn btn-ghost rounded-lg text-secondary cursor-pointer border-2 border-primary">
                       Update Profile
                     </button>
                   </>

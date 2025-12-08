@@ -6,14 +6,14 @@ const useMyInfo = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {
-    data: myInfo = [],
+    data: myInfo = {},
     isLoading,
     isError,
   } = useQuery({
     queryKey: ["my-info", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user?.email}`);
-      return res.data.user;
+      return res?.data?.user;
     },
   });
   return { myInfo, isLoading, isError };
