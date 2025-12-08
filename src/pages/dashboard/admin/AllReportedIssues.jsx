@@ -1,4 +1,4 @@
-import { UserPlus, XCircle } from "lucide-react";
+import { Search, UserPlus, XCircle } from "lucide-react";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import useGetIssues from "../../../hooks/citizen related/useGetIssues";
@@ -11,13 +11,21 @@ import useIssueReject from "../../../hooks/admin related/useIssueReject";
 import Swal from "sweetalert2";
 
 const AllReportedIssues = () => {
-  const { issues, isLoading, isError } = useGetIssues();
-  const axiosSecure = useAxiosSecure();
+  const [searchText, setSearchText] = useState();
   const [assignedStaffIssue, setAssignedStaffIssue] = useState();
   const [selectedStaff, setSelectedStaff] = useState({});
-
+  const [debouncedSearch, setDebouncedSearch] = useState(searchText);
   const assignModalRef = useRef();
+  //wait 1s after user stopped typing and then send the signal to backend to fetch
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchText);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [searchText]);
 
+  const { issues, isLoading, isError } = useGetIssues(debouncedSearch);
+  const axiosSecure = useAxiosSecure();
   const {
     data: staffs = [],
     isLoading: staffLoading,
@@ -79,12 +87,13 @@ const AllReportedIssues = () => {
     }
   };
 
-  if (staffLoading) return <p>Loading...</p>;
-  if (isError) return <p>something went wrong</p>;
+  if (staffLoading || isLoading) return <p>Loading...</p>;
+  if (isError || staffError) return <p>something went wrong</p>;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">
         {/* Title Section */}
+
         <div className="space-y-2">
           <Heading label={"All Reported Issues"} />
           <SubHeading
@@ -92,6 +101,23 @@ const AllReportedIssues = () => {
               "View and manage all reported issues across the platform. Track status, priority, and take necessary actions as an administrator."
             }
           />
+        </div>
+
+        {/* Search Section */}
+        <div className="flex md:justify-end justify-center mb-4">
+          <div className="relative w-full max-w-xs">
+            <input
+              type="search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search..."
+              className="w-full py-2 pl-10 pr-3 bg-gray-100 border border-primary rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1"
+            />
+            <Search
+              size={16}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-primary"
+            />
+          </div>
         </div>
 
         {/* Table Section */}
@@ -217,12 +243,12 @@ const AllReportedIssues = () => {
                         </button>
                       </>
                     ) : issue.status === "rejected" ? (
-                      <span className="px-3 py-1 text-sm font-bold rounded-full bg-green-100 text-green-700">
+                      <span className="px-3 py-1 text-sm font-bold rounded-full bg-red-100 text-red-700">
                         Issue Rejected
                       </span>
                     ) : (
                       <span className="px-3 py-1 text-sm font-bold rounded-full bg-green-100 text-green-700">
-                        Staff Assigned
+                        Assigned
                       </span>
                     )}
                   </td>
