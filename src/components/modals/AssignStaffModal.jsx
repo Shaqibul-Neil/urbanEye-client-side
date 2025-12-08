@@ -1,9 +1,13 @@
-import { useState } from "react";
 import useStaffAssign from "../../hooks/admin related/useStaffAssign";
 import Swal from "sweetalert2";
 
-const AssignStaffModal = ({ assignModalRef, staffs, assignedStaffIssue }) => {
-  const [selectedStaff, setSelectedStaff] = useState({});
+const AssignStaffModal = ({
+  assignModalRef,
+  staffs,
+  assignedStaffIssue,
+  selectedStaff,
+  setSelectedStaff,
+}) => {
   //creating hash table for staffs
   const staffsMap = staffs.reduce((acc, staff) => {
     acc[staff._id] = staff;
@@ -29,7 +33,6 @@ const AssignStaffModal = ({ assignModalRef, staffs, assignedStaffIssue }) => {
     };
     const res = await staffAssign(updatedIssue);
 
-    assignModalRef.current.close();
     if (res?.issueResult?.modifiedCount && res?.staffResult?.modifiedCount) {
       Swal.fire({
         position: "center",
@@ -39,7 +42,7 @@ const AssignStaffModal = ({ assignModalRef, staffs, assignedStaffIssue }) => {
         timer: 1500,
       });
     }
-    setSelectedStaff({});
+    assignModalRef.current.close();
   };
 
   return (
@@ -62,7 +65,7 @@ const AssignStaffModal = ({ assignModalRef, staffs, assignedStaffIssue }) => {
             {staffs?.length < 10 ? `0${staffs?.length}` : `${staffs?.length}`}
           </label>
           <select
-            className="w-full py-2 px-3 bg-base-200 border border-gray-300 rounded-xl focus:ring-1 focus:ring-primary outline-none"
+            className="select select-sm select-bordered w-full py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none"
             value={selectedStaff?._id}
             onChange={handleSelectStaff}
           >

@@ -2,16 +2,37 @@ import { useEffect, useState } from "react";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import useStaffAssignIssue from "../../../hooks/staff related/useStaffAssignIssue";
+import ChangeStatusModal from "../../../components/modals/ChangeStatusModal";
+import { useRef } from "react";
+import { RefreshCw } from "lucide-react";
+import {
+  getBg,
+  getBorder,
+  getStatusBadge,
+} from "../../../utilities/getStatusBadge";
 
 const AssignedIssues = () => {
   const [filters, setFilters] = useState({ status: "", priority: "" });
+  const [selectedIssue, setSelectedIssue] = useState({});
   const { assignedIssues, issuesLoading, issuesError, refetchAssignIssues } =
     useStaffAssignIssue(filters);
+  const statusModalRef = useRef();
 
   useEffect(() => {
     refetchAssignIssues();
   }, [filters, refetchAssignIssues]);
-  console.log(assignedIssues);
+
+  //status modal open
+  const handleChangeStatus = (issue) => {
+    setSelectedIssue(issue);
+    statusModalRef.current.showModal();
+  };
+  const modalObj = {
+    selectedIssue: selectedIssue,
+    statusModalRef: statusModalRef,
+    refetchAssignIssues: refetchAssignIssues,
+  };
+
   if (issuesLoading) return <p>Loading issues...</p>;
   if (issuesError) return <p>Error fetching issues.</p>;
   return (
@@ -37,6 +58,7 @@ const AssignedIssues = () => {
             }
           >
             <option value={""}>Status: All</option>
+            <option value={"pending"}>Pending</option>
             <option value={"in-progress"}>In Progress</option>
             <option value={"working"}>Working</option>
             <option value={"resolved"}>Resolved</option>
@@ -54,7 +76,6 @@ const AssignedIssues = () => {
             <option value={"high"}>High</option>
             <option value={"normal"}>Normal</option>
           </select>
-          <button onClick={refetchAssignIssues}>Apply</button>
         </div>
 
         {/* Table */}
@@ -91,15 +112,21 @@ const AssignedIssues = () => {
             <tbody>
               {assignedIssues.map((issue, i) => (
                 <tr
-                  className="transition-all duration-300 hover:scale-[1.01] hover:shadow-md bg-[#FDF6E3]"
+                  className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${getBg(
+                    issue?.status
+                  )} ${issue?.priority === "high" && "animate-pulse"}`}
                   key={issue?._id}
                 >
-                  <th className="py-3 px-4 border-l-4 border-l-yellow-400">
+                  <th
+                    className={`py-3 px-4 border-l-4 ${getBorder(
+                      issue?.status
+                    )}`}
+                  >
                     {i + 1}
                   </th>
 
                   {/* Sticky Issue Title */}
-                  <td className="py-3 px-4 sticky left-0 z-10 bg-[#FDF6E3]">
+                  <td className="py-3 px-4 sticky left-0 z-10">
                     <div className="space-y-1">
                       <div className="font-extrabold text-gray-800">
                         {issue?.title}
@@ -116,33 +143,44 @@ const AssignedIssues = () => {
                   </td>
 
                   <td className="py-3 px-4">
-                    <span className="px-3 py-1 text-xs font-bold rounded-full bg-yellow-100 text-yellow-700 uppercase">
-                      {issue.priority}
+                    <span
+                      className={`px-3 py-1 text-xs font-bold rounded-full uppercase ${
+                        issue?.priority === "high"
+                          ? "text-green-700"
+                          : "text-yellow-700"
+                      }`}
+                    >
+                      {issue?.priority}
                     </span>
                   </td>
 
                   <td className="py-3 px-4">
-                    <span className="px-3 py-1 text-xs font-bold rounded-full bg-blue-100 text-blue-700 uppercase">
-                      {issue.status}
+                    <span
+                      className={`px-3 py-1 text-xs font-bold rounded-full uppercase ${getStatusBadge(
+                        issue?.status
+                      )}`}
+                    >
+                      {issue?.status}
                     </span>
                   </td>
 
                   <td className="py-3 px-4">
-                    <select className="select select-sm select-bordered w-44 font-semibold py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none">
-                      <option disabled selected>
-                        Change Status
-                      </option>
-                      <option value={"in-progress"}>In Progress</option>
-                      <option value={"working"}>Working</option>
-                      <option value={"resolved"}>Resolved</option>
-                      <option value={"closed"}>Closed</option>
-                    </select>
+                    <button
+                      className="btn btn-primary w-24 btn-sm text-white transition-transform duration-200 hover:scale-105"
+                      onClick={() => handleChangeStatus(issue)}
+                    >
+                      <RefreshCw size={16} color="#ffffff" strokeWidth={1.5} />{" "}
+                      Status
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {/* Modal */}
+        <ChangeStatusModal modalObj={modalObj} />
       </div>
     </div>
   );

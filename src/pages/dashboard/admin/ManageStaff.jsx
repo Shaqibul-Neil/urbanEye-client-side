@@ -113,8 +113,8 @@ const ManageStaff = () => {
                   key={staff?._id}
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
                     staff.workStatus !== "available"
-                      ? "bg-[#F9F5E5] hover:bg-yellow-100"
-                      : ""
+                      ? "bg-yellow-50/40 hover:bg-yellow-100/40"
+                      : "bg-green-50 hover:bg-green-100/40"
                   }`}
                 >
                   <th

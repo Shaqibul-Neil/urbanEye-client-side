@@ -2,15 +2,19 @@ import { UserPlus, XCircle } from "lucide-react";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import useGetIssues from "../../../hooks/citizen related/useGetIssues";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AssignStaffModal from "../../../components/modals/AssignStaffModal";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
+import { getStatusBadge } from "../../../utilities/getStatusBadge";
+import useIssueReject from "../../../hooks/admin related/useIssueReject";
+import Swal from "sweetalert2";
 
 const AllReportedIssues = () => {
   const { issues, isLoading, isError } = useGetIssues();
   const axiosSecure = useAxiosSecure();
   const [assignedStaffIssue, setAssignedStaffIssue] = useState();
+  const [selectedStaff, setSelectedStaff] = useState({});
 
   const assignModalRef = useRef();
 
@@ -23,16 +27,60 @@ const AllReportedIssues = () => {
     queryKey: ["all-staffs", "available"],
     enabled: !!assignedStaffIssue,
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/staff?workStatus=available");
+      const { data } = await axiosSecure.get("/staff");
       return data.staff;
     },
   });
+
   //assign staff modal
   const handleAssignStaffModal = (issue) => {
     setAssignedStaffIssue(issue);
+    // reset selected staff
+    setSelectedStaff({});
+    staffRefetch();
     assignModalRef.current.showModal();
   };
 
+  //reject mutation
+  const { mutateAsync: issueReject } = useIssueReject();
+
+  //issue reject
+  const handleReject = async (issue) => {
+    try {
+      const issueInfo = { issueId: issue._id, status: "rejected" };
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+        confirmButtonText: "Yes",
+      });
+      if (!result.isConfirmed) return;
+      const res = await issueReject(issueInfo);
+      console.log(res);
+      if (res?.issue?.modifiedCount) {
+        await Swal.fire({
+          title: "Rejected",
+          text: `${issue?.title} has been rejected`,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Failed to update status",
+        text:
+          error?.response?.data?.message ||
+          "Something went wrong. Please try again.",
+        showConfirmButton: true,
+      });
+    }
+  };
+
+  if (staffLoading) return <p>Loading...</p>;
+  if (isError) return <p>something went wrong</p>;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">
@@ -78,8 +126,9 @@ const AllReportedIssues = () => {
                 <tr
                   key={issue._id}
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
-                    issue?.isAssignedStaff && "bg-[#E5F9E8] hover:bg-green-100"
-                  }`}
+                    issue?.isAssignedStaff &&
+                    "bg-green-50/50 hover:bg-green-100"
+                  } ${issue?.priority === "high" && "animate-pulse"}`}
                 >
                   <th
                     className={`py-3 px-4 border-l-4  ${
@@ -105,10 +154,10 @@ const AllReportedIssues = () => {
                   </td>
                   <td className="py-3 px-4">
                     <span
-                      className={`badge uppercase badge-sm text-secondary font-semibold ${
-                        issue?.priority === "normal"
-                          ? "badge-accent badge-outline"
-                          : "badge-success"
+                      className={`px-3 py-1 text-xs font-bold rounded-full uppercase ${
+                        issue?.priority === "high"
+                          ? "text-green-700"
+                          : "text-yellow-700"
                       }`}
                     >
                       {issue?.priority}
@@ -116,13 +165,9 @@ const AllReportedIssues = () => {
                   </td>
                   <td className="py-3 px-4">
                     <span
-                      className={`font-semibold uppercase ${
-                        issue.status === "pending"
-                          ? "text-warning"
-                          : issue.status === "in-progress"
-                          ? "text-primary"
-                          : "text-success"
-                      }`}
+                      className={`px-3 py-1 text-xs font-bold rounded-full uppercase ${getStatusBadge(
+                        issue?.status
+                      )}`}
                     >
                       {issue?.status}
                     </span>
@@ -145,21 +190,40 @@ const AllReportedIssues = () => {
                     )}
                   </td>
                   <td className="py-3 px-4 space-y-1">
-                    {!issue?.isAssignedStaff && (
-                      <button
-                        className="btn btn-primary w-24 btn-sm text-white transition-transform duration-200 hover:scale-105"
-                        onClick={() => handleAssignStaffModal(issue)}
-                      >
-                        <UserPlus size={16} color="#ffffff" strokeWidth={1.5} />{" "}
-                        Assign
-                      </button>
-                    )}
-                    {/* Reject Button */}
-                    {issue?.status === "pending" && (
-                      <button className="btn btn-error btn-sm text-white w-24">
-                        <XCircle size={16} color="#ffffff" strokeWidth={1.5} />{" "}
-                        Reject
-                      </button>
+                    {issue?.status === "pending" && !issue?.isAssignedStaff ? (
+                      <>
+                        <button
+                          className="btn btn-primary w-24 btn-sm text-white transition-transform duration-200 hover:scale-105"
+                          onClick={() => handleAssignStaffModal(issue)}
+                        >
+                          <UserPlus
+                            size={16}
+                            color="#ffffff"
+                            strokeWidth={1.5}
+                          />{" "}
+                          Assign
+                        </button>
+
+                        <button
+                          className="btn btn-error btn-sm text-white w-24"
+                          onClick={() => handleReject(issue)}
+                        >
+                          <XCircle
+                            size={16}
+                            color="#ffffff"
+                            strokeWidth={1.5}
+                          />{" "}
+                          Reject
+                        </button>
+                      </>
+                    ) : issue.status === "rejected" ? (
+                      <span className="px-3 py-1 text-sm font-bold rounded-full bg-green-100 text-green-700">
+                        Issue Rejected
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 text-sm font-bold rounded-full bg-green-100 text-green-700">
+                        Staff Assigned
+                      </span>
                     )}
                   </td>
                 </tr>
@@ -173,6 +237,8 @@ const AllReportedIssues = () => {
           assignModalRef={assignModalRef}
           assignedStaffIssue={assignedStaffIssue}
           staffs={staffs}
+          selectedStaff={selectedStaff}
+          setSelectedStaff={setSelectedStaff}
         />
       </div>
     </div>

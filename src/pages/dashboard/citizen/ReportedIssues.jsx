@@ -6,6 +6,11 @@ import EditIssueModal from "../../../components/modals/EditIssueModal";
 import useDeleteIssue from "../../../hooks/citizen related/useDeleteIssue";
 import Swal from "sweetalert2";
 import useMyInfo from "../../../hooks/citizen related/useMyInfo";
+import {
+  getBg,
+  getBorder,
+  getStatusBadge,
+} from "../../../utilities/getStatusBadge";
 
 const ReportedIssues = () => {
   //dependencies
@@ -64,10 +69,10 @@ const ReportedIssues = () => {
           />
         </div>
         {/* Table Section */}
-        <div className="overflow-x-auto">
-          <table className="table table-zebra">
+        <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+          <table className="table table-zebra w-full min-w-[900px]">
             {/* head */}
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
                 <th>No</th>
                 <th>Title & Location</th>
@@ -79,60 +84,67 @@ const ReportedIssues = () => {
             </thead>
             <tbody>
               {issues.map((issue, i) => (
-                <tr key={issue._id}>
-                  <th>{i + 1}</th>
-                  <td>
-                    <p>{issue.title}</p>
+                <tr
+                  key={issue?._id}
+                  className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${getBg(
+                    issue?.status
+                  )}`}
+                >
+                  <th
+                    className={`py-3 px-4 border-l-4  ${getBorder(
+                      issue?.status
+                    )}`}
+                  >
+                    {i + 1}
+                  </th>
+                  <td className="py-3 px-4">
+                    <p>{issue?.title}</p>
                     <p>
                       <span className="font-semibold">Location : </span>
-                      {issue.location}
+                      {issue?.location}
                     </p>
                   </td>
-                  <td>
+                  <td className="py-3 px-4">
                     <p
-                      className={`badge text-secondary uppercase badge-sm font-semibold ${
-                        issue.priority === "normal"
-                          ? "badge-accent"
-                          : "badge-success"
+                      className={`py-1 text-xs font-bold rounded-full uppercase ${
+                        issue?.priority === "high"
+                          ? "animate-pulse text-green-700"
+                          : "text-yellow-700"
                       }`}
                     >
-                      {issue.priority}
+                      {issue?.priority}
                     </p>
                   </td>
-                  <td>{issue.trackingId}</td>
-                  <td>
+                  <td>{issue?.trackingId}</td>
+                  <td className="py-3 px-4">
                     <p
-                      className={`${
-                        issue.status === "pending"
-                          ? "text-warning"
-                          : issue.status === "in-progress"
-                          ? "text-primary"
-                          : "text-success"
-                      } font-semibold uppercase`}
+                      className={`py-1 text-xs font-bold rounded-full uppercase text-center ${getStatusBadge(
+                        issue?.status
+                      )}`}
                     >
-                      {issue.status}
+                      {issue?.status}
                     </p>
                   </td>
-                  <td className="space-x-1 flex">
+                  <td className="space-x-1 flex py-3 px-4">
                     {/* Edit Button */}
                     <span
                       className="tooltip-wrapper"
                       title={
                         myInfo?.isBlocked
                           ? "Your account is blocked. You cannot edit issues."
-                          : issue.status !== "pending"
+                          : issue?.status !== "pending"
                           ? "Only pending issues can be edited."
                           : ""
                       }
                     >
                       <button
                         className={`btn btn-sm ${
-                          issue.status !== "pending" || myInfo?.isBlocked
+                          issue?.status !== "pending" || myInfo?.isBlocked
                             ? "bg-gray-400 cursor-not-allowed opacity-70"
                             : "btn-accent text-black"
                         }`}
                         disabled={
-                          issue.status !== "pending" || myInfo?.isBlocked
+                          issue?.status !== "pending" || myInfo?.isBlocked
                         }
                         onClick={() => handleEditIssues(issue)}
                       >

@@ -18,7 +18,6 @@ const useStaffAssignIssue = (filters = {}) => {
       const { data } = await axiosSecure.get(
         `/issues/staff/assigned-issues?staffEmail=${user?.email}&status=${status}&priority=${priority}`
       );
-      console.log(data);
       return data?.issues;
     },
   });
