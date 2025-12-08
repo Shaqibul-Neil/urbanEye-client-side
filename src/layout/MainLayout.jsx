@@ -12,7 +12,7 @@ const MainLayout = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       <header className="relative w-full">
         <div
           className={`transition-all duration-300 ease-in-out ${
@@ -25,7 +25,7 @@ const MainLayout = () => {
         </div>
       </header>
 
-      <main className="flex-1">
+      <main>
         <Outlet />
       </main>
       <footer>Footer</footer>

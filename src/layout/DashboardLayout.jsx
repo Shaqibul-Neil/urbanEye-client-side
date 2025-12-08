@@ -4,6 +4,7 @@ import SideBarLinks from "../components/common/sidebarLinks/SideBarLinks";
 import useAuth from "../hooks/auth & role/useAuth";
 import avatarImg from "../assets/placeholder.jpg";
 import {
+  Bell,
   CreditCard,
   Home,
   ListChecks,
@@ -43,12 +44,12 @@ const DashboardLayout = () => {
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Navbar */}
-          <nav className="navbar w-full bg-base-300 flex justify-between px-4">
+          <nav className="navbar lg:w-8/12 md:w-10/12 w-11/12 mx-auto bg-white flex justify-between lg:px-10 md:px-6 px-4 rounded-3xl my-8">
             <div className="flex justify-between items-center gap-2">
               <label
                 htmlFor="my-drawer-4"
                 aria-label="open sidebar"
-                className="btn btn-square btn-primary lg:hidden"
+                className="btn btn-square btn-primary lg:hidden btn-sm"
               >
                 {/* Sidebar toggle icon */}
                 <svg
@@ -66,19 +67,20 @@ const DashboardLayout = () => {
                   <path d="M14 10l2 2l-2 2"></path>
                 </svg>
               </label>
-              <h2 className="text-2xl text-primary font-extrabold">
+              <h2 className="md:text-2xl text-sm text-primary font-extrabold">
                 {" "}
                 Welcome Back, {user?.displayName}
               </h2>
             </div>
             <div className="px-4 flex justify-between">
-              <div className="flex justify-end w-10">
-                <Mail />
+              <div className="flex justify-end items-center w-10 gap-2">
+                <Bell className="w-8 h-8" />
+                <Mail className="w-8 h-8" />
               </div>
             </div>
           </nav>
           {/* Page content here */}
-          <main className="my-6 px-6">
+          <main className="my-6 md:px-6 px-2">
             <Outlet />
           </main>
         </div>
