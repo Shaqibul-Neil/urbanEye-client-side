@@ -13,7 +13,7 @@ const useGetIssues = (searchText = "") => {
     queryKey: ["my-issues", user?.email, searchText],
     queryFn: async () => {
       const res = await axiosSecure.get(`/issues?searchText=${searchText}`);
-      return res.data.issue;
+      return res?.data?.issue;
     },
     //stop flickering the table
     keepPreviousData: true,

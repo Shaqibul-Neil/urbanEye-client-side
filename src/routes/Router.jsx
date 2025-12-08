@@ -21,12 +21,29 @@ import CitizenRoutes from "./CitizenRoutes";
 import AssignedIssues from "../pages/dashboard/staff/AssignedIssues";
 import StaffRoutes from "./StaffRoutes";
 import PaymentsHistory from "../pages/dashboard/admin/PaymentsHistory";
+import About from "../pages/about/About";
+import AllIssues from "../pages/all issues/AllIssues";
+import Contact from "../pages/contact/Contact";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
-    children: [{ index: true, element: <Home /> }],
+    children: [
+      { index: true, element: <Home /> },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/all-issues",
+        element: <AllIssues />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+    ],
   },
   {
     path: "/",

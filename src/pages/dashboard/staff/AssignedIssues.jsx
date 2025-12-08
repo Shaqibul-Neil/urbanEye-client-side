@@ -10,6 +10,8 @@ import {
   getBorder,
   getStatusBadge,
 } from "../../../utilities/getStatusBadge";
+import Loading from "../../../components/loading/Loading";
+import ErrorPage from "../../../components/error/error page/ErrorPage";
 
 const AssignedIssues = () => {
   const [filters, setFilters] = useState({ status: "", priority: "" });
@@ -33,8 +35,8 @@ const AssignedIssues = () => {
     refetchAssignIssues: refetchAssignIssues,
   };
 
-  if (issuesLoading) return <p>Loading issues...</p>;
-  if (issuesError) return <p>Error fetching issues.</p>;
+  if (issuesLoading) return <Loading />;
+  if (issuesError) return <ErrorPage />;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-8">
