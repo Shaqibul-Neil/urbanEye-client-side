@@ -26,6 +26,7 @@ import AllIssues from "../pages/all issues/AllIssues";
 import Contact from "../pages/contact/Contact";
 import IssueDetails from "../pages/all issues/IssueDetails";
 import UpvotePaymentPage from "../pages/upvote/UpvotePaymentPage";
+import UpvotePaymentSuccess from "../pages/upvote/UpvotePaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/upvote-payment",
+        path: "/upvote-payment/:id",
         element: (
           <PrivateRoutes>
             <UpvotePaymentPage />
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/upvote-payment-success",
+        element: <UpvotePaymentSuccess />,
       },
     ],
   },

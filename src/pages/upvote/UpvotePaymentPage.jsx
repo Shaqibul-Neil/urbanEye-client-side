@@ -1,7 +1,11 @@
-// PaymentPage.jsx
 import { useState } from "react";
 import { CreditCard, Smartphone } from "lucide-react";
-import { useLocation } from "react-router";
+import useIssueDetails from "../../hooks/citizen related/useIssueDetails";
+import { useParams } from "react-router";
+import Loading from "../../components/loading/Loading";
+import ErrorPage from "../../components/error/error page/ErrorPage";
+import useAuth from "../../hooks/auth & role/useAuth";
+import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
 
 const paymentMethods = [
   {
@@ -19,28 +23,49 @@ const paymentMethods = [
 ];
 
 const UpvotePaymentPage = ({ totalAmount = 100, onPay }) => {
-  const location = useLocation();
-  const issue = location.state?.issue;
+  const { id } = useParams();
+  const { user } = useAuth();
   const [selected, setSelected] = useState("card");
+  const axiosSecure = useAxiosSecure();
+  const { issue, isLoading, isError } = useIssueDetails(id);
 
-  const handleUpvotePay = async () => {
+  const handleUpvotePay = async (issue) => {
     if (!selected) return;
     onPay && onPay(selected);
     try {
-      console.log("upvote", issue);
+      const paymentInfo = {
+        paymentName: issue?.title,
+        reporterEmail: issue?.userEmail,
+        issueId: issue?._id,
+        userEmail: user?.email,
+      };
+      console.log(paymentInfo);
+      const result = await axiosSecure.post(
+        "/payments/upvote-checkout-session",
+        paymentInfo
+      );
+      console.log(result);
+      //redirect to checkout page
+      window.location.assign(result?.data?.url);
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(issue);
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorPage />;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-start p-6">
+    <div className="min-h-screen bg-gray-50 flex items-start px-6 py-16">
       <div className="max-w-lg w-full mx-auto space-y-8">
         {/* Heading */}
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-4">
           <h1 className="text-4xl font-extrabold text-secondary">
             Complete Your Payment
           </h1>
+          <h2 className="md:text-xl font-semibold text-primary">
+            Upvote Issue : {issue?.title}
+          </h2>
           <p className="text-gray-600">
             Choose a payment method below and proceed to pay. Your selected
             method will be used to process your transaction.
@@ -92,7 +117,7 @@ const UpvotePaymentPage = ({ totalAmount = 100, onPay }) => {
             </span>
           </div>
           <button
-            onClick={handleUpvotePay}
+            onClick={() => handleUpvotePay(issue)}
             className="w-full py-4 bg-primary hover:bg-indigo-700 text-white font-semibold rounded-2xl transition-colors duration-200 shadow-lg"
           >
             Pay Now

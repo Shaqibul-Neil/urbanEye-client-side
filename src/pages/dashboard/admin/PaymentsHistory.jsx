@@ -3,6 +3,8 @@ import useAuth from "../../../hooks/auth & role/useAuth";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
+import Loading from "../../../components/loading/Loading";
+import ErrorPage from "../../../components/error/error page/ErrorPage";
 
 const PaymentsHistory = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,6 +22,8 @@ const PaymentsHistory = () => {
       return res?.data?.payment;
     },
   });
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorPage />;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">

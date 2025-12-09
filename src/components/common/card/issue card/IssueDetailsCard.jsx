@@ -74,6 +74,35 @@ const IssueDetailsCard = ({ issue }) => {
       });
     }
   };
+  //upvote
+  const handleUpvote = (issue) => {
+    if (!user) {
+      navigate("/signin");
+      return;
+    }
+    if (user?.email === issue?.userEmail) {
+      return Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Your can not upvote on your issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be charged $100 for one upvote",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#ef4444",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate(`/upvote-payment/${issue._id}`);
+      }
+    });
+  };
   return (
     <div className="max-w-6xl mx-auto p-6">
       {/* Back link */}

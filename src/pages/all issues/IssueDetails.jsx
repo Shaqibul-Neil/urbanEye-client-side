@@ -9,8 +9,6 @@ const IssueDetails = () => {
   //issue details data fetch
   const { issue, isLoading, isError } = useIssueDetails(id);
 
-  console.log(id);
-  console.log(issue);
   if (isLoading) return <Loading />;
   if (isError) return <ErrorPage />;
   return (

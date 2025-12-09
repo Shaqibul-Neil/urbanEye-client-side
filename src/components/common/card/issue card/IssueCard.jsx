@@ -1,9 +1,61 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { getStatusBadge } from "../../../../utilities/getStatusBadge";
 import { MdArrowOutward } from "react-icons/md";
 import { ThumbsUp } from "lucide-react";
+import useAuth from "../../../../hooks/auth & role/useAuth";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
 
-const IssueCard = ({ issue, handleUpvote }) => {
+const IssueCard = ({ issue }) => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  //upvote
+  const handleUpvote = async (issue) => {
+    //not logged in
+    if (!user) {
+      navigate("/signin");
+      return;
+    }
+    //if issuer tries to upvote on his posted issue
+    if (user?.email === issue?.userEmail) {
+      return Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Your can not upvote on your issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    //if same user upvote on the same issue
+    const { data } = await axiosSecure.get(
+      `/payments/check-upvote?issueId=${issue._id}&userEmail=${user.email}`
+    );
+
+    if (data.alreadyUpvoted) {
+      return Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "You have already paid for this issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be charged $100 for one upvote",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#ef4444",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate(`/upvote-payment/${issue._id}`);
+      }
+    });
+  };
   return (
     <div className="w-full max-w-sm" key={issue._id}>
       <div className="card-inner relative w-full h-72 bg-white rounded-3xl overflow-hidden">

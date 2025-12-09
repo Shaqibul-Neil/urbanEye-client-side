@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../hooks/auth & role/useAxios";
-import { Link, useNavigate } from "react-router";
-import { MdArrowOutward } from "react-icons/md";
-import { getStatusBadge } from "../../utilities/getStatusBadge";
-import { Search, ThumbsUp } from "lucide-react";
+import { useNavigate } from "react-router";
+
+import { Search } from "lucide-react";
 import Loading from "../../components/loading/Loading";
 import ErrorPage from "../../components/error/error page/ErrorPage";
 import useAuth from "../../hooks/auth & role/useAuth";
@@ -17,7 +16,6 @@ import IssueCard from "../../components/common/card/issue card/IssueCard";
 
 const AllIssues = () => {
   const axiosInstance = useAxios();
-  const { user } = useAuth();
   const [searchText, setSearchText] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState(searchText);
   const [issues, setIssues] = useState([]);
@@ -33,7 +31,7 @@ const AllIssues = () => {
     priority: [],
   });
   const limit = 6;
-  const navigate = useNavigate();
+
   //wait .5s after user stopped typing and then send the signal to backend to fetch
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -77,36 +75,6 @@ const AllIssues = () => {
   useEffect(() => {
     setCurrentPage(0);
   }, [debouncedSearch]);
-  //upvote
-  const handleUpvote = (issue) => {
-    if (!user) {
-      navigate("/signin");
-      return;
-    }
-    if (user?.email === issue?.userEmail) {
-      return Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Your can not upvote on your issue",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will be charged $100 for one upvote",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#10b981",
-      cancelButtonColor: "#ef4444",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/upvote-payment", { state: { issue } });
-      }
-    });
-  };
-
   //filtration handler
   const handleCheckboxChange = (type, value) => {
     setFilters((prev) => {
@@ -211,11 +179,7 @@ const AllIssues = () => {
           {/* Issues */}
           <div className="lg:col-span-4 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
             {issues.map((issue) => (
-              <IssueCard
-                issue={issue}
-                key={issue._id}
-                handleUpvote={handleUpvote}
-              />
+              <IssueCard issue={issue} key={issue._id} />
             ))}
           </div>
         </div>
