@@ -35,9 +35,8 @@ const UpvotePaymentPage = ({ totalAmount = 100, onPay }) => {
     try {
       const paymentInfo = {
         paymentName: issue?.title,
-        reporterEmail: issue?.userEmail,
+        citizenEmail: user?.email, //one who pays
         issueId: issue?._id,
-        userEmail: user?.email,
       };
       console.log(paymentInfo);
       const result = await axiosSecure.post(

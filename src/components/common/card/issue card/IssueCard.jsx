@@ -56,6 +56,8 @@ const IssueCard = ({ issue }) => {
       }
     });
   };
+  console.log(issue);
+
   return (
     <div className="w-full max-w-sm" key={issue._id}>
       <div className="card-inner relative w-full h-72 bg-white rounded-3xl overflow-hidden">
@@ -124,7 +126,7 @@ const IssueCard = ({ issue }) => {
             onClick={() => handleUpvote(issue)}
           >
             <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
-            <span>Upvote {issue?.upvote || ""}</span>
+            <span>Upvote {issue?.upvoteCount || ""}</span>
           </button>
         </div>
       </div>
