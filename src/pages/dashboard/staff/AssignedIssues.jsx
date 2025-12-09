@@ -50,7 +50,7 @@ const AssignedIssues = () => {
           />
         </div>
 
-        {/* Filter Section (UI only) */}
+        {/* Filter Section */}
         <div className="flex flex-wrap gap-3">
           <select
             className="select select-bordered max-w-xs py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none"
