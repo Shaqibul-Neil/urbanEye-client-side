@@ -126,7 +126,7 @@ const IssueCard = ({ issue }) => {
             onClick={() => handleUpvote(issue)}
           >
             <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
-            <span>Upvote {issue?.upvoteCount || ""}</span>
+            <span>Upvote {issue?.upvoteCount || 0}</span>
           </button>
         </div>
       </div>

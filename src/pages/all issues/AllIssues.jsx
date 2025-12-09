@@ -13,6 +13,7 @@ import {
   StatusFiltration,
 } from "../../components/common/sidebarLinks/Filtration";
 import IssueCard from "../../components/common/card/issue card/IssueCard";
+import Heading from "../../components/common/heading/Heading";
 
 const AllIssues = () => {
   const axiosInstance = useAxios();
@@ -100,10 +101,11 @@ const AllIssues = () => {
         {/* Heading Section */}
         <div className="text-left space-y-12">
           <div className="space-y-2">
-            <h1 className="text-4xl font-extrabold text-secondary leading-tight">
-              {" "}
-              Explore Public <span className="text-primary">Issues</span>
-            </h1>
+            <Heading
+              className={"text-4xl md:text-5xl"}
+              label={"Explore Public Issues"}
+            />
+
             <SubHeading
               label={`Browse through the latest issues reported by the community. Upvote the
           ones you care about, check priorities, and stay informed about your
