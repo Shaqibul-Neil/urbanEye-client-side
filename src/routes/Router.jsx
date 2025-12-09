@@ -24,6 +24,7 @@ import PaymentsHistory from "../pages/dashboard/admin/PaymentsHistory";
 import About from "../pages/about/About";
 import AllIssues from "../pages/all issues/AllIssues";
 import Contact from "../pages/contact/Contact";
+import IssueDetails from "../pages/all issues/IssueDetails";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: "/all-issues",
         element: <AllIssues />,
+      },
+      {
+        path: "/issue/:id",
+        element: (
+          <PrivateRoutes>
+            <IssueDetails />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/contact",

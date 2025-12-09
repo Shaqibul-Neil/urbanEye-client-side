@@ -13,6 +13,7 @@ import {
   PriorityFiltration,
   StatusFiltration,
 } from "../../components/common/sidebarLinks/Filtration";
+import IssueCard from "../../components/common/card/issue card/IssueCard";
 
 const AllIssues = () => {
   const axiosInstance = useAxios();
@@ -108,7 +109,7 @@ const AllIssues = () => {
   };
 
   const filtrationProps = { filters: filters, onChange: handleCheckboxChange };
-  console.log(filters);
+
   if (loading) return <Loading />;
   if (error) return <ErrorPage />;
 
@@ -155,7 +156,7 @@ const AllIssues = () => {
           </div>
         </div>
         {/* Issues and Filter Grid */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
+        <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-4">
           {/* Filter Section */}
           <div className="drawer md:drawer-open mt-12">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -168,25 +169,25 @@ const AllIssues = () => {
                 Filter By
               </label>
             </div>
-            <div className="drawer-side border p-3 text-xl text-primary text-center font-semibold rounded-3xl">
+            <div className="drawer-side border text-xl text-primary text-center font-semibold rounded-3xl py-4">
               <label
                 htmlFor="my-drawer-3"
                 aria-label="close sidebar"
-                className="drawer-overlay"
+                className="drawer-overlay text-xl font-black"
               >
                 Filter By
               </label>
-              <ul className="menu lg:w-64 md:w-52 p-4 text-secondary">
+              <ul className="menu lg:w-60 md:w-52 py-4 text-secondary">
                 {/* Sidebar content here */}
                 {/* By Status */}
-                <label className="flex items-center justify-between cursor-pointer gap-3 mb-1">
+                <label className="flex items-center justify-between cursor-pointer gap-3 mb-1 text-primary font-semibold text- underline">
                   {" "}
                   Status{" "}
                 </label>
                 <StatusFiltration filtrationProps={filtrationProps} />
 
                 {/* By Priority */}
-                <label className="flex items-center justify-between cursor-pointer gap-3 my-1">
+                <label className="flex items-center justify-between cursor-pointer gap-3 my-1 text-primary font-semibold text-base underline">
                   {" "}
                   Priority{" "}
                 </label>
@@ -195,83 +196,13 @@ const AllIssues = () => {
             </div>
           </div>
           {/* Issues */}
-          <div className="lg:col-span-3 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+          <div className="lg:col-span-4 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
             {issues.map((issue) => (
-              <div className="w-full max-w-sm" key={issue._id}>
-                <div className="card-inner relative w-full h-72 bg-white rounded-3xl overflow-hidden">
-                  <div className="box w-full h-full bg-white rounded-3xl overflow-hidden relative">
-                    {/* Image Box */}
-                    <div className="absolute inset-0">
-                      <img
-                        src={issue?.photoURL}
-                        alt={issue?.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-
-                    {/* Priority Badge */}
-                    <p
-                      className={`px-3 py-1 text-xs font-bold rounded-full uppercase absolute top-4 right-4 ${
-                        issue?.priority === "high"
-                          ? "text-green-700 bg-green-100"
-                          : "text-yellow-700 bg-yellow-100"
-                      }`}
-                    >
-                      {issue?.priority}
-                    </p>
-
-                    {/* Issue Status */}
-                    <p
-                      className={`px-3 py-1 text-xs font-bold rounded-full uppercase absolute bottom-4 left-4 ${getStatusBadge(
-                        issue?.status
-                      )}`}
-                    >
-                      {issue?.status}
-                    </p>
-
-                    <div className="icon absolute bottom-1.5 right-1.5 w-24 h-24 rounded-tl-[50%] tooltip">
-                      <div></div>
-                      <div className="tooltip-content">
-                        <div className="animate-bounce text-white text-sm font-black">
-                          View Details
-                        </div>
-                      </div>
-                      <Link
-                        className="iconBox absolute inset-2.5 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 group"
-                        data-tip="View details"
-                      >
-                        <span className="text-white text-2xl">
-                          <MdArrowOutward className="w-10 h-10 group-hover:rotate-30 transition-all" />
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-4">
-                  <h3 className="capitalize text-xl font-extrabold tracking-tight text-secondary mb-1">
-                    {issue?.title}
-                  </h3>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="mt-2 text-sm text-primary">
-                        {issue?.category}
-                      </p>
-                      <p className="text-secondary text-base">
-                        {issue?.location}
-                      </p>
-                    </div>
-                    <button
-                      className="btn btn-primary btn-outline group flex items-center gap-1"
-                      onClick={() => handleUpvote(issue)}
-                    >
-                      <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
-                      <span>Upvote {issue?.upvote || 0}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <IssueCard
+                issue={issue}
+                key={issue._id}
+                handleUpvote={handleUpvote}
+              />
             ))}
           </div>
         </div>
