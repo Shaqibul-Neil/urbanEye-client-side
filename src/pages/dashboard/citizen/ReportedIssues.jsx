@@ -11,6 +11,9 @@ import {
   getBorder,
   getStatusBadge,
 } from "../../../utilities/getStatusBadge";
+import Loading from "../../../components/loading/Loading";
+import ErrorPage from "../../../components/error/error page/ErrorPage";
+import { Link } from "react-router";
 
 const ReportedIssues = () => {
   //dependencies
@@ -23,6 +26,25 @@ const ReportedIssues = () => {
 
   //event handlers
   const handleEditIssues = (issue) => {
+    // account blocked check
+    if (myInfo?.isBlocked) {
+      Swal.fire({
+        icon: "error",
+        title: "Account Blocked",
+        text: "Your account is blocked. You cannot edit issues.",
+      });
+      return;
+    }
+    // only pending issues allowed
+    if (issue?.status !== "pending") {
+      Swal.fire({
+        icon: "info",
+        title: "Cannot Edit",
+        text: "Only pending issues can be edited.",
+      });
+      return;
+    }
+    // else open modal
     setCurrentIssue(issue);
     editIssueRef.current.showModal();
   };
@@ -56,6 +78,8 @@ const ReportedIssues = () => {
       });
     }
   };
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorPage />;
   return (
     <div className="px-5">
       <div className="space-y-12">
@@ -127,34 +151,21 @@ const ReportedIssues = () => {
                   </td>
                   <td className="space-x-1 flex py-3 px-4">
                     {/* Edit Button */}
-                    <span
-                      className="tooltip-wrapper"
-                      title={
-                        myInfo?.isBlocked
-                          ? "Your account is blocked. You cannot edit issues."
-                          : issue?.status !== "pending"
-                          ? "Only pending issues can be edited."
-                          : ""
-                      }
-                    >
+                    <span>
                       <button
-                        className={`btn btn-sm ${
-                          issue?.status !== "pending" || myInfo?.isBlocked
-                            ? "bg-gray-400 cursor-not-allowed opacity-70"
-                            : "btn-accent text-black"
-                        }`}
-                        disabled={
-                          issue?.status !== "pending" || myInfo?.isBlocked
-                        }
+                        className="btn btn-sm btn-accent text-black "
                         onClick={() => handleEditIssues(issue)}
                       >
                         Edit
                       </button>
                     </span>
                     {/* Details Button */}
-                    <button className="btn btn-warning btn-sm text-black">
+                    <Link
+                      className="btn btn-warning btn-sm text-black"
+                      to={`/issue/${issue?._id}`}
+                    >
                       Details
-                    </button>
+                    </Link>
                     {/* Delete Button */}
                     <button
                       className="btn btn-error btn-sm text-black"

@@ -25,6 +25,7 @@ import About from "../pages/about/About";
 import AllIssues from "../pages/all issues/AllIssues";
 import Contact from "../pages/contact/Contact";
 import IssueDetails from "../pages/all issues/IssueDetails";
+import UpvotePaymentPage from "../pages/upvote/UpvotePaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <IssueDetails />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/upvote-payment",
+        element: (
+          <PrivateRoutes>
+            <UpvotePaymentPage />
           </PrivateRoutes>
         ),
       },

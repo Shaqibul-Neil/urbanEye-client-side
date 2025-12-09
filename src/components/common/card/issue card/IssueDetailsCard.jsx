@@ -1,13 +1,79 @@
 import { MdEmail } from "react-icons/md";
 import { MapPin, ThumbsUp } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { getStatusBadge } from "../../../../utilities/getStatusBadge";
 import useAuth from "../../../../hooks/auth & role/useAuth";
+import EditIssueModal from "../../../modals/EditIssueModal";
+import { useRef, useState } from "react";
+import Swal from "sweetalert2";
+import useDeleteIssue from "../../../../hooks/citizen related/useDeleteIssue";
+import useMyInfo from "../../../../hooks/citizen related/useMyInfo";
 
 const IssueDetailsCard = ({ issue }) => {
   const { user } = useAuth();
+  const editIssueRef = useRef();
+  const [currentIssue, setCurrentIssue] = useState({});
+  const navigate = useNavigate();
+  //delete mutation
+  const { mutateAsync: deleteIssue } = useDeleteIssue();
+  const { myInfo } = useMyInfo();
+  //event handlers
+  const handleEditIssues = (issue) => {
+    // account blocked check
+    if (myInfo?.isBlocked) {
+      Swal.fire({
+        icon: "error",
+        title: "Account Blocked",
+        text: "Your account is blocked. You cannot edit issues.",
+      });
+      return;
+    }
+    // only pending issues allowed
+    if (issue?.status !== "pending") {
+      Swal.fire({
+        icon: "info",
+        title: "Cannot Edit",
+        text: "Only pending issues can be edited.",
+      });
+      return;
+    }
+    // else open modal
+    setCurrentIssue(issue);
+    editIssueRef.current.showModal();
+  };
+  const handleDeleteIssue = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You cant revert this",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+        confirmButtonText: "Yes, Delete",
+      });
+      if (!result.isConfirmed) return;
+      const res = await deleteIssue(id);
+
+      if (res?.issue?.deletedCount) {
+        navigate("/all-issues");
+        //success popup
+        await Swal.fire({
+          title: "Deleted!",
+          text: "Your issue has been deleted",
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Something went wrong",
+        text: error?.response?.data?.message || "Server error!",
+        icon: "error",
+      });
+    }
+  };
   return (
     <div className="max-w-6xl mx-auto p-6">
       {/* Back link */}
@@ -103,13 +169,31 @@ const IssueDetailsCard = ({ issue }) => {
                 {user?.email === issue?.userEmail ? (
                   <div className="flex gap-2 items-center">
                     {issue?.status === "pending" && (
-                      <button className="btn">Edit</button>
+                      <button
+                        className="magicBtn"
+                        onClick={() => handleEditIssues(issue)}
+                        style={{
+                          "--btn-text": "'Edit'",
+                          "--btn-bg": "white",
+                          "--btn-text-color": "#2563eb",
+                          "--btn-border": "#2563eb",
+                        }}
+                      />
                     )}
-                    <button className="btn">Delete</button>
+                    <button
+                      className="magicBtn"
+                      onClick={() => handleDeleteIssue(issue._id)}
+                      style={{
+                        "--btn-text": "'Delete'",
+                        "--btn-bg": "white",
+                        "--btn-text-color": "#ef4444",
+                        "--btn-border": "#ef4444",
+                      }}
+                    />
                   </div>
                 ) : (
                   <button
-                    className="btn btn-primary btn-outline group flex items-center gap-1"
+                    className="btn btn-primary btn-outline group flex items-center gap-1 rounded-3xl"
                     onClick={() => handleUpvote(issue)}
                   >
                     <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
@@ -187,6 +271,11 @@ const IssueDetailsCard = ({ issue }) => {
             </TabPanel>
           </Tabs>
         </div>
+        {/*Edit issue Modal */}
+        <EditIssueModal
+          editIssueRef={editIssueRef}
+          currentIssue={currentIssue}
+        />
       </div>
     </div>
   );

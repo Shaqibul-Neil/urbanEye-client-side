@@ -68,7 +68,7 @@ const IssueCard = ({ issue, handleUpvote }) => {
             <p className="text-secondary text-sm">{issue?.location}</p>
           </div>
           <button
-            className="btn btn-primary btn-outline group flex items-center gap-1"
+            className="btn btn-primary btn-outline group flex items-center gap-1 rounded-3xl"
             onClick={() => handleUpvote(issue)}
           >
             <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />

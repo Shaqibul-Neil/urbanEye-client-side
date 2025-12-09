@@ -36,8 +36,8 @@
   bottom: 0.375rem;
   left: -1.25rem;
   background: transparent;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-bottom-right-radius: 1.25rem;
   box-shadow: 0.313rem 0.313rem 0 0.313rem #fff;
 }
@@ -48,8 +48,8 @@
   top: -1.25rem;
   right: 0.375rem;
   background: transparent;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-bottom-right-radius: 1.25rem;
   box-shadow: 0.313rem 0.313rem 0 0.313rem #fff;
 }
@@ -76,6 +76,76 @@
 .animate-elastic {
   animation: elastic 3s ease-in-out infinite;
 }
+/* Fancy Action Button */
+.magicBtn {
+  --btn-text: "Button";
+  --btn-bg: #38bdf8;
+  --btn-text-color: #363636;
+  --btn-border: #363636;
+
+  width: 112px;
+  height: 40px;
+
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: capitalize;
+
+  border: 1px solid var(--btn-border);
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  font-family: inherit;
+}
+
+/* FRONT */
+.magicBtn::before {
+  content: var(--btn-text);
+  position: absolute;
+  inset: 0;
+  background-color: var(--btn-bg);
+  color: var(--btn-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+  border-radius: 20px;
+}
+
+/* FRONT EXIT */
+.magicBtn:hover::before {
+  left: 100%;
+  transform: scale(0) rotateY(360deg);
+  opacity: 0;
+}
+
+/* BACK */
+.magicBtn::after {
+  content: var(--btn-text);
+  position: absolute;
+  inset: 0;
+  left: -100%;
+  background-color: var(--btn-bg);
+  color: var(--btn-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+  transform: scale(0);
+  opacity: 0;
+  border-radius: 20px;
+}
+
+/* BACK ENTER */
+.magicBtn:hover::after {
+  left: 0;
+  transform: scale(1) rotateY(360deg);
+  opacity: 1;
+}
+
 /* form text-gray-400 */
 /* Primary: #2563eb
 Secondary: #10b981

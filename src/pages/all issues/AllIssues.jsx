@@ -92,6 +92,19 @@ const AllIssues = () => {
         timer: 1500,
       });
     }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be charged $100 for one upvote",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#ef4444",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/upvote-payment", { state: { issue } });
+      }
+    });
   };
 
   //filtration handler
