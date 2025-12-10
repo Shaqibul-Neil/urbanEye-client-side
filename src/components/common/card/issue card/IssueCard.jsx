@@ -27,6 +27,16 @@ const IssueCard = ({ issue }) => {
         timer: 1500,
       });
     }
+    //if issue is already resolved
+    if (issue?.status === "resolved" || issue?.status === "closed") {
+      return Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Your can not upvote on a resolved issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
     //if same user upvote on the same issue
     const { data } = await axiosSecure.get(
       `/payments/check-upvote?issueId=${issue._id}&userEmail=${user.email}`

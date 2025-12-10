@@ -29,8 +29,11 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
       let photoURL = user?.photoURL;
       //do not use ternary here. sometimes user wont upload photo thats why we need error here so that pervious photo persists
       if (data?.photo && data?.photo[0]) {
+        console.log(data?.photo);
         try {
-          photoURL = await imageUpload(data.photo[0]);
+          if (data?.photo[0]) {
+            photoURL = await imageUpload(data.photo[0]);
+          }
         } catch (err) {
           console.log(err);
           toast.error("Image upload failed, using previous photo:", err);

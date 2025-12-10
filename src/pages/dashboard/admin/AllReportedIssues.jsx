@@ -42,10 +42,12 @@ const AllReportedIssues = () => {
 
   //assign staff modal
   const handleAssignStaffModal = (issue) => {
+    setSelectedStaff({});
+    // staffRefetch();
     setAssignedStaffIssue(issue);
     // reset selected staff
-    setSelectedStaff({});
-    staffRefetch();
+    // setSelectedStaff({});
+    // staffRefetch();
     assignModalRef.current.showModal();
   };
 

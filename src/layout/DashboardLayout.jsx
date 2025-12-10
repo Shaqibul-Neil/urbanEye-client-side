@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { MdLogout, MdOutlineDashboard } from "react-icons/md";
 import SideBarLinks from "../components/common/sidebarLinks/SideBarLinks";
 import useAuth from "../hooks/auth & role/useAuth";
@@ -7,6 +7,7 @@ import {
   Bell,
   CreditCard,
   Home,
+  HomeIcon,
   ListChecks,
   Mail,
   Mic,
@@ -43,7 +44,7 @@ const DashboardLayout = () => {
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Navbar */}
-          <nav className="navbar lg:w-8/12 md:w-10/12 w-11/12 mx-auto bg-white flex justify-between lg:px-10 md:px-6 px-4 rounded-3xl mt-8 mb-12">
+          <nav className="navbar flex md:justify-between md:flex-row flex-col md:px-6 px-3 rounded-3xl mt-8 items-start md:items-center gap-3">
             <div className="flex justify-between items-center gap-2">
               <label
                 htmlFor="my-drawer-4"
@@ -66,16 +67,22 @@ const DashboardLayout = () => {
                   <path d="M14 10l2 2l-2 2"></path>
                 </svg>
               </label>
-              <h2 className="md:text-2xl text-sm text-primary font-extrabold">
+              <h2 className="md:text-4xl text-3xl text-primary font-extrabold">
                 {" "}
                 Welcome Back, {user?.displayName}
               </h2>
             </div>
-            <div className="px-4 flex justify-between">
-              <div className="flex justify-end items-center w-10 gap-2">
-                <Bell className="w-8 h-8" />
-                <Mail className="w-8 h-8" />
-              </div>
+
+            <div className="flex justify-center md:justify-end items-center gap-4 mx-auto md:mx-0 md:ml:auto">
+              <Link to={"/"}>
+                <HomeIcon className="w-6 h-6" />
+              </Link>
+              <button>
+                <Mail className="w-6 h-6" />
+              </button>
+              <button>
+                <Bell className="w-6 h-6" />
+              </button>
             </div>
           </nav>
           {/* Page content here */}

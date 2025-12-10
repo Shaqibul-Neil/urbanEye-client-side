@@ -23,6 +23,8 @@ const AssignStaffModal = ({
   const { mutateAsync: staffAssign } = useStaffAssign();
   //assigning staff
   const handleAssign = async () => {
+    setSelectedStaff({});
+    //staffRefetch();
     const updatedIssue = {
       ...assignedStaffIssue,
       assignedStaff: {
@@ -44,8 +46,6 @@ const AssignStaffModal = ({
       });
     }
     assignModalRef.current.close();
-    setSelectedStaff({});
-    staffRefetch();
   };
 
   return (
@@ -69,7 +69,7 @@ const AssignStaffModal = ({
           </label>
           <select
             className="select select-sm select-bordered w-full py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none"
-            value={selectedStaff?._id}
+            value={selectedStaff?._id || ""}
             onChange={handleSelectStaff}
           >
             <option value="">Select Staff</option>
