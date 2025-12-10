@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import useUpdateIssue from "../../hooks/citizen related/useUpdateIssue";
 import imageUpload from "../../utilities/imageUpload";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const EditIssueModal = ({ editIssueRef, currentIssue }) => {
   //dependencies
@@ -60,7 +61,7 @@ const EditIssueModal = ({ editIssueRef, currentIssue }) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error?.message);
     }
   };
   return (

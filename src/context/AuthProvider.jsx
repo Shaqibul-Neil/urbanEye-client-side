@@ -28,8 +28,13 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
   //update user
-  const updateUser = (profile) => {
-    return updateProfile(auth.currentUser, profile);
+  const updateUser = async (profile) => {
+    await updateProfile(auth.currentUser, profile);
+    setUser((prev) => ({
+      ...prev,
+      displayName: profile.displayName || prev.displayName,
+      photoURL: profile.photoURL || prev.photoURL,
+    }));
   };
   //sign in with google
   const signInWithGoogle = () => {

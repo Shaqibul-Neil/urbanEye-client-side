@@ -3,10 +3,13 @@ import useMyInfo from "../../../hooks/citizen related/useMyInfo";
 import profilePageCover from "../../../assets/profilePageCover.jpg";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import toast from "react-hot-toast";
+import { useRef } from "react";
+import MyProfileUpdateModal from "../../../components/modals/MyProfileUpdateModal";
 
 const Profile = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const profileUpdateRef = useRef();
   //my info
   const { myInfo, isLoading, isError } = useMyInfo();
   const handleSubscription = async () => {
@@ -24,6 +27,9 @@ const Profile = () => {
     } catch (error) {
       toast.error(error.message || "Something went wrong!");
     }
+  };
+  const handleUpdateModal = () => {
+    profileUpdateRef.current.showModal();
   };
   if (isLoading) return <p>Loading profile...</p>;
   if (isError) return <p>No profile data found!</p>;
@@ -99,7 +105,10 @@ const Profile = () => {
                       </div>
                     )}
 
-                    <button className="btn btn-ghost rounded-lg text-secondary cursor-pointer border-2 border-primary">
+                    <button
+                      className="btn btn-ghost rounded-lg text-secondary cursor-pointer border-2 border-primary"
+                      onClick={handleUpdateModal}
+                    >
                       Update Profile
                     </button>
                   </>
@@ -109,6 +118,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      {/* Modal Section */}
+      <MyProfileUpdateModal profileUpdateRef={profileUpdateRef} />
     </div>
   );
 };

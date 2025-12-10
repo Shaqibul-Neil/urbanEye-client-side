@@ -7,7 +7,6 @@ import StaffDashBoard from "./StaffDashBoard";
 
 const Dashboard = () => {
   const { role, roleLoading } = useRole();
-  console.log(role);
   if (roleLoading) return <Loading />;
   if (role === "admin") return <AdminDashboard />;
   if (role === "citizen") return <CitizenDashboard />;
