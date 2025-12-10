@@ -7,6 +7,7 @@ const AssignStaffModal = ({
   assignedStaffIssue,
   selectedStaff,
   setSelectedStaff,
+  staffRefetch,
 }) => {
   //creating hash table for staffs
   const staffsMap = staffs.reduce((acc, staff) => {
@@ -43,6 +44,8 @@ const AssignStaffModal = ({
       });
     }
     assignModalRef.current.close();
+    setSelectedStaff({});
+    staffRefetch();
   };
 
   return (

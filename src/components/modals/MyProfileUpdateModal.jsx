@@ -32,6 +32,7 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
         try {
           photoURL = await imageUpload(data.photo[0]);
         } catch (err) {
+          console.log(err);
           toast.error("Image upload failed, using previous photo:", err);
           photoURL = user?.photoURL;
         }
@@ -65,6 +66,7 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
         });
       }
     } catch (error) {
+      console.log(error);
       toast.error(error?.message || "Something went wrong");
     } finally {
       setLoading(false);

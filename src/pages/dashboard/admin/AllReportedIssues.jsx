@@ -267,6 +267,7 @@ const AllReportedIssues = () => {
           assignModalRef={assignModalRef}
           assignedStaffIssue={assignedStaffIssue}
           staffs={staffs}
+          staffRefetch={staffRefetch}
           selectedStaff={selectedStaff}
           setSelectedStaff={setSelectedStaff}
         />

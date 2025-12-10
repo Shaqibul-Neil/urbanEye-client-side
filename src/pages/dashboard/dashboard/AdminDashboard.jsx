@@ -24,6 +24,7 @@ const statusIcons = {
 
 const AdminDashboard = () => {
   const axiosSecure = useAxiosSecure();
+  //issue status fetch data aggregation
   const {
     data: statusStats = [],
     isLoading,
@@ -35,6 +36,7 @@ const AdminDashboard = () => {
       return data?.result;
     },
   });
+  //total payments data aggregation
   const {
     data: paymentStats = [],
     isLoading: paymentLoading,
@@ -43,12 +45,25 @@ const AdminDashboard = () => {
     queryKey: ["payment-stats"],
     queryFn: async () => {
       const { data } = await axiosSecure.get("/payments/stats/total");
-      console.log(data);
       return data;
     },
   });
-  if (isLoading || paymentLoading) return <Loading />;
-  if (isError || paymentError) return <ErrorPage />;
+
+  //latest issue for admin dashboard
+  const {
+    data: latestIssue = [],
+    isLoading: latestLoading,
+    isError: latestError,
+  } = useQuery({
+    queryKey: ["latest-issue"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/issues/latest/admin");
+      console.log(data);
+      return data?.issue;
+    },
+  });
+  if (isLoading || paymentLoading || latestLoading) return <Loading />;
+  if (isError || paymentError || latestError) return <ErrorPage />;
   return (
     <div className="grid lg:grid-cols-4 gap-8">
       {/* Left Side Stats */}
@@ -83,10 +98,45 @@ const AdminDashboard = () => {
       </div>
 
       {/* Right Side */}
+
       <div className="space-y-6">
+        {/* Latest Issues */}
+        <div>
+          <div className="bg-white p-6 rounded-3xl space-y-4">
+            <h3 className="text-lg text-secondary font-bold">
+              Latest Posted Issues
+            </h3>
+            <div>
+              {latestIssue.map((latest) => (
+                <div
+                  key={latest._id}
+                  className="flex items-center gap-4 p-2 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer transform hover:-translate-y-1 bg-base-200 my-3"
+                >
+                  {/* Profile / Photo */}
+                  <div className="shrink-0 w-12 h-12">
+                    <img
+                      src={latest?.photoURL}
+                      alt={latest?.title}
+                      className="w-full h-full object-cover rounded-full border-2 border-primary"
+                    />
+                  </div>
+
+                  {/* Text */}
+                  <div className="flex flex-col justify-center">
+                    <h3 className="text-sm text-secondary">{latest?.title}</h3>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {latest?.userEmail}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         <div className="bg-gradient-to-r from-red-400 to-red-600 rounded-xl shadow-lg p-6 hover:scale-105 transition-transform duration-500 text-white h-48 flex items-center justify-center font-semibold">
           Latest Issues
         </div>
+        {/* Latest Registered Users */}
         <div className="bg-gradient-to-r from-green-400 to-green-600 rounded-xl shadow-lg p-6 hover:scale-105 transition-transform duration-500 text-white h-48 flex items-center justify-center font-semibold">
           Latest Registered Users
         </div>

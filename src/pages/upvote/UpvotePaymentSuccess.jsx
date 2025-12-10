@@ -44,7 +44,7 @@ const UpvotePaymentSuccess = () => {
     service: paymentInfo?.paymentName,
     amount: paymentInfo?.amount,
     currency: paymentInfo?.currency,
-    paidBy: paymentInfo?.userEmail,
+    paidBy: paymentInfo?.citizenEmail,
     transactionId: paymentInfo?.transactionId,
     date: new Date(paymentInfo?.paidAt).toLocaleString(),
     method: paymentInfo?.paymentMethod || "Card / Stripe",
