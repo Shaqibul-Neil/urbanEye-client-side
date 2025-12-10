@@ -57,7 +57,7 @@ const ManageCitizens = () => {
       <div className="space-y-2 mb-6">
         <Heading
           label="Citizen Oversight"
-          className="text-3xl font-extrabold tracking-wide"
+          className="text-4xl md:text-5xl pb-1"
         />
         <SubHeading
           label="Monitor and manage all registered citizens. Block or unblock users, view their profiles, and remove accounts as needed—all from one place."

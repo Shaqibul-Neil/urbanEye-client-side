@@ -42,7 +42,10 @@ const AssignedIssues = () => {
       <div className="space-y-8">
         {/* Title */}
         <div className="space-y-2">
-          <Heading label={"Assigned Issues"} />
+          <Heading
+            className={"text-4xl md:text-5xl pb-1"}
+            label={"Assigned Issues"}
+          />
           <SubHeading
             label={
               "View and manage all issues assigned to you. Boosted issues are prioritized automatically to ensure faster resolution."

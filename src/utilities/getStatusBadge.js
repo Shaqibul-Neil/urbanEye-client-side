@@ -26,7 +26,7 @@ export const getBg = (status) => {
     case "working":
       return "bg-cyan-50";
     case "resolved":
-      return "bg-green-50 ";
+      return "bg-green-50";
     case "closed":
       return "bg-gray-100";
     case "rejected":

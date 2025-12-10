@@ -15,7 +15,6 @@ const LatestResolved = () => {
     queryKey: ["my-issues"],
     queryFn: async () => {
       const res = await axiosInstance.get(`/issues/latest/resolved-issues`);
-      console.log(res);
       return res?.data?.issue;
     },
   });

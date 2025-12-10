@@ -65,7 +65,10 @@ const ReportIssues = () => {
       <div>
         {/* Title Section */}
         <div className="space-y-2">
-          <Heading label={"Report a Public Infrastructure Issue"} />
+          <Heading
+            label={"Report a Public Infrastructure Issue"}
+            className={"text-4xl md:text-5xl pb-1"}
+          />
           <SubHeading
             label={
               "Help us keep the city safe and efficient by reporting issues quickly."

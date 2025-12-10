@@ -11,7 +11,6 @@ const PaymentsHistory = () => {
   const { user } = useAuth();
   const {
     data: payments = [],
-    refetch,
     isLoading,
     isError,
   } = useQuery({
@@ -30,7 +29,10 @@ const PaymentsHistory = () => {
         {/* Title Section */}
         <div className="flex justify-between items-center gap-10 md:flex-row flex-col">
           <div className="space-y-2">
-            <Heading label={"Payments History"} />
+            <Heading
+              label={"Payments History"}
+              className={"text-4xl md:text-5xl pb-1"}
+            />
             <SubHeading
               label={
                 "Track all user payments, view details, and manage transactions—all from one centralized dashboard."
@@ -67,12 +69,18 @@ const PaymentsHistory = () => {
                 <tr
                   key={payment?._id}
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
-                    payment.status !== "completed"
+                    payment.paymentType !== "subscription"
                       ? "bg-[#FFF7F0] hover:bg-orange-100"
-                      : ""
+                      : "bg-green-50 hover:bg-green-100"
                   }`}
                 >
-                  <th className="py-3 px-4 border-l-4 border-l-[#6EE7B7]">
+                  <th
+                    className={`py-3 px-4 border-l-4 ${
+                      payment.paymentType !== "subscription"
+                        ? "border-l-yellow-400"
+                        : "border-l-[#6EE7B7]"
+                    }`}
+                  >
                     {i + 1}
                   </th>
                   <td className="py-3 px-4 sticky left-0 z-10 text-gray-700 font-semibold">

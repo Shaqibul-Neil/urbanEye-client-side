@@ -69,7 +69,10 @@ const ManageStaff = () => {
         {/* Title Section */}
         <div className="flex justify-between items-center gap-10 md:flex-row flex-col">
           <div className="space-y-2">
-            <Heading label={"Staff Management"} />
+            <Heading
+              label={"Staff Management"}
+              className={"text-4xl md:text-5xl pb-1"}
+            />
             <SubHeading
               label={
                 "Monitor, manage, and add new employees. Assign roles, update profiles, and remove accounts—all from one centralized dashboard."

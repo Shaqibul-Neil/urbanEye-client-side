@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import AssignStaffModal from "../../../components/modals/AssignStaffModal";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
-import { getStatusBadge } from "../../../utilities/getStatusBadge";
+import { getBg, getStatusBadge } from "../../../utilities/getStatusBadge";
 import useIssueReject from "../../../hooks/admin related/useIssueReject";
 import Swal from "sweetalert2";
 
@@ -95,7 +95,10 @@ const AllReportedIssues = () => {
         {/* Title Section */}
 
         <div className="space-y-2">
-          <Heading label={"All Reported Issues"} />
+          <Heading
+            className={"text-4xl md:text-5xl"}
+            label={"All Reported Issues"}
+          />
           <SubHeading
             label={
               "View and manage all reported issues across the platform. Track status, priority, and take necessary actions as an administrator."
@@ -152,9 +155,10 @@ const AllReportedIssues = () => {
                 <tr
                   key={issue._id}
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
-                    issue?.isAssignedStaff &&
-                    "bg-green-50/50 hover:bg-green-100"
-                  } ${issue?.priority === "high" && "animate-pulse"}`}
+                    issue?.priority === "high" &&
+                    !issue?.isAssignedStaff &&
+                    "animate-pulse"
+                  } ${getBg(issue?.status)}`}
                 >
                   <th
                     className={`py-3 px-4 border-l-4  ${

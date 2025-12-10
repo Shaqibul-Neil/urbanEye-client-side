@@ -27,7 +27,10 @@ const MyPayments = () => {
       <div className="space-y-12">
         {/* Title Section */}
         <div className="space-y-2">
-          <Heading label={"My Payment History"} />
+          <Heading
+            label={"My Payment History"}
+            className={"text-4xl md:text-5xl pb-1"}
+          />
           <SubHeading
             label={
               "Track all your subscription payments. Each payment shows the transaction ID and payment date."
@@ -60,12 +63,18 @@ const MyPayments = () => {
                 <tr
                   key={payment._id}
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
-                    payment.status !== "completed"
+                    payment.paymentType !== "subscription"
                       ? "bg-[#FFF7F0] hover:bg-orange-100"
-                      : ""
+                      : "bg-green-50 hover:bg-green-100"
                   }`}
                 >
-                  <th className="py-3 px-4 border-l-4 border-l-[#6EE7B7]">
+                  <th
+                    className={`py-3 px-4 border-l-4 ${
+                      payment.paymentType !== "subscription"
+                        ? "border-l-yellow-400"
+                        : "border-l-[#6EE7B7]"
+                    }`}
+                  >
                     {i + 1}
                   </th>
                   <td className="py-3 px-4 sticky left-0 z-10 text-gray-700 font-semibold">
