@@ -5,10 +5,13 @@ import { ThumbsUp } from "lucide-react";
 import useAuth from "../../../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
+import useRole from "../../../../hooks/auth & role/useRole";
 
 const IssueCard = ({ issue }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { role } = useRole();
+
   const axiosSecure = useAxiosSecure();
   //upvote
   const handleUpvote = async (issue) => {
@@ -17,6 +20,16 @@ const IssueCard = ({ issue }) => {
       navigate("/signin");
       return;
     }
+    //admin can not upvote
+    // if (role === "admin") {
+    //   return Swal.fire({
+    //     position: "center",
+    //     icon: "error",
+    //     title: "Your can not upvote admin",
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    // }
     //if issuer tries to upvote on his posted issue
     if (user?.email === issue?.userEmail) {
       return Swal.fire({
@@ -39,7 +52,7 @@ const IssueCard = ({ issue }) => {
     }
     //if same user upvote on the same issue
     const { data } = await axiosSecure.get(
-      `/payments/check-upvote?issueId=${issue._id}&userEmail=${user.email}`
+      `/payments/check-upvote?issueId=${issue._id}&citizenEmail=${user.email}`
     );
 
     if (data.alreadyUpvoted) {

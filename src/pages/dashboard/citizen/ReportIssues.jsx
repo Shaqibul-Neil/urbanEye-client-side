@@ -31,7 +31,6 @@ const ReportIssues = () => {
     const photoURL = await imageUpload(uploadedPhoto);
     //removing photo from data
     const { photo, ...rest } = data;
-    console.log(data);
     try {
       const issuesData = { ...rest, photoURL, userEmail: user?.email };
       //send issues to backend

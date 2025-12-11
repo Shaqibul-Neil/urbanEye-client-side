@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
+import { useQueryClient } from "@tanstack/react-query";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const [paymentInfo, setPaymentInfo] = useState("");
   const sessionId = searchParams.get("session_id");
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     try {
       if (sessionId) {
@@ -15,12 +18,14 @@ const PaymentSuccess = () => {
           .then((res) => {
             console.log(res);
             setPaymentInfo(res?.data?.transactionId);
+            // invalidate payment stats
+            queryClient.invalidateQueries({ queryKey: ["payment-stats"] });
           });
       }
     } catch (error) {
       console.log(error);
     }
-  }, [sessionId, axiosSecure]);
+  }, [sessionId, axiosSecure, queryClient]);
   return (
     <div>
       <p>Transaction Id: {paymentInfo}</p>

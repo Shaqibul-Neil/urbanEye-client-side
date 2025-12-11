@@ -53,9 +53,6 @@ const MyPayments = () => {
                 <th className="py-3 px-4 border-b-2 border-blue-600/20">
                   Transaction Id
                 </th>
-                <th className="py-3 px-4 border-b-2 border-blue-600/20">
-                  Tracking Id
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -78,16 +75,13 @@ const MyPayments = () => {
                     {i + 1}
                   </th>
                   <td className="py-3 px-4 sticky left-0 z-10 text-gray-700 font-semibold">
-                    {payment.paymentName}
+                    {payment?.paymentName}
                   </td>
                   <td className="py-3 px-4 font-semibold text-gray-700">
-                    {formatDate(payment.paidAt)}
+                    {formatDate(payment?.paidAt)}
                   </td>
                   <td className="py-3 px-4 font-semibold text-gray-700">
-                    {payment.transactionId}
-                  </td>
-                  <td className="py-3 px-4 text-gray-600">
-                    {payment.trackingId || "N/A"}
+                    {payment?.transactionId}
                   </td>
                 </tr>
               ))}

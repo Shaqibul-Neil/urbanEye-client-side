@@ -1,19 +1,41 @@
+import IssueMetrics from "../../../components/dashboard/issue metrics/IssueMetrics";
 import AdminPaymentChart from "../../../components/dashboard/payment chart/AdminPaymentChart";
 import ErrorPage from "../../../components/error/error page/ErrorPage";
 import Loading from "../../../components/loading/Loading";
+import useIssueAggregate from "../../../hooks/citizen related/useIssueAggregate";
 import useAggregatePayment from "../../../hooks/payment related/useAggregatePayment";
+import { getBg } from "../../../utilities/getStatusBadge";
 
 const CitizenDashboard = () => {
   //total payments data aggregation
   const { paymentStats, paymentLoading, paymentError } = useAggregatePayment();
-  if (paymentLoading) return <Loading />;
-  if (paymentError) return <ErrorPage />;
+  const { statusStats, isLoading, isError } = useIssueAggregate();
+  const issueCount = statusStats?.reduce(
+    (accu, stats) => accu + stats.count,
+    0
+  );
+  if (paymentLoading || isLoading) return <Loading />;
+  if (paymentError || isError) return <ErrorPage />;
   return (
-    <div className="grid lg:grid-cols-4 gap-8">
+    <div className="grid lg:grid-cols-4 gap-4 px-5">
       {/* Left Side Stats */}
       <div className="lg:col-span-3 space-y-8">
         {/* Issue Status Cards */}
+        {/* Issue Status Cards */}
+        <div className="bg-white p-6 rounded-3xl space-y-4">
+          <h2 className="text-lg text-secondary font-bold">
+            Issue Metrics :{" "}
+            <span className="font-normal">
+              Total Submitted Issues: {issueCount}
+            </span>
+          </h2>
 
+          <div className="grid md:grid-cols-3 gap-2">
+            {statusStats.map((stat, i) => (
+              <IssueMetrics key={i} stat={stat} />
+            ))}
+          </div>
+        </div>
         {/* Payments Grid */}
         <div className="col-span-3">
           <AdminPaymentChart paymentStats={paymentStats} />

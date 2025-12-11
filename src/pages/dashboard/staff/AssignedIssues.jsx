@@ -119,7 +119,11 @@ const AssignedIssues = () => {
                 <tr
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${getBg(
                     issue?.status
-                  )} ${issue?.priority === "high" && "animate-pulse"}`}
+                  )} ${
+                    issue?.priority === "high" &&
+                    issue?.status === "pending" &&
+                    "animate-pulse"
+                  }`}
                   key={issue?._id}
                 >
                   <th

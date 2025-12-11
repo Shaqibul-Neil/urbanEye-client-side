@@ -40,7 +40,7 @@ const DashboardLayout = () => {
         {/* Icons or anything you want 
       </aside> */}
       {/* Sidebar */}
-      <div className="drawer lg:drawer-open">
+      <div className="drawer xl:drawer-open">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Navbar */}
@@ -49,7 +49,7 @@ const DashboardLayout = () => {
               <label
                 htmlFor="my-drawer-4"
                 aria-label="open sidebar"
-                className="btn btn-square btn-primary lg:hidden btn-sm"
+                className="btn btn-square btn-primary xl:hidden btn-sm"
               >
                 {/* Sidebar toggle icon */}
                 <svg
@@ -60,14 +60,14 @@ const DashboardLayout = () => {
                   strokeWidth="2"
                   fill="none"
                   stroke="currentColor"
-                  className="my-1.5 inline-block size-6 lg:hidden"
+                  className="my-1.5 inline-block size-6 xl:hidden"
                 >
                   <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
                   <path d="M9 4v16"></path>
                   <path d="M14 10l2 2l-2 2"></path>
                 </svg>
               </label>
-              <h2 className="md:text-4xl text-3xl text-primary font-extrabold">
+              <h2 className="text-3xl text-secondary tracking-tighter font-extrabold">
                 {" "}
                 Welcome Back, {user?.displayName}
               </h2>
@@ -86,7 +86,7 @@ const DashboardLayout = () => {
             </div>
           </nav>
           {/* Page content here */}
-          <main className="my-6 md:px-6 px-2">
+          <main className="my-6">
             <Outlet />
           </main>
         </div>

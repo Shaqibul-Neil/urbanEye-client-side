@@ -20,7 +20,7 @@ export const getStatusBadge = (status) => {
 export const getBg = (status) => {
   switch (status) {
     case "pending":
-      return "bg-yellow-50/50";
+      return "#fefce8";
     case "in-progress":
       return "bg-blue-50";
     case "working":
@@ -52,5 +52,22 @@ export const getBorder = (status) => {
       return "border-l-red-400";
     default:
       return "bg-gray-50";
+  }
+};
+
+export const getBar = (status) => {
+  switch (status) {
+    case "pending":
+      return "#fbbf24"; // deep yellow
+    case "in-progress":
+      return "#60a5fa"; // deep blue
+    case "working":
+      return "#06b6d4"; // deep cyan
+    case "resolved":
+      return "#16a34a"; // deep green
+    case "closed":
+      return "#9ca3af"; // deep gray
+    default:
+      return "#9ca3af"; // default = gray
   }
 };

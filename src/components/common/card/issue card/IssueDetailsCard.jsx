@@ -1,6 +1,6 @@
 import { MdEmail } from "react-icons/md";
 import { MapPin, ThumbsUp } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { getStatusBadge } from "../../../../utilities/getStatusBadge";
@@ -14,12 +14,14 @@ import VerticalTimeline from "../../timeline/VerticalTimeline";
 import { FaTasks } from "react-icons/fa";
 import Heading from "../../heading/Heading";
 import StatusCard from "../status card/StatusCard";
+import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
 
 const IssueDetailsCard = ({ issue }) => {
   const { user } = useAuth();
   const editIssueRef = useRef();
   const [currentIssue, setCurrentIssue] = useState({});
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   //delete mutation
   const { mutateAsync: deleteIssue } = useDeleteIssue();
   const { myInfo } = useMyInfo();
@@ -79,16 +81,41 @@ const IssueDetailsCard = ({ issue }) => {
     }
   };
   //upvote
-  const handleUpvote = (issue) => {
+  const handleUpvote = async (issue) => {
+    //not logged in
     if (!user) {
       navigate("/signin");
       return;
     }
+    //if issuer tries to upvote on his posted issue
     if (user?.email === issue?.userEmail) {
       return Swal.fire({
         position: "center",
         icon: "error",
         title: "Your can not upvote on your issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    //if issue is already resolved
+    if (issue?.status === "resolved" || issue?.status === "closed") {
+      return Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Your can not upvote on a resolved issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    //if same user upvote on the same issue
+    const { data } = await axiosSecure.get(
+      `/payments/check-upvote?issueId=${issue._id}&citizenEmail=${user.email}`
+    );
+    if (data.alreadyUpvoted) {
+      return Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "You have already paid for this issue",
         showConfirmButton: false,
         timer: 1500,
       });
