@@ -10,6 +10,7 @@ import {
 } from "recharts";
 
 const AdminPaymentChart = ({ paymentStats }) => {
+  console.log(paymentStats);
   // Prepare data
   const chartData = paymentStats?.dateWise?.map((item) => ({
     date: item._id,
