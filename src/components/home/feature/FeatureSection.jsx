@@ -25,7 +25,7 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="lg:py-24 py-16 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Content */}
         <div className="max-w-md space-y-4">
@@ -34,7 +34,7 @@ export default function FeaturesSection() {
             Our Public Reporting System
           </h2>
 
-          <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+          <p className="text-gray-600 mb-6 leading-relaxed">
             A powerful and transparent platform where citizens can report
             issues, track progress, and help improve their city with ease.
           </p>

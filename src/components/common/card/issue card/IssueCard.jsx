@@ -115,7 +115,6 @@ const IssueCard = ({ issue }) => {
           </p>
 
           <div className="icon absolute bottom-1.5 right-1.5 w-24 h-24 rounded-tl-[50%] tooltip">
-            <div></div>
             <div className="tooltip-content">
               <div className="animate-bounce text-white text-sm font-black">
                 View Details
