@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Loading from "../../../components/loading/Loading";
-import ErrorPage from "../../../components/error/error page/ErrorPage";
-import { getBg } from "../../../utilities/getStatusBadge";
 import AdminPaymentChart from "../../../components/dashboard/payment chart/AdminPaymentChart";
 import useAggregatePayment from "../../../hooks/payment related/useAggregatePayment";
 import useIssueAggregate from "../../../hooks/citizen related/useIssueAggregate";
 import IssueMetrics from "../../../components/dashboard/issue metrics/IssueMetrics";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const AdminDashboard = () => {
   const axiosSecure = useAxiosSecure();
@@ -48,7 +47,7 @@ const AdminDashboard = () => {
   if (isLoading || paymentLoading || latestLoading || latestUsersLoading)
     return <Loading />;
   if (isError || paymentError || latestError || latestUsersError)
-    return <ErrorPage />;
+    return <ErrorComponent />;
   return (
     <div className="grid lg:grid-cols-4 gap-4 px-5">
       {/* Left Side Stats */}

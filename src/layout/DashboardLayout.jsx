@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import useRole from "../hooks/auth & role/useRole";
+import Loading from "../components/loading/Loading";
 
 const DashboardLayout = () => {
   const { user, signOutUser, setUser } = useAuth();
@@ -32,7 +33,7 @@ const DashboardLayout = () => {
       toast.error(error.message);
     }
   };
-  if (roleLoading) return <p>Role Loading....</p>;
+  if (roleLoading) return <Loading />;
   return (
     <div className="bg-base-200">
       {/* Static left bar

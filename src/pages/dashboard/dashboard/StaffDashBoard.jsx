@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import useAuth from "../../../hooks/auth & role/useAuth";
 import Loading from "../../../components/loading/Loading";
-import ErrorPage from "../../../components/error/error page/ErrorPage";
 import IssueMetrics from "../../../components/dashboard/issue metrics/IssueMetrics";
 import StaffIssueChart from "../../../components/dashboard/staff chart/StaffIssueChart";
 import StaffPieChart from "../../../components/dashboard/staff chart/StaffIssuePieChart";
 import StaffLatestAssign from "../../../components/dashboard/staff chart/StaffLatestAssign";
 import { formatDate } from "../../../utilities/formatDate";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const StaffDashBoard = () => {
   const axiosSecure = useAxiosSecure();
@@ -60,7 +60,7 @@ const StaffDashBoard = () => {
   });
   console.log(resolvedTasks);
   if (isLoading || taskLoading || resolveLoading) return <Loading />;
-  if (isError || taskError || resolveError) return <ErrorPage />;
+  if (isError || taskError || resolveError) return <ErrorComponent />;
   return (
     <div className="grid lg:grid-cols-4 gap-4 px-5">
       {/* Left Side Stats */}

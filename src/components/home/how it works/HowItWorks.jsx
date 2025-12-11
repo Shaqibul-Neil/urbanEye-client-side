@@ -1,5 +1,4 @@
 import { UserPlus, FileText, Eye, MapPin } from "lucide-react";
-import Heading from "../../common/heading/Heading";
 const features = [
   {
     icon: <UserPlus className="lg:w-7 w-5 h-5 lg:h-7 text-indigo-600" />,

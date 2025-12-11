@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import useIssueDetails from "../../hooks/citizen related/useIssueDetails";
 import Loading from "../../components/loading/Loading";
-import ErrorPage from "../../components/error/error page/ErrorPage";
 import IssueDetailsCard from "../../components/common/card/issue card/IssueDetailsCard";
+import ErrorComponent from "../../components/error/error page/ErrorComponent";
 
 const IssueDetails = () => {
   const { id } = useParams();
@@ -10,10 +10,9 @@ const IssueDetails = () => {
   const { issue, isLoading, isError } = useIssueDetails(id);
 
   if (isLoading) return <Loading />;
-  if (isError) return <ErrorPage />;
+  if (isError) return <ErrorComponent />;
   return (
     <div>
-      <title>UrbanEye - Issue Details</title>
       <div className="container mx-auto">
         {/* main content */}
         <IssueDetailsCard issue={issue} />

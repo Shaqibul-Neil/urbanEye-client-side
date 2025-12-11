@@ -58,7 +58,6 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
 
       const res = await axiosSecure.patch("users/my-profile", profileData);
       profileUpdateRef.current.close();
-      console.log(res);
       if (res?.data?.profile?.modifiedCount) {
         await Swal.fire({
           position: "center",
@@ -69,7 +68,6 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
         });
       }
     } catch (error) {
-      console.log(error);
       toast.error(error?.message || "Something went wrong");
     } finally {
       setLoading(false);

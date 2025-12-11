@@ -1,10 +1,9 @@
 import IssueMetrics from "../../../components/dashboard/issue metrics/IssueMetrics";
 import AdminPaymentChart from "../../../components/dashboard/payment chart/AdminPaymentChart";
-import ErrorPage from "../../../components/error/error page/ErrorPage";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 import Loading from "../../../components/loading/Loading";
 import useIssueAggregate from "../../../hooks/citizen related/useIssueAggregate";
 import useAggregatePayment from "../../../hooks/payment related/useAggregatePayment";
-import { getBg } from "../../../utilities/getStatusBadge";
 
 const CitizenDashboard = () => {
   //total payments data aggregation
@@ -15,7 +14,7 @@ const CitizenDashboard = () => {
     0
   );
   if (paymentLoading || isLoading) return <Loading />;
-  if (paymentError || isError) return <ErrorPage />;
+  if (paymentError || isError) return <ErrorComponent />;
   return (
     <div className="grid lg:grid-cols-4 gap-4 px-5">
       {/* Left Side Stats */}

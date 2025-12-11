@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import imageUpload from "../../utilities/imageUpload";
 import useStaffUpdate from "../../hooks/admin related/useStaffUpdate";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const UpdateStuffModal = ({
   staffUpdateModalRef,
@@ -35,14 +36,12 @@ const UpdateStuffModal = ({
   const { mutateAsync: staffUpdate } = useStaffUpdate();
   const handleUpdateStuff = async (data) => {
     try {
-      console.log("data", data);
       const staffData = {
         staffName: data.staffName,
         staffEmail: data.staffEmail,
         staffPhone: data.staffPhone,
         staffId: currentStaff._id,
       };
-      console.log("staffData", staffData);
       const res = await staffUpdate(staffData);
       staffUpdateModalRef.current.close();
       if (res?.staff?.modifiedCount) {
@@ -55,7 +54,7 @@ const UpdateStuffModal = ({
         });
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
   return (

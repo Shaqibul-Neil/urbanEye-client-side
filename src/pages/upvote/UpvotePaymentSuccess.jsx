@@ -1,6 +1,6 @@
 import { CheckCircle2, Download, Home, Compass } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
 import toast from "react-hot-toast";
 import Loading from "../../components/loading/Loading";
@@ -13,7 +13,6 @@ const UpvotePaymentSuccess = () => {
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
     if (!sessionId) return;
-
     setLoading(true);
     axiosSecure
       .post(
@@ -58,7 +57,7 @@ const UpvotePaymentSuccess = () => {
         <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-emerald-400/20 blur-3xl rounded-full animate-pulse" />
 
         {/* main card */}
-        <div className="relative bg-white/80 backdrop-blur-xl border border-gray-200 rounded-3xl shadow-2xl overflow-hidden">
+        <div className="relative">
           {/* top bar */}
           <div className="flex justify-between items-center px-6 py-4 border-b">
             <div className="flex items-center gap-2">
@@ -79,7 +78,7 @@ const UpvotePaymentSuccess = () => {
             {/* headline */}
             <div className="text-center space-y-2">
               <h1 className="text-4xl font-extrabold text-secondary tracking-tight">
-                Thank you for your support 🎉
+                Thank you for your support
               </h1>
               <p className="text-gray-600">
                 Your payment has been processed successfully.
@@ -105,9 +104,7 @@ const UpvotePaymentSuccess = () => {
 
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Transaction ID</span>
-                <span className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
-                  {receipt?.transactionId}
-                </span>
+                <span className="font-semibold">{receipt?.transactionId}</span>
               </div>
 
               <div className="flex justify-between text-sm">
@@ -119,7 +116,7 @@ const UpvotePaymentSuccess = () => {
                 <span className="text-lg font-semibold text-secondary">
                   Total Paid
                 </span>
-                <span className="text-3xl font-extrabold text-emerald-600">
+                <span className="text-3xl font-extrabold text-primary">
                   ${receipt?.amount}
                 </span>
               </div>
@@ -127,15 +124,21 @@ const UpvotePaymentSuccess = () => {
 
             {/* actions */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <button className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-white font-semibold shadow-lg hover:scale-105 transition">
+              <Link
+                to={"/"}
+                className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-white font-semibold shadow-lg hover:scale-105 transition"
+              >
                 <Home className="w-4 h-4" />
                 Back to Home
-              </button>
+              </Link>
 
-              <button className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition">
+              <Link
+                to={"/all-issues"}
+                className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition"
+              >
                 <Compass className="w-4 h-4" />
                 Explore More Issues
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -4,13 +4,14 @@ import useAuth from "../../../hooks/auth & role/useAuth";
 import { formatDate } from "../../../utilities/formatDate";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
+import Loading from "../../../components/loading/Loading";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const MyPayments = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {
     data: payments = [],
-    refetch,
     isLoading,
     isError,
   } = useQuery({
@@ -22,6 +23,8 @@ const MyPayments = () => {
       return res?.data?.payment;
     },
   });
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorComponent />;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">

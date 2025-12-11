@@ -6,7 +6,6 @@ import { FaXTwitter } from "react-icons/fa6";
 const Contact = () => {
   return (
     <div>
-      <title>ShareBite - Contact</title>
       <div className="max-w-6xl mx-auto py-16 space-y-12">
         {/* Heading */}
         <h2 className="font-extrabold text-primary tracking-tight text-4xl md:text-5xl">

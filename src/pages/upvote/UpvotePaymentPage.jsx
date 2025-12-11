@@ -22,7 +22,7 @@ const paymentMethods = [
   },
 ];
 
-const UpvotePaymentPage = ({ totalAmount = 100, onPay }) => {
+const UpvotePaymentPage = ({ totalAmount = 100 }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [selected, setSelected] = useState("card");
@@ -31,7 +31,6 @@ const UpvotePaymentPage = ({ totalAmount = 100, onPay }) => {
 
   const handleUpvotePay = async (issue) => {
     if (!selected) return;
-    onPay && onPay(selected);
     try {
       const paymentInfo = {
         paymentName: issue?.title,
@@ -117,7 +116,7 @@ const UpvotePaymentPage = ({ totalAmount = 100, onPay }) => {
           </div>
           <button
             onClick={() => handleUpvotePay(issue)}
-            className="w-full py-4 bg-primary hover:bg-indigo-700 text-white font-semibold rounded-2xl transition-colors duration-200 shadow-lg"
+            className="w-full py-4 border-2 border-primary hover:bg-primary text-primary font-semibold rounded-2xl transition-colors duration-200 shadow-lg cursor-pointer text-xl hover:text-white"
           >
             Pay Now
           </button>

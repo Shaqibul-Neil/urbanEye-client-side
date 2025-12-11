@@ -7,9 +7,7 @@ const statusList = ["pending", "in-progress", "working", "resolved", "closed"];
 const ChangeStatusModal = ({ modalObj }) => {
   const { selectedIssue, statusModalRef, refetchAssignIssues } = modalObj;
   const [status, setStatus] = useState("");
-  console.log(selectedIssue);
   const currentStatusIndex = statusList.indexOf(selectedIssue?.status);
-
   const { mutateAsync: statusChange } = useIssueStatusChange();
 
   const handleStatus = async () => {

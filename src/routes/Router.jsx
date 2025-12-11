@@ -27,26 +27,46 @@ import Contact from "../pages/contact/Contact";
 import IssueDetails from "../pages/all issues/IssueDetails";
 import UpvotePaymentPage from "../pages/upvote/UpvotePaymentPage";
 import UpvotePaymentSuccess from "../pages/upvote/UpvotePaymentSuccess";
+import ErrorPage from "../components/error/error page/ErrorPage";
+import RouteTitle from "./RouteTitle";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
+    errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Home /> },
+      {
+        index: true,
+        element: (
+          <RouteTitle title="Home">
+            <Home />
+          </RouteTitle>
+        ),
+      },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <RouteTitle title="About">
+            <About />
+          </RouteTitle>
+        ),
       },
       {
         path: "/all-issues",
-        element: <AllIssues />,
+        element: (
+          <RouteTitle title="All Issues">
+            <AllIssues />
+          </RouteTitle>
+        ),
       },
       {
         path: "/issue/:id",
         element: (
           <PrivateRoutes>
-            <IssueDetails />
+            <RouteTitle title="Issue Details">
+              <IssueDetails />
+            </RouteTitle>
           </PrivateRoutes>
         ),
       },
@@ -54,17 +74,27 @@ const router = createBrowserRouter([
         path: "/upvote-payment/:id",
         element: (
           <PrivateRoutes>
-            <UpvotePaymentPage />
+            <RouteTitle title="Upvote Payment">
+              <UpvotePaymentPage />
+            </RouteTitle>
           </PrivateRoutes>
         ),
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <RouteTitle title="Contact">
+            <Contact />
+          </RouteTitle>
+        ),
       },
       {
         path: "/upvote-payment-success",
-        element: <UpvotePaymentSuccess />,
+        element: (
+          <RouteTitle title="Upvote Payment Success">
+            <UpvotePaymentSuccess />
+          </RouteTitle>
+        ),
       },
     ],
   },
@@ -74,15 +104,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/signin",
-        element: <SignIn />,
+        element: (
+          <RouteTitle title="Sign In">
+            <SignIn />
+          </RouteTitle>
+        ),
       },
       {
         path: "/signup",
-        element: <SignUp />,
+        element: (
+          <RouteTitle title="Sign Up">
+            <SignUp />
+          </RouteTitle>
+        ),
       },
       {
         path: "/forget-password",
-        element: <ForgetPassword />,
+        element: (
+          <RouteTitle title="ForgetPassword">
+            <ForgetPassword />
+          </RouteTitle>
+        ),
       },
     ],
   },
@@ -94,13 +136,22 @@ const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
-      { index: true, element: <Dashboard /> },
+      {
+        index: true,
+        element: (
+          <RouteTitle title="Dashboard">
+            <Dashboard />
+          </RouteTitle>
+        ),
+      },
       //Admin Routes
       {
         path: "all-reported-issues",
         element: (
           <AdminRoutes>
-            <AllReportedIssues />
+            <RouteTitle title="Admin - All Reported Issues">
+              <AllReportedIssues />
+            </RouteTitle>
           </AdminRoutes>
         ),
       },
@@ -108,7 +159,9 @@ const router = createBrowserRouter([
         path: "manage-staff",
         element: (
           <AdminRoutes>
-            <ManageStaff />
+            <RouteTitle title="Admin - Manage Staff">
+              <ManageStaff />
+            </RouteTitle>
           </AdminRoutes>
         ),
       },
@@ -116,7 +169,9 @@ const router = createBrowserRouter([
         path: "manage-citizens",
         element: (
           <AdminRoutes>
-            <ManageCitizens />
+            <RouteTitle title="Admin - Manage Citizens">
+              <ManageCitizens />
+            </RouteTitle>
           </AdminRoutes>
         ),
       },
@@ -124,7 +179,9 @@ const router = createBrowserRouter([
         path: "payments-history",
         element: (
           <AdminRoutes>
-            <PaymentsHistory />
+            <RouteTitle title="Admin - Payments History">
+              <PaymentsHistory />
+            </RouteTitle>
           </AdminRoutes>
         ),
       },
@@ -133,7 +190,9 @@ const router = createBrowserRouter([
         path: "assigned-issues",
         element: (
           <StaffRoutes>
-            <AssignedIssues />
+            <RouteTitle title="Staff - AssignedIssues">
+              <AssignedIssues />
+            </RouteTitle>
           </StaffRoutes>
         ),
       },
@@ -142,7 +201,9 @@ const router = createBrowserRouter([
         path: "my-reported-issues",
         element: (
           <CitizenRoutes>
-            <ReportedIssues />
+            <RouteTitle title="Citizen - Reported Issues">
+              <ReportedIssues />
+            </RouteTitle>
           </CitizenRoutes>
         ),
       },
@@ -150,7 +211,9 @@ const router = createBrowserRouter([
         path: "report-issues",
         element: (
           <CitizenRoutes>
-            <ReportIssues />
+            <RouteTitle title="Citizen - Report Issues">
+              <ReportIssues />
+            </RouteTitle>
           </CitizenRoutes>
         ),
       },
@@ -158,17 +221,27 @@ const router = createBrowserRouter([
         path: "my-payments-history",
         element: (
           <CitizenRoutes>
-            <MyPayments />
+            <RouteTitle title="Citizen - My Payments">
+              <MyPayments />
+            </RouteTitle>
           </CitizenRoutes>
         ),
       },
       {
         path: "my-profile",
-        element: <Profile />,
+        element: (
+          <RouteTitle title="My Profile">
+            <Profile />
+          </RouteTitle>
+        ),
       },
       {
         path: "payment-success",
-        Component: PaymentSuccess,
+        element: (
+          <RouteTitle title="Payment Success">
+            <PaymentSuccess />
+          </RouteTitle>
+        ),
       },
     ],
   },

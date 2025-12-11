@@ -7,7 +7,7 @@ const AboutSection = () => {
     <div className="grid grid-cols-1 md:grid-cols-2">
       {/* Left Side */}
       <div className="relative">
-        <div className="">
+        <div>
           <img
             src={skyline}
             alt=""

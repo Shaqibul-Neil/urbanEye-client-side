@@ -9,6 +9,8 @@ import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import { getBg, getStatusBadge } from "../../../utilities/getStatusBadge";
 import useIssueReject from "../../../hooks/admin related/useIssueReject";
 import Swal from "sweetalert2";
+import Loading from "../../../components/loading/Loading";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const AllReportedIssues = () => {
   const [searchText, setSearchText] = useState();
@@ -89,8 +91,8 @@ const AllReportedIssues = () => {
     }
   };
 
-  if (staffLoading || isLoading) return <p>Loading...</p>;
-  if (isError || staffError) return <p>something went wrong</p>;
+  if (staffLoading || isLoading) return <Loading />;
+  if (isError || staffError) return <ErrorComponent />;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import imageUpload from "../../utilities/imageUpload";
 import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
   const axiosSecure = useAxiosSecure();
@@ -38,8 +39,9 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
           timer: 2500,
         });
       }
+      reset();
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
   return (

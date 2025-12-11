@@ -11,13 +11,13 @@ import {
   getStatusBadge,
 } from "../../../utilities/getStatusBadge";
 import Loading from "../../../components/loading/Loading";
-import ErrorPage from "../../../components/error/error page/ErrorPage";
 import { Link } from "react-router";
 import {
   PriorityFiltration,
   StatusFiltration,
 } from "../../../components/common/sidebarLinks/Filtration";
 import useFilteredIssues from "../../../hooks/citizen related/useFilteredIssue";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const ReportedIssues = () => {
   const [filters, setFilters] = useState({
@@ -103,7 +103,7 @@ const ReportedIssues = () => {
   };
   const filtrationProps = { filters: filters, onChange: handleCheckboxChange };
   if (isLoading) return <Loading />;
-  if (isError) return <ErrorPage />;
+  if (isError) return <ErrorComponent />;
   return (
     <div className="px-5">
       <div className="space-y-12">

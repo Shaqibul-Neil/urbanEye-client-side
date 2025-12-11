@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../hooks/auth & role/useAxios";
-import { useNavigate } from "react-router";
-
 import { Search } from "lucide-react";
 import Loading from "../../components/loading/Loading";
-import ErrorPage from "../../components/error/error page/ErrorPage";
-import useAuth from "../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
 import SubHeading from "../../components/common/heading/SubHeading";
 import {
@@ -14,6 +10,7 @@ import {
 } from "../../components/common/sidebarLinks/Filtration";
 import IssueCard from "../../components/common/card/issue card/IssueCard";
 import Heading from "../../components/common/heading/Heading";
+import ErrorComponent from "../../components/error/error page/ErrorComponent";
 
 const AllIssues = () => {
   const axiosInstance = useAxios();
@@ -93,7 +90,7 @@ const AllIssues = () => {
   const filtrationProps = { filters: filters, onChange: handleCheckboxChange };
 
   if (loading) return <Loading />;
-  if (error) return <ErrorPage />;
+  if (error) return <ErrorComponent />;
 
   return (
     <div className="py-12">

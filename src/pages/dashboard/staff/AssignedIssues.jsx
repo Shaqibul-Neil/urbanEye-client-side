@@ -11,7 +11,7 @@ import {
   getStatusBadge,
 } from "../../../utilities/getStatusBadge";
 import Loading from "../../../components/loading/Loading";
-import ErrorPage from "../../../components/error/error page/ErrorPage";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const AssignedIssues = () => {
   const [filters, setFilters] = useState({ status: "", priority: "" });
@@ -36,7 +36,7 @@ const AssignedIssues = () => {
   };
 
   if (issuesLoading) return <Loading />;
-  if (issuesError) return <ErrorPage />;
+  if (issuesError) return <ErrorComponent />;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-8">

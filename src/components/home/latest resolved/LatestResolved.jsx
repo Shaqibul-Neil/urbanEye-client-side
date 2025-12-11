@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../../hooks/auth & role/useAxios";
 import Loading from "../../loading/Loading";
-import ErrorPage from "../../error/error page/ErrorPage";
-
 import IssueCard from "../../common/card/issue card/IssueCard";
+import ErrorComponent from "../../error/error page/ErrorComponent";
 
 const LatestResolved = () => {
   const axiosInstance = useAxios();
@@ -20,7 +19,7 @@ const LatestResolved = () => {
   });
 
   if (isLoading) return <Loading />;
-  if (isError) return <ErrorPage />;
+  if (isError) return <ErrorComponent />;
   return (
     <div className="space-y-16">
       {/* Title and subtitle */}

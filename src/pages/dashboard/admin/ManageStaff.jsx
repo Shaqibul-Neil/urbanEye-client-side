@@ -8,6 +8,8 @@ import { Delete, PencilOff } from "lucide-react";
 import useStaffDelete from "../../../hooks/admin related/useStaffDelete";
 import Swal from "sweetalert2";
 import UpdateStuffModal from "../../../components/modals/UpdateStuffModal";
+import Loading from "../../../components/loading/Loading";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const ManageStaff = () => {
   const staffModalRef = useRef();
@@ -63,6 +65,8 @@ const ManageStaff = () => {
     setCurrentStaff(staff);
     staffUpdateModalRef.current.showModal();
   };
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorComponent />;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">

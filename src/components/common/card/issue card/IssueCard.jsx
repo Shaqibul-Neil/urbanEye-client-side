@@ -10,7 +10,7 @@ import useRole from "../../../../hooks/auth & role/useRole";
 const IssueCard = ({ issue }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { role } = useRole();
+  //const { role } = useRole();
 
   const axiosSecure = useAxiosSecure();
   //upvote
@@ -79,7 +79,6 @@ const IssueCard = ({ issue }) => {
       }
     });
   };
-  console.log(issue);
 
   return (
     <div className="w-full max-w-sm" key={issue._id}>

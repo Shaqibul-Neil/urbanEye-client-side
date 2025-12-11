@@ -6,13 +6,20 @@ import SubHeading from "../../../components/common/heading/SubHeading";
 import useBlockUnblockUser from "../../../hooks/admin related/useBlockUnblockUser";
 import Swal from "sweetalert2";
 import { CircleCheckBig, PencilOff } from "lucide-react";
+import toast from "react-hot-toast";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
+import Loading from "../../../components/loading/Loading";
 
 const ManageCitizens = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
   // fetching all users data
-  const { data: users = [] } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["all-users", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -47,10 +54,11 @@ const ManageCitizens = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
-
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorComponent />;
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       {/* Title Section */}
