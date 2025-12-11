@@ -20,6 +20,14 @@
   font-family: "Urbanist", sans-serif;
 }
 
+/* IMAGE CLIP */
+.clip-top-left {
+  clip-path: polygon(0% 0, 20% 0, 100% 100%, 0 100%, 0 20%);
+}
+.clip-bottom-left {
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%, 0 20%);
+}
+
 /* ISSUES CARD */
 
 .card-inner .box .icon {

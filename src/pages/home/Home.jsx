@@ -4,31 +4,38 @@ import CitizenFeedback from "../../components/home/feedback/CitizenFeedback";
 import HowItWorks from "../../components/home/how it works/HowItWorks";
 import LatestResolved from "../../components/home/latest resolved/LatestResolved";
 import { Star } from "lucide-react";
+import AboutSection from "../../components/home/about/AboutSection";
 
 const Home = () => {
   return (
     <div>
+      {/* About Us Section */}
+      <section className="container mx-auto lg:py-16 md:py-12 py-8">
+        <AboutSection />
+      </section>
       {/* Latest Resolved Section */}
-      <div className="container mx-auto py-28">
+      <section className="container mx-auto lg:py-16 md:py-12 py-8">
         <LatestResolved />
-      </div>
+      </section>
 
       {/* Feature Section */}
-      <div className="bg-linear-to-br from-white via-[#f8f9ff] to-white">
+      <section className="bg-linear-to-br from-white via-[#f8f9ff] to-white">
         <div className="container mx-auto">
           <FeaturesSection />
         </div>
-      </div>
+      </section>
 
       {/* How It works Section */}
-      <div className="container mx-auto lg:py-16 md:py-12 py-8">
+      <section className="container mx-auto lg:pt-16 md:pt-12 pt-8">
         <HowItWorks />
-      </div>
+      </section>
 
       {/* Testimonials */}
-      <div className="container mx-auto">
-        <CitizenFeedback />
-      </div>
+      <section className="bg-linear-to-br from-white via-[#f8f9ff] to-white lg:py-24 md:py-16 py-8">
+        <div className="container mx-auto">
+          <CitizenFeedback />
+        </div>
+      </section>
     </div>
   );
 };
