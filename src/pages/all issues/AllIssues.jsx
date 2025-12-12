@@ -115,7 +115,7 @@ const AllIssues = () => {
               label={`Total issue found : ${totalIssue}`}
               className="underline text-primary"
             />
-            <div className="flex gap-4 items-center justify-center">
+            <div className="flex gap-4 items-center justify-center md:flex-row flex-col">
               {/* Search Section */}
               <div className="w-64">
                 <div className="flex md:justify-end justify-center">
@@ -134,8 +134,8 @@ const AllIssues = () => {
                   </div>
                 </div>
               </div>
-              {/* Filter Section */}
 
+              {/* Filter Section */}
               <div className="drawer w-24">
                 <input
                   id="my-drawer-3"
@@ -182,8 +182,8 @@ const AllIssues = () => {
             </div>
           </div>
         </div>
-        {/* Issues and Filter Grid */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
+        {/* Issues Grid */}
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
           {/* Issues */}
           <div className="lg:col-span-4 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
             {issues.map((issue) => (

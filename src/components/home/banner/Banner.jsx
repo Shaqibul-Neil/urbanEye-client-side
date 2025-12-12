@@ -9,7 +9,7 @@ const Banner = () => {
   return (
     <div className="relative bg-base-200 pt-12 lg:pt-0">
       <h1
-        className="transform text-center text-[72px] lg:text-[270px] md:text-[200px] font-black opacity-100 pointer-events-none lg:tracking-[58px] tracking-tighter leading-none bg-linear-to-b from-white to-[#e5edf0]
+        className="transform text-center text-[88px] lg:text-[270px] md:text-[200px] font-black opacity-100 pointer-events-none lg:tracking-[58px] tracking-tighter leading-none bg-linear-to-b from-white to-[#e5edf0]
     bg-clip-text text-transparent lg:pl-9 drop-shadow-[3px_3px_0px_rgba(0,0,0,0.15)]"
       >
         URBANi
@@ -18,7 +18,7 @@ const Banner = () => {
       {/* lottie and globe */}
       {/* lg screen block*/}
       <div className="lg:grid lg:grid-cols-4 hidden relative px-8 gap-16 pb-24 ">
-        {/* Left */}
+        {/* Left Globe*/}
         <div className="lg:col-span-1 relative">
           <div className="relative">
             <img
@@ -42,7 +42,7 @@ const Banner = () => {
           </div>
           <div className="h-2 w-24 bg-white absolute -bottom-15 left-8 left-overlay"></div>
         </div>
-        {/* Middle */}
+        {/* Middle Lottie*/}
         <div className="lg:col-span-2">
           {/* overlay / circles */}
           <div className="h-1 bg-blue-100 relative z-15 w-10/12 left-6 top-40 mx-auto"></div>{" "}
@@ -57,7 +57,7 @@ const Banner = () => {
             </div>{" "}
           </div>
           {/* 150k User */}
-          <div className="w-44 h-18 bg-blue-200 rounded-3xl absolute top-0 right-110 z-25 flex items-center justify-center">
+          <div className="w-44 h-18 bg-blue-200 rounded-3xl absolute top-0 right-110 z-25 flex items-center justify-center animate-elasticBounce">
             <div className="w-40 h-14 bg-white rounded-2xl flex items-center gap-2 px-2">
               <div className="avatar-group -space-x-6">
                 <div className="avatar">
@@ -95,8 +95,8 @@ const Banner = () => {
             className="w-160 h-100 absolute -top-20"
           />
         </div>
-        {/* Right */}
-        {/* Right Side */}
+
+        {/* Right Side Badge*/}
         <div className="lg:col-span-1 relative flex flex-col items-center justify-center px-4 space-y-6">
           <div className="h-2 w-24 bg-white right-overlay relative -right-19"></div>
           {/* Card Container */}
@@ -142,13 +142,12 @@ const Banner = () => {
         </div>
       </div>
 
-      {/* lottie and globe */}
       {/* sm and md screen*/}
       <div className="px-8 gap-16 pb-24 lg:hidden md:block">
-        {/* Middle */}
+        {/* Lottie */}
         <div className="relative">
           {/* 150k User */}
-          <div className="md:w-44 md:h-18 w-32 h-14 bg-blue-200 rounded-3xl absolute top-20 right-0 z-25 flex items-center justify-center">
+          <div className="md:w-44 md:h-18 w-32 h-14 bg-blue-200 rounded-3xl absolute top-20 right-0 z-25 flex items-center justify-center animate-elasticBounce">
             <div className="md:w-40 md:h-14 w-27 h-10 bg-white rounded-2xl flex items-center gap-2 px-2">
               <div className="avatar-group -space-x-6">
                 <div className="avatar">
@@ -184,10 +183,11 @@ const Banner = () => {
             <Lottie
               animationData={citySkyline}
               loop
-              className="w-full h-40 md:h-80"
+              className="w-70 h-50 md:w-full md:h-80"
             />
           </div>
         </div>
+        {/* Globe and Badge */}
         <div className="flex justify-between md:flex-row flex-col gap-4">
           {/* Left */}
           <div>
@@ -254,7 +254,7 @@ const Banner = () => {
       {/* Tags and Stats */}
       <div className="relative w-full bg-base-200 rounded-3xl lg:flex lg:justify-between pt-4">
         {/* Left */}
-        <div className="col-span-1 bg-white rounded-tl-3xl pt-10 lg:px-15 px-10 space-y-4 lg:w-[35%] w-full pb-10 lg:pb-0 lg:banner-clip-left">
+        <div className="col-span-1 bg-white rounded-tl-3xl pt-10 lg:px-15 px-10 space-y-4 lg:w-[35%] w-full pb-10 lg:pb-0 lg:[clip-path:polygon(0_0,89%_0,91%_13%,100%_68%,100%_100%,0_100%)]">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
               <MessageCircle className="h-6 w-6 text-white" />
@@ -282,7 +282,7 @@ const Banner = () => {
           </div>
         </div>
         {/* right */}
-        <div className="rounded-tr-3xl bg-white p-10 lg:pl-30 space-y-4 lg:w-[35%] lg:banner-clip-right">
+        <div className="rounded-tr-3xl bg-white p-10 lg:pl-30 space-y-4 lg:w-[35%] lg:[clip-path:polygon(100%_0,11%_0,8%_18%,0_70%,0_100%,100%_100%)]">
           <div className="w-64 border-secondary border rounded-full bg-base-200 h-10 flex justify-center items-center">
             <p className="text-secondary">Citizens Shaping Urban Life </p>
           </div>

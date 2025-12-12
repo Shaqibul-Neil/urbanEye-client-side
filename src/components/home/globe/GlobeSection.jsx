@@ -3,13 +3,13 @@ import globe from "../../../assets/globe.png";
 const GlobeSection = () => {
   return (
     <>
-      <div className="mx-auto w-[500px] bg-white rounded-full h-[450px] flex justify-center items-center absolute -top-60 left-1/2 -translate-x-1/2">
+      <div className="mx-auto md:w-[500px] w-full bg-white rounded-full md:h-[450px] h-84 flex justify-center items-center absolute -top-60 left-1/2 -translate-x-1/2">
         <div className="flex justify-center items-center">
           <img src={globe} alt="" className="w-full" />
         </div>
       </div>
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 lg:w-1/2 w-full space-y-4">
-        <h2 className="text-5xl text-white text-center font-bold">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 lg:w-1/2 w-full space-y-4 px-5">
+        <h2 className="md:text-5xl text-4xl text-white text-center font-bold">
           Urban Issues
           <br /> Shared Citizen Solutions
         </h2>

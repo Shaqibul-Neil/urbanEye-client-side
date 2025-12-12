@@ -11,28 +11,28 @@ const AboutSection = () => {
           <img
             src={skyline}
             alt=""
-            className="w-44 h-40 rounded-l-2xl object-cover absolute top-40 right-20 border-12 border-white z-10"
+            className="w-44 h-40 rounded-b-2xl object-cover absolute top-40 right-20 border-12 border-base-200 z-10"
           />
         </div>
         <div>
           <img
             src={ppl}
             alt=""
-            className="w-96 h-96 object-cover  overflow-hidden"
+            className="w-96 h-96 object-cover  overflow-hidden border-base-200 border-12 rounded-bl-2xl"
           />
         </div>
         <div>
           <img
             src={hand}
             alt=""
-            className="rounded-l-2xl w-64 h-64 absolute -top-20 right-50 border-12 border-white object-cover"
+            className="rounded-b-2xl w-64 h-64 absolute -top-20 right-50 border-12 border-base-200 object-cover"
           />
         </div>
         <div>
           <img
             src={student}
             alt=""
-            className="rounded-b-2xl w-48 h-48 absolute top-20 right-40 border-12 border-white object-cover"
+            className="rounded-b-2xl w-48 h-48 absolute top-20 right-40 border-12 border-base-200 object-cover"
           />
         </div>
       </div>
@@ -52,11 +52,6 @@ const AboutSection = () => {
           Our mission is simple: <strong>empower communities</strong> to
           actively improve their neighborhoods, ensure transparency, and make
           cities safer and cleaner for everyone.
-        </p>
-        <p className="pl-14 text-right text-gray-700 leading-relaxed">
-          By connecting citizens and authorities, URBANi transforms feedback
-          into action, giving every user a tangible impact on their city’s
-          development.
         </p>
       </div>
     </div>

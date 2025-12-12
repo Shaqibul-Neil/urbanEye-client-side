@@ -26,7 +26,7 @@ const Home = () => {
       </section>
 
       {/* Globe Section */}
-      <section className="container mx-auto lg:mt-40 lg:mb-20 md:mt-24 md:py-12 py-8 lg:px-6 bg-secondary lg:rounded-3xl relative h-[550px]">
+      <section className="container mx-auto lg:mt-40 lg:mb-20 md:mt-24 mt-40 md:py-12 py-8 lg:px-6 bg-secondary lg:rounded-3xl relative h-[550px]">
         <GlobeSection />
       </section>
 
@@ -38,12 +38,12 @@ const Home = () => {
       </section>
 
       {/* How It works Section */}
-      <section className="container mx-auto lg:pt-24 md:pt-20 pt-8 lg:px-6">
+      <section className="container mx-auto lg:pt-24 md:pt-20 py-16 lg:px-6">
         <HowItWorks />
       </section>
 
       {/* Testimonials */}
-      <section className="bg-linear-to-br from-white via-[#f8f9ff] to-white lg:py-24 md:py-16 lg:px-6 py-8">
+      <section className="bg-linear-to-br from-white via-[#f8f9ff] to-white lg:py-24 md:py-16 lg:px-6 py-16">
         <div className="container mx-auto">
           <CitizenFeedback />
         </div>

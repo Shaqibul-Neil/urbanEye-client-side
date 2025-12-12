@@ -5,13 +5,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // import required modules
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import SliderCard from "./SliderCard";
 
 const testimonials = [
   {
     rating: 5,
-    desc: "The platform made it incredibly easy to report and track issues in my area. Updates are real-time, and I feel confident that authorities respond quickly to each report.",
+    desc: "The platform made it incredibly easy to report and track issues in my area. Updates are real-time, and authorities respond quickly to each report.",
     image: "https://i.pravatar.cc/150?img=1",
     name: "Sarah J.",
     company: "City Council",
@@ -25,7 +25,7 @@ const testimonials = [
   },
   {
     rating: 5,
-    desc: "I appreciate the accountability this platform brings. Knowing that each issue is tracked encourages me to report problems actively and participate in better neighborhood management.",
+    desc: "I appreciate the accountability this platform brings. Knowing that each issue is tracked encourages me to report problems actively.",
     image: "https://i.pravatar.cc/150?img=3",
     name: "Lina R.",
     company: "Community Watch NGO",
@@ -56,7 +56,12 @@ const FeedbackSlider = () => {
         pagination={{
           clickable: true,
         }}
-        modules={[Pagination]}
+        loop={true}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
+        modules={[Pagination, Autoplay]}
         className="mySwiper h-full"
       >
         {" "}
