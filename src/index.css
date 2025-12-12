@@ -30,6 +30,12 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: rgba(255, 255, 255, 0);
 }
+.banner-clip-left {
+  clip-path: polygon(0 0, 89% 0, 91% 13%, 100% 68%, 100% 100%, 0 100%);
+}
+.banner-clip-right {
+  clip-path: polygon(100% 0, 11% 0, 8% 18%, 0 70%, 0 100%, 100% 100%);
+}
 
 @keyframes animate {
   0% {
@@ -293,11 +299,11 @@
 .left-overlay::before {
   position: absolute;
   content: "";
-  top: -110px;
+  top: -180px;
   left: 345px;
   background: transparent;
   width: 10px;
-  height: 115px;
+  height: 180px;
   transform: scaleX(0.2);
   transform-origin: top;
   border-top-left-radius: 1.25rem;
@@ -323,7 +329,7 @@
   right: 345px;
   background: transparent;
   width: 1px;
-  height: 90px;
+  height: 130px;
   transform: scaleX(0.2);
   transform-origin: top;
   border-top-left-radius: 1.25rem;
@@ -348,10 +354,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 105%;
-  height: 115%;
+  width: 240px;
+  height: 84px;
   border: 2px solid #2563eb;
-  border-radius: 25px;
+  border-radius: 35px;
   transform: translate(-50%, -50%) scale(1);
   animation: sonar-wave 2s infinite;
   opacity: 0;
@@ -364,15 +370,15 @@
 
 @keyframes sonar-wave {
   0% {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(1.1);
     opacity: 0.5;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.15);
     opacity: 0.25;
   }
   100% {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(1.2);
     opacity: 0;
   }
 }

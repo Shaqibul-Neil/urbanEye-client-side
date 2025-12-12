@@ -11,10 +11,10 @@ const AboutSection = () => {
           <img
             src={skyline}
             alt=""
-            className="w-40 h-36 rounded-l-2xl object-cover absolute -top-1 left-50 border-12 border-white z-10"
+            className="w-44 h-40 rounded-l-2xl object-cover absolute top-40 right-20 border-12 border-white z-10"
           />
         </div>
-        <div className="clip-top-left">
+        <div>
           <img
             src={ppl}
             alt=""
@@ -25,7 +25,7 @@ const AboutSection = () => {
           <img
             src={hand}
             alt=""
-            className="rounded-l-2xl w-64 h-64 absolute -top-20 right-20 border-12 border-white object-cover"
+            className="rounded-l-2xl w-64 h-64 absolute -top-20 right-50 border-12 border-white object-cover"
           />
         </div>
         <div>

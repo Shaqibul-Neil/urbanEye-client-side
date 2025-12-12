@@ -4,12 +4,13 @@ import HowItWorks from "../../components/home/how it works/HowItWorks";
 import LatestResolved from "../../components/home/latest resolved/LatestResolved";
 import AboutSection from "../../components/home/about/AboutSection";
 import Banner from "../../components/home/banner/Banner";
+import GlobeSection from "../../components/home/globe/GlobeSection";
 
 const Home = () => {
   return (
     <div>
       {/* Banner Section */}
-      <section className="pb-16 bg-base-200 mb-24">
+      <section className="pb-16 mb-24">
         <Banner />
       </section>
 
@@ -20,6 +21,11 @@ const Home = () => {
       {/* Latest Resolved Section */}
       <section className="container mx-auto lg:py-16 md:py-12 py-8 lg:px-6">
         <LatestResolved />
+      </section>
+
+      {/* Globe Section */}
+      <section className="container mx-auto lg:mt-40 lg:mb-20 md:py-12 py-8 lg:px-6 bg-secondary rounded-3xl relative h-[550px]">
+        <GlobeSection />
       </section>
 
       {/* Feature Section */}
