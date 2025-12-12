@@ -8,9 +8,7 @@ const Banner = () => {
     <div className="relative">
       <h1
         className="transform text-center text-[64px] lg:text-[270px] md:text-[150px] font-black opacity-100 pointer-events-none tracking-[58px] leading-none bg-linear-to-b from-white to-[#e5edf0]
-    bg-clip-text 
-    text-transparent pl-9
-"
+    bg-clip-text text-transparent pl-9 drop-shadow-[3px_3px_0px_rgba(0,0,0,0.15)]"
       >
         URBANi
       </h1>
@@ -18,12 +16,16 @@ const Banner = () => {
         {/* Left */}
         <div className="col-span-1 relative">
           <div className="relative -top-40">
-            <img src={globe} alt="" className="w-72 relative z-10" />
+            <img
+              src={globe}
+              alt=""
+              className="w-72 relative z-10 animate-elasticBounce"
+            />
             {/* Circular shadow */}
-            <div className="absolute bottom-4 left-12 w-32 h-32 bg-blue-100/40  rounded-full z-9" />
+            <div className="absolute bottom-4 left-12 w-32 h-32 bg-blue-100/40 rounded-full z-9 animate-elasticBounce" />
             {/* Card content */}
             <div className="absolute top-24 left-8 w-64 bg-white rounded-tr-[100px] z-5 px-5 pt-24 pb-6">
-              <h3 className="text-lg font-black text-primary">
+              <h3 className="text-lg font-black text-primary txt">
                 Report fast. Track faster.
               </h3>
               <p className="text-secondary font-light tracking-wider">
@@ -46,7 +48,7 @@ const Banner = () => {
               {" "}
               <div className="bg-white/80 h-8 w-8 rounded-full flex justify-center items-center">
                 {" "}
-                <div className="bg-primary h-4 w-4 rounded-full"></div>{" "}
+                <div className="bg-primary h-4 w-4 rounded-full animate-pulse"></div>{" "}
               </div>{" "}
             </div>{" "}
           </div>

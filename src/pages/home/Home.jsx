@@ -1,9 +1,7 @@
-import { MdArrowOutward } from "react-icons/md";
 import FeaturesSection from "../../components/home/feature/FeatureSection";
 import CitizenFeedback from "../../components/home/feedback/CitizenFeedback";
 import HowItWorks from "../../components/home/how it works/HowItWorks";
 import LatestResolved from "../../components/home/latest resolved/LatestResolved";
-import { Star } from "lucide-react";
 import AboutSection from "../../components/home/about/AboutSection";
 import Banner from "../../components/home/banner/Banner";
 

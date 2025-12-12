@@ -20,6 +20,26 @@
   font-family: "Urbanist", sans-serif;
 }
 
+.txt {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #fff 10%, #2563eb 20%);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  animation: animate 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes animate {
+  0% {
+    background-position: -500%;
+  }
+  100% {
+    background-position: 500%;
+  }
+}
+
 /* IMAGE CLIP */
 .clip-top-left {
   clip-path: polygon(0% 0, 20% 0, 100% 100%, 0 100%, 0 20%);
@@ -356,78 +376,71 @@
     opacity: 0;
   }
 }
+@keyframes elasticBounce {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-12px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 
-/* form text-gray-400 */
-/* Primary: #2563eb
-Secondary: #10b981
-Accent: #38bdf8
-Background: #e5edf0
-Heading: #1e293b */
+.animate-elasticBounce {
+  animation: elasticBounce 3s ease-in-out infinite;
+}
 
-/* 1. Text Colors
-Primary Text (main paragraphs): #1e293b
-Secondary / Subtext: #475569
-Muted Text: #64748b */
+.loader-wave::before,
+.loader-wave::after {
+  content: "";
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  border: 2px solid #2563eb;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(1.5);
+  /* animation: sonar-wave 2s infinite; */
+  opacity: 1;
+}
+.loader-wave::before,
+.loader-wave::after {
+  content: "";
+  position: absolute; /* absolute, relative parent er context e */
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #2563eb;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  animation: load-wave 2s infinite; /* uncomment kore animation dao */
+}
+@keyframes load-wave {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
 
-/* 2. Headings (H1–H6)
-Heading Color: #1e293b
-Weight: bold or semi-bold
-Slight spacing: letter-spacing -0.2px */
-
-/* 3. Links
-Default Link: #2563eb (Primary Blue)
-Hover: #1d4ed8 (slightly deeper blue)
-Visited: #1e40af */
-
-/* A) Primary Button (Call-To-Action)
-Background: #2563eb
-Text: #ffffff
-Hover: #1d4ed8
-This is for the main actions: “Report Issue”, “Submit”. */
-
-/* B) Success / Accept Button
-(Used for Accept, Confirm Pickup, Confirm Delivery)
-Background: #10b981
-Text: #ffffff
-Border: none
-Hover: #0d8a68
-Psychology: green = progress, go, trusted action. */
-
-/* C) Danger / Reject Button
-Background: #ef4444
-Text: #ffffff
-Hover: #dc2626
-Reject always needs red. Govt UI te clarity insanely important. */
-
-/* D) View Details Button
-Details = info category → uses Accent Blue.
-Background: #38bdf8
-Text: #0f172a (dark text; better contrast)
-Hover: #0ea5e9
-Friendly, informational, not aggressive. */
-
-/* E) Outlined / Minimal Button
-(Secondary “Just look / not action-heavy”)
-Border: #2563eb
-Text: #2563eb
-Background: transparent
-Hover Background: rgba(37, 99, 235, 0.1)
-Helpful for subtle actions. */
-
-/* 5. CTA Buttons (Homepage, Big Actions)
-Primary CTA = Primary Blue
-Secondary CTA = Green
-CTA always stays blue for trust.
-CTA Primary: #2563eb
-CTA Hover: #1d4ed8 */
-
-/* 6. Cards & Containers
-Card Background: #ffffff
-Card Border: #cbd5e1
-Card Shadow: rgba(0,0,0,0.05) */
-
-/* 7. Status Tags (Badges)
-Pending: #f59e0b (amber)
-In-Progress: #2563eb
-Resolved: #10b981
-Closed: #475569 (grey) */
+.loader-wave::after {
+  animation-delay: 1s; /* second wave delayed for continuous effect */
+}

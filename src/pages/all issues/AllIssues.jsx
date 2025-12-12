@@ -28,7 +28,7 @@ const AllIssues = () => {
     status: [],
     priority: [],
   });
-  const limit = 6;
+  const limit = 8;
 
   //wait .5s after user stopped typing and then send the signal to backend to fetch
   useEffect(() => {
@@ -94,7 +94,7 @@ const AllIssues = () => {
 
   return (
     <div className="py-12">
-      <div className="container mx-auto lg:px-0 px-5">
+      <div className="container mx-auto px-5">
         {/* Heading Section */}
         <div className="text-left space-y-12">
           <div className="space-y-2">
@@ -115,68 +115,77 @@ const AllIssues = () => {
               label={`Total issue found : ${totalIssue}`}
               className="underline text-primary"
             />
-            {/* Search Section */}
-            <div className="col-span-1">
-              <div className="flex md:justify-end justify-center mb-4">
-                <div className="relative w-full">
-                  <input
-                    type="search"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    placeholder="Search..."
-                    className="w-full py-2 pl-10 pr-3 bg-gray-100 border border-primary rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1"
-                  />
-                  <Search
-                    size={16}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-primary"
-                  />
+            <div className="flex gap-4 items-center justify-center">
+              {/* Search Section */}
+              <div className="w-64">
+                <div className="flex md:justify-end justify-center">
+                  <div className="relative w-full">
+                    <input
+                      type="search"
+                      value={searchText}
+                      onChange={(e) => setSearchText(e.target.value)}
+                      placeholder="Search..."
+                      className="w-full py-2 pl-10 pr-3 bg-gray-100 border border-primary rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1"
+                    />
+                    <Search
+                      size={16}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-primary"
+                    />
+                  </div>
+                </div>
+              </div>
+              {/* Filter Section */}
+
+              <div className="drawer w-24">
+                <input
+                  id="my-drawer-3"
+                  type="checkbox"
+                  className="drawer-toggle"
+                />
+
+                {/* MAIN CONTENT */}
+                <div className="drawer-content flex flex-col items-center justify-center">
+                  <label
+                    htmlFor="my-drawer-3"
+                    className="btn drawer-button btn-outline btn-primary"
+                  >
+                    Filter By
+                  </label>
+                </div>
+
+                {/* SIDE DRAWER */}
+                <div className="drawer-side text-xl text-primary text-center font-semibold">
+                  {/* Custom overlay so it doesn't cover full screen */}
+                  <label
+                    htmlFor="my-drawer-3"
+                    aria-label="close sidebar"
+                    className="drawer-overlay bg-black/20 backdrop-blur-sm w-full"
+                  ></label>
+
+                  <ul className="menu md:w-lg w-11/12 mx-auto md:p-10 p-6 text-secondary bg-white rounded-3xl my-auto">
+                    {/* Sidebar content here */}
+
+                    {/* By Status */}
+                    <label className="flex items-center justify-between cursor-pointer gap-3 mb-1 text-primary font-semibold underline">
+                      Status
+                    </label>
+                    <StatusFiltration filtrationProps={filtrationProps} />
+
+                    {/* By Priority */}
+                    <label className="flex items-center justify-between cursor-pointer gap-3 my-1 text-primary font-semibold underline">
+                      Priority
+                    </label>
+                    <PriorityFiltration filtrationProps={filtrationProps} />
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
         {/* Issues and Filter Grid */}
-        <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-4">
-          {/* Filter Section */}
-          <div className="drawer md:drawer-open mt-12">
-            <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col items-center justify-center">
-              {/* Page content here */}
-              <label
-                htmlFor="my-drawer-3"
-                className="btn drawer-button lg:hidden"
-              >
-                Filter By
-              </label>
-            </div>
-            <div className="drawer-side border text-xl text-primary text-center font-semibold rounded-3xl py-4">
-              <label
-                htmlFor="my-drawer-3"
-                aria-label="close sidebar"
-                className="drawer-overlay text-xl font-black"
-              >
-                Filter By
-              </label>
-              <ul className="menu lg:w-60 md:w-52 py-4 text-secondary">
-                {/* Sidebar content here */}
-                {/* By Status */}
-                <label className="flex items-center justify-between cursor-pointer gap-3 mb-1 text-primary font-semibold text- underline">
-                  {" "}
-                  Status{" "}
-                </label>
-                <StatusFiltration filtrationProps={filtrationProps} />
-
-                {/* By Priority */}
-                <label className="flex items-center justify-between cursor-pointer gap-3 my-1 text-primary font-semibold text-base underline">
-                  {" "}
-                  Priority{" "}
-                </label>
-                <PriorityFiltration filtrationProps={filtrationProps} />
-              </ul>
-            </div>
-          </div>
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
           {/* Issues */}
-          <div className="lg:col-span-4 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+          <div className="lg:col-span-4 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
             {issues.map((issue) => (
               <IssueCard issue={issue} key={issue._id} />
             ))}

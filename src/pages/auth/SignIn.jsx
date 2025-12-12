@@ -4,11 +4,9 @@ import useAuth from "../../hooks/auth & role/useAuth";
 import GoogleLogin from "../../components/socialLogin/GoogleLogin";
 //import { useQueryClient } from "@tanstack/react-query";
 import useRole from "../../hooks/auth & role/useRole";
-import { useState } from "react";
 import Swal from "sweetalert2";
 
 const SignIn = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,7 +22,16 @@ const SignIn = () => {
   const handleSignIn = async (data) => {
     try {
       setUserLoading(true);
-      setIsSubmitting(true);
+      // SweetAlert Loading Popup
+      Swal.fire({
+        title: "Logging your account...",
+        text: "Please wait",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       const result = await signInUser(data.email, data.password);
       console.log(result.user);
       //force refresh to get new token so that user role changes
@@ -66,21 +73,11 @@ const SignIn = () => {
       });
     } finally {
       setUserLoading(false);
-      setIsSubmitting(false);
     }
   };
 
   return (
     <>
-      {isSubmitting && (
-        <div className="fixed inset-0 bg-white/70 flex flex-col items-center justify-center z-50">
-          <span className="loading loading-ring loading-3xl text-primary"></span>
-          <span className="text-primary font-bold text-4xl mt-4">
-            Processing Your Login...
-          </span>
-        </div>
-      )}
-
       <div className="flex items-center justify-center lg:p-10 p-3 mt-12 lg:mt-0 max-w-md mx-auto">
         {/* floating glow */}
         <div className="absolute top-20 left-40 w-72 h-72 bg-indigo-400/20 blur-3xl rounded-full animate-pulse md:block hidden" />

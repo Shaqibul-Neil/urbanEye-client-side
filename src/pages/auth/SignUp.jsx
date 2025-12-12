@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 
 const SignUp = () => {
   //dependencies
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewImage, setPreviewImage] = useState(null); //image preview
   const fileInputRef = useRef();
   const {
@@ -41,7 +40,16 @@ const SignUp = () => {
 
     try {
       setUserLoading(true);
-      setIsSubmitting(true);
+      // SweetAlert Loading Popup
+      Swal.fire({
+        title: "Creating your account...",
+        text: "Please wait",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       //firebase signup
       const result = await signUpUser(data?.email, data?.password);
       // Prepare DB user object
@@ -94,7 +102,6 @@ const SignUp = () => {
       });
     } finally {
       setUserLoading(false);
-      setIsSubmitting(false);
     }
   };
   // handle click on custom box
@@ -112,15 +119,6 @@ const SignUp = () => {
   // };
   return (
     <>
-      {isSubmitting && (
-        <div className="fixed inset-0 bg-white/70 flex flex-col items-center justify-center z-50">
-          <span className="loading loading-ring loading-3xl text-primary"></span>
-          <span className="text-primary font-bold text-4xl mt-4">
-            Processing Your Registration...
-          </span>
-        </div>
-      )}
-
       <div className="flex items-center justify-center max-w-md mx-auto lg:p-10 p-3 mt-12 lg:mt-0">
         {/* floating glow */}
         <div className="absolute top-20 left-40 w-72 h-72 bg-indigo-400/20 blur-3xl rounded-full animate-pulse md:block hidden" />
