@@ -6,7 +6,7 @@ const MyLinks = ({ to, children, className }) => {
       to={to}
       className={({ isActive }) =>
         isActive
-          ? "text-primary bg-base-200 py-2 px-3 rounded-3xl transition-all duration-300"
+          ? "bg-base-200 py-2 px-3 rounded-3xl transition-all duration-300"
           : `${className}`
       }
     >

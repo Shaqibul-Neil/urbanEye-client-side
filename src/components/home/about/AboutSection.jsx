@@ -39,7 +39,7 @@ const AboutSection = () => {
       {/* Right side */}
       <div className="space-y-4">
         <h2 className="font-extrabold text-primary tracking-tight text-4xl md:text-5xl text-right">
-          Urban Eye is a{" "}
+          URBANi is a{" "}
           <span className="text-secondary">citizen-focused platform</span> that
           lets residents
         </h2>
@@ -54,7 +54,7 @@ const AboutSection = () => {
           cities safer and cleaner for everyone.
         </p>
         <p className="pl-14 text-right text-gray-700 leading-relaxed">
-          By connecting citizens and authorities, Urban Eye transforms feedback
+          By connecting citizens and authorities, URBANi transforms feedback
           into action, giving every user a tangible impact on their city’s
           development.
         </p>

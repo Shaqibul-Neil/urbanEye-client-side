@@ -12,7 +12,7 @@ const Banner = () => {
     text-transparent pl-9
 "
       >
-        UrBANi
+        URBANi
       </h1>
       <div className="grid lg:grid-cols-4 items-center relative px-8 gap-16">
         {/* Left */}

@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 const RouteTitle = ({ title, children }) => {
   const location = useLocation();
   useEffect(() => {
-    document.title = `${title} - UrbanEye`;
+    document.title = `${title} - URBANi`;
   }, [location, title]);
   return <>{children}</>;
 };

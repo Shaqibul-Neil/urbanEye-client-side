@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import useAuth from "../../../hooks/auth & role/useAuth";
 import MyLinks from "./MyLinks";
 
-const Navbar = () => {
+const Navbar = ({ scrolled }) => {
   const { user, setUser, signOutUser } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -76,13 +76,18 @@ const Navbar = () => {
         </div>
         <Link to={"/"} className="flex items-center gap-2">
           <span className="lg:text-3xl text-2xl text-primary font-extrabold tracking-tight">
-            UrBANi
+            URBANi
           </span>
         </Link>
       </div>
 
-      <div className="navbar-center hidden lg:flex bg-white rounded-3xl px-6 py-4">
-        <ul className="flex items-center gap-6 text-secondary">
+      <div
+        className={`navbar-center hidden lg:flex bg-white rounded-3xl px-6 py-4 transition-all duration-300 ease-in-out  ${
+          scrolled &&
+          "fixed top-4 left-1/2 transform -translate-x-1/2 md:w-96 w-full lg:px-10 md:px-4 px-1 bg-blue-100/80 backdrop-blur-2xl rounded-3xl z-50 flex justify-center items-center"
+        }`}
+      >
+        <ul className="flex items-center gap-6 text-primary">
           <li>
             <MyLinks to={"/"}>Home</MyLinks>
           </li>

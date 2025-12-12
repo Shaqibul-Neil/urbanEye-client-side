@@ -22,7 +22,7 @@ const Contact = () => {
             <p className="text-gray-600 text-sm mb-4">
               Have a question, want to report an issue, or need guidance on how
               to get assistance in your area? Fill out the form below and our
-              Urban Eye team will respond promptly to help you take action or
+              URBANi team will respond promptly to help you take action or
               connect with local authorities.
             </p>
 
@@ -92,7 +92,7 @@ const Contact = () => {
                 <FiMail className="text-3xl" />
                 <div>
                   <p className="font-semibold text-lg">Email</p>
-                  <p className="text-sm break-all">support@urbaneye.com</p>
+                  <p className="text-sm break-all">support@URBANi.com</p>
                 </div>
               </div>
             </div>

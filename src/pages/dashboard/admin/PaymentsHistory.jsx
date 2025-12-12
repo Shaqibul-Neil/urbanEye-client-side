@@ -5,8 +5,11 @@ import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
+import { useState } from "react";
+import { MdEmail } from "react-icons/md";
 
 const PaymentsHistory = () => {
+  const [filterType, setFilterType] = useState("");
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {
@@ -14,10 +17,14 @@ const PaymentsHistory = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["payments", user?.email],
+    queryKey: ["payments", user?.email, filterType],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get("/payments");
+      const res = await axiosSecure.get("/payments", {
+        params: {
+          ...(filterType && { paymentType: filterType }),
+        },
+      });
       return res?.data?.payment;
     },
   });
@@ -39,6 +46,17 @@ const PaymentsHistory = () => {
               }
             />
           </div>
+        </div>
+        <div className="mb-4 w-48 ml-auto">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="select select-bordered w-48 py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none"
+          >
+            <option value="">All Types</option>
+            <option value="subscription">Subscription</option>
+            <option value="upvote">Upvote</option>
+          </select>
         </div>
 
         {/* Table Section */}
