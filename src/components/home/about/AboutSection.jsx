@@ -37,7 +37,7 @@ const AboutSection = () => {
         </div>
       </div>
       {/* Right side */}
-      <div className="space-y-4">
+      <div className="space-y-4 px-5">
         <h2 className="font-extrabold text-primary tracking-tight text-4xl md:text-5xl text-right">
           URBANi is a{" "}
           <span className="text-secondary">citizen-focused platform</span> that

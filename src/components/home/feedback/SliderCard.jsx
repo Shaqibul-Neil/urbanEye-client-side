@@ -40,11 +40,11 @@ const SliderCard = ({ testimony }) => {
           </div>
 
           <div className="testimony-icon absolute top-35 right-0 w-16 h-16 rounded-tl-[50%] bg-white">
-            <button className="absolute inset-3 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 group">
+            <div className="absolute inset-3 bg-white rounded-full flex items-center justify-center">
               <span className="text-white text-2xl">
-                <MdArrowOutward className="w-10 h-10 group-hover:rotate-30 transition-all" />
+                <div className="w-10 h-10"></div>
               </span>
-            </button>
+            </div>
           </div>
         </div>
       </div>

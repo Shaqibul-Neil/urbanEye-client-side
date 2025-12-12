@@ -9,7 +9,7 @@ const Banner = () => {
   return (
     <div className="relative bg-base-200 pt-12 lg:pt-0">
       <h1
-        className="transform text-center text-[88px] lg:text-[270px] md:text-[200px] font-black opacity-100 pointer-events-none lg:tracking-[58px] tracking-tighter leading-none bg-linear-to-b from-white to-[#e5edf0]
+        className="transform text-center text-[72px] lg:text-[270px] md:text-[200px] font-black opacity-100 pointer-events-none lg:tracking-[58px] tracking-tighter leading-none bg-linear-to-b from-white to-[#e5edf0]
     bg-clip-text text-transparent lg:pl-9 drop-shadow-[3px_3px_0px_rgba(0,0,0,0.15)]"
       >
         URBANi
@@ -148,8 +148,8 @@ const Banner = () => {
         {/* Middle */}
         <div className="relative">
           {/* 150k User */}
-          <div className="w-44 h-18 bg-blue-200 rounded-3xl absolute top-20 right-0 z-25 flex items-center justify-center">
-            <div className="w-40 h-14 bg-white rounded-2xl flex items-center gap-2 px-2">
+          <div className="md:w-44 md:h-18 w-32 h-14 bg-blue-200 rounded-3xl absolute top-20 right-0 z-25 flex items-center justify-center">
+            <div className="md:w-40 md:h-14 w-27 h-10 bg-white rounded-2xl flex items-center gap-2 px-2">
               <div className="avatar-group -space-x-6">
                 <div className="avatar">
                   <div className="w-8">
@@ -173,16 +173,22 @@ const Banner = () => {
                 </div>
               </div>
               <div>
-                <p className="text-primary font-extrabold leading-2 mt-2 text-lg">
+                <p className="text-primary font-extrabold leading-2 mt-2 md:text-lg text-base">
                   150K
                 </p>
                 <p>users</p>
               </div>
             </div>
           </div>
-          <Lottie animationData={citySkyline} loop className="w-full h-80" />
+          <div className="w-full">
+            <Lottie
+              animationData={citySkyline}
+              loop
+              className="w-full h-40 md:h-80"
+            />
+          </div>
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between md:flex-row flex-col gap-4">
           {/* Left */}
           <div>
             <div className="relative">
@@ -194,7 +200,7 @@ const Banner = () => {
               {/* Circular shadow */}
               <div className="absolute bottom-4 left-12 w-32 h-32 bg-blue-100/40 rounded-full z-9 animate-elasticBounce" />
               {/* Card content */}
-              <div className="absolute top-24 left-8 w-64 bg-white rounded-tr-[100px] z-5 px-5 pt-24 pb-6">
+              <div className="absolute top-24 md:left-8 w-64 bg-white rounded-tr-[100px] z-5 px-5 pt-24 pb-6">
                 <h3 className="text-lg font-black text-primary txt">
                   Report fast. Track faster.
                 </h3>
@@ -208,7 +214,7 @@ const Banner = () => {
           </div>
           {/* Right */}
           {/* Right Side */}
-          <div className="lg:col-span-1 relative flex flex-col items-center justify-center px-4 space-y-6">
+          <div className="flex flex-col items-center justify-center px-4 space-y-6 mt-24 md:mt-0">
             {/* Card Container */}
             <div className="flex flex-col items-center mt-12 z-30 gap-3">
               {/* Main CTA */}
@@ -233,7 +239,7 @@ const Banner = () => {
       </div>
 
       {/* CTA */}
-      <div className="flex justify-center items-center relative z-10">
+      <div className="flex justify-center items-center relative z-10 mb-8">
         <div className="flex justify-center items-center w-64 border-white border rounded-full h-20 wave">
           <div className="flex justify-center items-center w-60 border-primary border rounded-full h-16">
             <Link
@@ -248,15 +254,7 @@ const Banner = () => {
       {/* Tags and Stats */}
       <div className="relative w-full bg-base-200 rounded-3xl lg:flex lg:justify-between pt-4">
         {/* Left */}
-        <div
-          className="col-span-1 bg-white rounded-tl-3xl pt-10 lg:px-15 px-10 space-y-4 lg:w-[35%] w-full pb-10 lg:pb-0"
-          style={{
-            clipPath:
-              window.innerWidth >= 1024
-                ? "polygon(0 0, 89% 0, 91% 13%, 100% 68%, 100% 100%, 0 100%)"
-                : "none",
-          }}
-        >
+        <div className="col-span-1 bg-white rounded-tl-3xl pt-10 lg:px-15 px-10 space-y-4 lg:w-[35%] w-full pb-10 lg:pb-0 lg:banner-clip-left">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
               <MessageCircle className="h-6 w-6 text-white" />
@@ -284,19 +282,11 @@ const Banner = () => {
           </div>
         </div>
         {/* right */}
-        <div
-          className="rounded-tr-3xl bg-white p-10 lg:pl-30 space-y-4 lg:w-[35%]"
-          style={{
-            clipPath:
-              window.innerWidth >= 1024
-                ? "polygon(100% 0, 11% 0, 8% 18%, 0 70%, 0 100%, 100% 100%)"
-                : "none",
-          }}
-        >
+        <div className="rounded-tr-3xl bg-white p-10 lg:pl-30 space-y-4 lg:w-[35%] lg:banner-clip-right">
           <div className="w-64 border-secondary border rounded-full bg-base-200 h-10 flex justify-center items-center">
             <p className="text-secondary">Citizens Shaping Urban Life </p>
           </div>
-          <div className="flex lg:flex-col flex-row gap-2">
+          <div className="flex lg:flex-col md:flex-row flex-col gap-2">
             <div className="gap-2 items-center flex">
               <h3 className="text-5xl text-primary font-bold">15K+</h3>
               <p className="text-primary font-light">

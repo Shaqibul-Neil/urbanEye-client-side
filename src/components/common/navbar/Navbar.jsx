@@ -18,7 +18,7 @@ const Navbar = ({ scrolled }) => {
     }
   };
   return (
-    <div className="navbar lg:py-6 md:py-4 md:px-0 px-2">
+    <div className="navbar lg:py-6 md:py-4 md:px-4 px-2 lg:px-0">
       <div className="navbar-start">
         <div className="dropdown">
           <div

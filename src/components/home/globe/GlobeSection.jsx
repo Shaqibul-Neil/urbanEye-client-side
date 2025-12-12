@@ -18,7 +18,7 @@ const GlobeSection = () => {
           neighbors, and see real solutions unfold. Together, we transform our
           city—one report, one upvote at a time.
         </p>
-        <div className="flex justify-center items-center relative z-10">
+        <div className="flex justify-center items-center relative z-10 mt-8">
           <div className="flex justify-center items-center w-64 border-white border rounded-full h-20 wave">
             <div className="flex justify-center items-center w-60 border-primary border rounded-full h-16">
               <Link

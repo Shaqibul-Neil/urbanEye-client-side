@@ -10,21 +10,23 @@ const Home = () => {
   return (
     <div>
       {/* Banner Section */}
-      <section className="pb-16 mb-24">
+      <section className="pb-16">
         <Banner />
       </section>
 
       {/* About Us Section */}
-      <section className="container mx-auto lg:py-16 md:py-12 py-8 lg:px-6">
-        <AboutSection />
-      </section>
+      <div className="bg-base-200">
+        <section className="container mx-auto lg:py-20 md:py-24 py-8 lg:px-6">
+          <AboutSection />
+        </section>
+      </div>
       {/* Latest Resolved Section */}
-      <section className="container mx-auto lg:py-16 md:py-12 py-8 lg:px-6">
+      <section className="container mx-auto lg:py-24 md:py-20 py-8 lg:px-6 px-5 z-5 relative">
         <LatestResolved />
       </section>
 
       {/* Globe Section */}
-      <section className="container mx-auto lg:mt-40 lg:mb-20 md:py-12 py-8 lg:px-6 bg-secondary rounded-3xl relative h-[550px]">
+      <section className="container mx-auto lg:mt-40 lg:mb-20 md:mt-24 md:py-12 py-8 lg:px-6 bg-secondary lg:rounded-3xl relative h-[550px]">
         <GlobeSection />
       </section>
 
@@ -36,7 +38,7 @@ const Home = () => {
       </section>
 
       {/* How It works Section */}
-      <section className="container mx-auto lg:pt-16 md:pt-12 pt-8 lg:px-6">
+      <section className="container mx-auto lg:pt-24 md:pt-20 pt-8 lg:px-6">
         <HowItWorks />
       </section>
 
