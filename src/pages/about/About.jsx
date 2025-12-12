@@ -1,5 +1,131 @@
+import about from "../../assets/about.webp";
+import hand from "../../assets/hand.jpg";
+import ppl from "../../assets/ppl.jpg";
 const About = () => {
-  return <div></div>;
+  const topImages = [hand, ppl];
+
+  const stats = [
+    { number: "10K+", label: "Issues Reported" },
+    { number: "50K+", label: "Upvotes Cast" },
+    { number: "2K+", label: "Resolved Reports" },
+    { number: "100+", label: "Active Citizens" },
+  ];
+
+  return (
+    <section className="text-secondary py-20 px-5 md:px-10 lg:px-20 scroll-section bg-gray-50">
+      <div className="max-w-7xl mx-auto space-y-20">
+        {/* MISSION SECTION */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* LEFT COLUMN */}
+          <div className="flex flex-col">
+            <div className="mb-8">
+              <p className="text-sm font-medium tracking-widest uppercase text-gray-500 border-t border-gray-300 pt-2 w-24">
+                OUR MISSION
+              </p>
+              <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mt-1">
+                Empower Citizens to Improve{" "}
+                <span className="text-blue-600">Their Community</span>
+              </h1>
+            </div>
+
+            <img
+              src={about}
+              alt="Community volunteering"
+              className="w-full h-auto object-cover rounded-lg shadow-lg"
+            />
+          </div>
+
+          {/* RIGHT COLUMN */}
+          <div className="flex flex-col">
+            <div className="flex space-x-4 mb-8">
+              {topImages.map((imgSrc, i) => (
+                <div
+                  key={i}
+                  className="flex-1 relative overflow-hidden rounded-lg"
+                >
+                  <img
+                    src={imgSrc}
+                    alt=""
+                    className="w-full h-36 object-cover"
+                  />
+                  <div className="absolute top-2 right-2 flex space-x-2">
+                    <span className="bg-primary text-white bg-opacity-50 text-xs px-2 py-0.5 rounded">
+                      Civic
+                    </span>
+                    <span className="bg-white text-primary bg-opacity-50 text-xs px-2 py-0.5 rounded">
+                      Community
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="leading-relaxed text-gray-600 mb-8">
+              URBANi lets citizens actively participate in improving their local
+              infrastructure. Report issues, track resolutions, upvote important
+              matters, and stay informed about community initiatives. Together,
+              we ensure safer streets, cleaner public spaces, and more
+              accountable civic management.
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 border-b border-gray-300 pb-5 mb-8">
+              {stats.map((stat, i) => (
+                <div key={i} className="text-left">
+                  <h2 className="text-2xl font-bold text-blue-600">
+                    {stat.number}
+                  </h2>
+                  <p className="text-xs text-gray-500 mt-1 uppercase leading-snug">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="leading-relaxed text-gray-600 mb-8">
+              With URBANi, citizens can easily voice their concerns, suggest
+              improvements, and collaborate on local projects. From fixing
+              potholes to organizing community clean-ups, every contribution
+              counts. Our platform encourages active participation, fosters
+              transparency, and helps build neighborhoods that are safer,
+              cleaner, and more connected.
+            </p>
+          </div>
+        </div>
+
+        {/* VISION SECTION */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+          {/* LEFT COLUMN TEXT */}
+          <div className="flex flex-col">
+            <p className="text-sm font-medium tracking-widest uppercase text-gray-500 border-t border-gray-300 pt-2 w-24 mb-2">
+              OUR VISION
+            </p>
+            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mt-1 mb-6">
+              Build a{" "}
+              <span className="text-blue-600">
+                Connected & Accountable Community
+              </span>
+            </h1>
+            <p className="leading-relaxed text-gray-600">
+              URBANi envisions a city where citizens, local authorities, and
+              organizations collaborate seamlessly. With transparent reporting,
+              proactive engagement, and data-driven insights, communities can
+              thrive, public services improve, and every voice is heard. Our
+              goal is to make civic participation intuitive, rewarding, and
+              impactful.
+            </p>
+          </div>
+
+          {/* RIGHT COLUMN IMAGE */}
+          <div className="flex justify-center lg:justify-end">
+            <img
+              src={ppl}
+              alt="Community planning"
+              className="w-full max-w-md h-auto object-cover rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default About;

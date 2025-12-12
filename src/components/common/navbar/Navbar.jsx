@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router";
-import { Gamepad2 } from "lucide-react";
+import logo from "../../../assets/logo.png";
 import toast from "react-hot-toast";
 import useAuth from "../../../hooks/auth & role/useAuth";
 import MyLinks from "./MyLinks";
@@ -75,9 +75,7 @@ const Navbar = ({ scrolled }) => {
           </ul>
         </div>
         <Link to={"/"} className="flex items-center gap-2">
-          <span className="lg:text-3xl text-2xl text-primary font-extrabold tracking-tight">
-            URBANi
-          </span>
+          <img src={logo} alt="" className="object-cover w-32" />
         </Link>
       </div>
 
