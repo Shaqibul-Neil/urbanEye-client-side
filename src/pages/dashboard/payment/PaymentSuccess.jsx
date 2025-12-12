@@ -22,6 +22,8 @@ const PaymentSuccess = () => {
             setPaymentInfo(res?.data?.payment);
             // invalidate payment stats
             queryClient.invalidateQueries({ queryKey: ["payment-stats"] });
+            queryClient.invalidateQueries({ queryKey: ["payments"] });
+            queryClient.invalidateQueries({ queryKey: ["latest-payments"] });
           });
       }
     } catch (error) {

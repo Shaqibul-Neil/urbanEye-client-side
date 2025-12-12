@@ -6,6 +6,9 @@ import useAggregatePayment from "../../../hooks/payment related/useAggregatePaym
 import useIssueAggregate from "../../../hooks/citizen related/useIssueAggregate";
 import IssueMetrics from "../../../components/dashboard/issue metrics/IssueMetrics";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
+import LatestPayments from "../../../components/dashboard/payment chart/LatestPayments";
+import useLatestPayments from "../../../hooks/payment related/useLatestPayments";
+import { Link } from "react-router";
 
 const AdminDashboard = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,6 +16,11 @@ const AdminDashboard = () => {
   const { statusStats, isLoading, isError } = useIssueAggregate();
   //total payments data aggregation
   const { paymentStats, paymentLoading, paymentError } = useAggregatePayment();
+  const {
+    latestPayments,
+    latestLoading: latestPaymentLoading,
+    latestError: latestPaymentError,
+  } = useLatestPayments();
   const issueCount = statusStats?.reduce(
     (accu, stats) => accu + stats.count,
     0
@@ -40,13 +48,24 @@ const AdminDashboard = () => {
     queryKey: ["latest-user"],
     queryFn: async () => {
       const { data } = await axiosSecure.get("/users/latest/registered-users");
-      console.log(data);
       return data?.user;
     },
   });
-  if (isLoading || paymentLoading || latestLoading || latestUsersLoading)
+  if (
+    isLoading ||
+    paymentLoading ||
+    latestLoading ||
+    latestUsersLoading ||
+    latestPaymentLoading
+  )
     return <Loading />;
-  if (isError || paymentError || latestError || latestUsersError)
+  if (
+    isError ||
+    paymentError ||
+    latestError ||
+    latestUsersError ||
+    latestPaymentError
+  )
     return <ErrorComponent />;
   return (
     <div className="grid lg:grid-cols-4 gap-4 px-5">
@@ -146,6 +165,25 @@ const AdminDashboard = () => {
         </div>
 
         {/* Latest Payments */}
+        <div>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg text-secondary font-bold">
+                Latest Payments
+              </h3>
+              <Link
+                to={"/dashboard/payments-history"}
+                className="underline text-primary text-sm"
+              >
+                View All
+              </Link>
+            </div>
+            <div>
+              {/* Text */}
+              <LatestPayments latestPayments={latestPayments} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

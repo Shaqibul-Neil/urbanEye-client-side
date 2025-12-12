@@ -12,7 +12,7 @@ const Banner = () => {
     text-transparent pl-9
 "
       >
-        URBANi
+        UrBANi
       </h1>
       <div className="grid lg:grid-cols-4 items-center relative px-8 gap-16">
         {/* Left */}
@@ -40,7 +40,7 @@ const Banner = () => {
         <div className="col-span-2">
           {/* overlay / circles */}
           <div className="h-1 bg-blue-100 relative top-0 z-15 w-10/12 mx-auto"></div>{" "}
-          <div className="relative -top-6 z-16 left-80">
+          <div className="relative -top-6 z-16 left-72">
             {" "}
             <div className="bg-blue-100 h-12 w-12 rounded-full flex justify-center items-center">
               {" "}
@@ -86,7 +86,7 @@ const Banner = () => {
           <Lottie
             animationData={citySkyline}
             loop
-            className="md:w-140 md:h-80 absolute -top-30 ml-15"
+            className="md:w-140 md:h-80 absolute -top-30 ml-12"
           />
         </div>
 

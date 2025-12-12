@@ -76,12 +76,12 @@ const Navbar = () => {
         </div>
         <Link to={"/"} className="flex items-center gap-2">
           <span className="lg:text-3xl text-2xl text-primary font-extrabold tracking-tight">
-            UrbanEye
+            UrBANi
           </span>
         </Link>
       </div>
 
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-center hidden lg:flex bg-white rounded-3xl px-6 py-4">
         <ul className="flex items-center gap-6 text-secondary">
           <li>
             <MyLinks to={"/"}>Home</MyLinks>
