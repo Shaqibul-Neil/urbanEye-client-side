@@ -21,7 +21,10 @@ const Home = () => {
         </section>
       </div>
       {/* Latest Resolved Section */}
-      <section className="container mx-auto lg:py-24 md:py-20 py-8 lg:px-6 px-5 z-5 relative">
+      <section
+        className="container mx-auto lg:py-24 md:py-20 py-8 lg:px-6 px-5 z-5 relative"
+        id="latest-section"
+      >
         <LatestResolved />
       </section>
 
