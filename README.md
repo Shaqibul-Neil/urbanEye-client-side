@@ -8,11 +8,11 @@ https://urbaneye-server-side.vercel.app/
 
 ## Credentials<br/>
 ### Admin <br/>
-Email: <br/>
-Password: <br/>
+Email: admin@urbani.com <br/>
+Password: adMin123# <br/>
 ### Staff
-Email: <br/>
-Password: <br/>
+Email: staff@urbani.com <br/>
+Password: stAff123# <br/>
 ### Citizen<br/>
 Email: citizen@gmail.com<br/>
 Password: citiZen123#<br/>
