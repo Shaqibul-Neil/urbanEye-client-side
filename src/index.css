@@ -90,6 +90,24 @@
   }
 }
 
+.scroll-dot {
+  animation: scrollDot 1.6s infinite ease-in-out;
+}
+
+@keyframes scrollDot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* IMAGE CLIP */
 .clip-top-left {
   clip-path: polygon(0% 0, 20% 0, 100% 100%, 0 100%, 0 20%);
@@ -157,11 +175,9 @@
 
   width: 112px;
   height: 40px;
-
   font-size: 16px;
   font-weight: 700;
   text-transform: capitalize;
-
   border: 1px solid var(--btn-border);
   background: transparent;
   color: transparent;
@@ -172,6 +188,7 @@
   border-radius: 20px;
   font-family: inherit;
 }
+
 @keyframes elastic {
   0% {
     transform: translateX(0);
@@ -343,11 +360,11 @@
 .left-overlay::before {
   position: absolute;
   content: "";
-  top: -180px;
+  top: -200px;
   left: 345px;
   background: transparent;
   width: 10px;
-  height: 180px;
+  height: 200px;
   transform: scaleX(0.2);
   transform-origin: top;
   border-top-left-radius: 1.25rem;

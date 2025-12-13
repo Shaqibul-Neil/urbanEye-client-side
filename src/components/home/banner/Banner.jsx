@@ -3,6 +3,8 @@ import citySkyline from "../../../lottie/citySkyline.json";
 import globe from "../../../assets/globe.png";
 import { Link } from "react-router";
 import { Clock, MessageCircle } from "lucide-react";
+import { PrimaCTA } from "../../common/button/FancyButton";
+
 const Banner = () => {
   const scrollToLatest = () => {
     const element = document.getElementById("latest-section");
@@ -59,8 +61,8 @@ const Banner = () => {
         {/* Middle border*/}
         <div className="lg:col-span-2">
           {/* overlay / circles */}
-          <div className="h-1 bg-blue-100 relative z-15 w-10/12 left-6 top-40 mx-auto"></div>{" "}
-          <div className="relative top-33 z-16 left-72">
+          <div className="h-1 bg-blue-100 relative z-15 w-10/12 left-3 top-40 mx-auto"></div>{" "}
+          <div className="relative top-33 z-16 left-76">
             {" "}
             <div className="bg-blue-100 h-12 w-12 rounded-full flex justify-center items-center">
               {" "}
@@ -69,6 +71,18 @@ const Banner = () => {
                 <div className="bg-primary h-4 w-4 rounded-full animate-pulse"></div>{" "}
               </div>{" "}
             </div>{" "}
+          </div>
+          {/* Scroll Indicator */}
+          <div className="absolute left-1/2 top-50 -translate-x-1/2 flex flex-col items-center gap-2 opacity-90">
+            {/* Mouse */}
+            <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center relative overflow-hidden">
+              <span className="absolute top-2 w-1.5 h-2.5 bg-primary rounded-full scroll-dot"></span>
+            </div>
+
+            {/* Text */}
+            <p className="text-xs tracking-widest text-primary uppercase">
+              scroll
+            </p>
           </div>
           {/* 150k User */}
           <div className="w-44 h-18 bg-blue-200 rounded-3xl absolute top-0 right-110 z-25 flex items-center justify-center">
@@ -141,7 +155,7 @@ const Banner = () => {
         <div className="lg:col-span-1 relative flex flex-col items-center justify-center px-4 space-y-6">
           <div className="h-2 w-24 bg-white right-overlay relative -right-19"></div>
           {/* Card Container */}
-          <div className="glass-card relative p-6 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl hover:scale-105 transition-transform duration-300 top-8">
+          <div className="glass-card relative p-6 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl hover:scale-105 transition-transform duration-300 top-8 animate-elasticBounce">
             <Clock className="h-6 w-6 text-primary absolute top-4 left-4" />
             <h3 className="text-primary text-lg font-bold mt-8">
               Track Your Impact <br /> in Real Time
@@ -284,7 +298,7 @@ const Banner = () => {
         <div className="flex justify-center items-center w-64 border-white border rounded-full h-20 wave">
           <div className="flex justify-center items-center w-60 border-primary border rounded-full h-16">
             <Link
-              className="w-56 bg-white text-primary font-bold py-3 px-5 rounded-full shadow-lg text-lg transition duration-300 text-center cursor-pointer relative z-12 hover:bg-primary hover:text-white"
+              className="w-56 bg-primary text-white font-bold py-3 px-5 rounded-full shadow-lg text-lg transition uppercase duration-300 text-center cursor-pointer relative z-12 hover:bg-white hover:text-primary"
               to={"/all-issues"}
             >
               Explore Issue
@@ -324,8 +338,8 @@ const Banner = () => {
         </div>
         {/* right */}
         <div className="rounded-tr-3xl bg-white p-10 lg:pl-30 space-y-4 lg:w-[35%] lg:[clip-path:polygon(100%_0,11%_0,8%_18%,0_70%,0_100%,100%_100%)]">
-          <div className="w-64 border-secondary border rounded-full bg-base-200 h-10 flex justify-center items-center">
-            <p className="text-secondary">Citizens Shaping Urban Life </p>
+          <div className="w-64 border-primary border rounded-full bg-base-200 h-10 flex justify-center items-center">
+            <p className="text-primary">Citizens Shaping Urban Life </p>
           </div>
           <div className="flex lg:flex-col md:flex-row flex-col gap-2">
             <div className="gap-2 items-center flex">

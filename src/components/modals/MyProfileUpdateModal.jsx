@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const MyProfileUpdateModal = ({ profileUpdateRef }) => {
   const [loading, setLoading] = useState(false);
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, setUser } = useAuth();
   const { role } = useRole();
   const {
     register,
@@ -24,21 +24,11 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
 
   const axiosSecure = useAxiosSecure();
   const handleUpdateProfile = async (data) => {
+    let photoURL;
     try {
       setLoading(true);
-      let photoURL = user?.photoURL;
-      //do not use ternary here. sometimes user wont upload photo thats why we need error here so that pervious photo persists
-      if (data?.photo && data?.photo[0]) {
-        console.log(data?.photo);
-        try {
-          if (data?.photo[0]) {
-            photoURL = await imageUpload(data.photo[0]);
-          }
-        } catch (err) {
-          console.log(err);
-          toast.error("Image upload failed, using previous photo:", err);
-          photoURL = user?.photoURL;
-        }
+      if (data.photo[0].name) {
+        photoURL = await imageUpload(data?.photo[0]);
       } else {
         photoURL = user?.photoURL;
       }
@@ -51,12 +41,12 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
       await updateUser(userProfile);
       // database update
       const profileData = {
-        name: data?.name || user?.displayName,
-        photoURL: photoURL || user?.photoURL,
+        name: data?.name,
+        photoURL: photoURL,
         role,
       };
 
-      const res = await axiosSecure.patch("users/my-profile", profileData);
+      const res = await axiosSecure.put("users/my-profile", profileData);
       profileUpdateRef.current.close();
       if (res?.data?.profile?.modifiedCount) {
         await Swal.fire({
@@ -66,6 +56,7 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
           showConfirmButton: false,
           timer: 2500,
         });
+        setUser({ ...user, displayName: data.name, photoURL: photoURL });
       }
     } catch (error) {
       toast.error(error?.message || "Something went wrong");

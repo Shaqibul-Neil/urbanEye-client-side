@@ -16,7 +16,7 @@ const Home = () => {
 
       {/* About Us Section */}
       <div className="bg-base-200">
-        <section className="container mx-auto lg:py-20 md:py-24 py-8 lg:px-6">
+        <section className="container mx-auto lg:py-17 md:py-24 py-8 lg:px-6">
           <AboutSection />
         </section>
       </div>

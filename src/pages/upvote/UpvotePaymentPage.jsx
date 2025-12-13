@@ -37,19 +37,19 @@ const UpvotePaymentPage = ({ totalAmount = 100 }) => {
         citizenEmail: user?.email, //one who pays
         issueId: issue?._id,
       };
-      console.log(paymentInfo);
+      //console.log(paymentInfo);
       const result = await axiosSecure.post(
         "/payments/upvote-checkout-session",
         paymentInfo
       );
-      console.log(result);
+      //console.log(result);
       //redirect to checkout page
       window.location.assign(result?.data?.url);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
-  console.log(issue);
+  //console.log(issue);
   if (isLoading) return <Loading />;
   if (isError) return <ErrorPage />;
 

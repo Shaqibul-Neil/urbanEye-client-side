@@ -3,11 +3,14 @@ import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/auth & role/useAuth";
 import useCreateUser from "../../hooks/auth & role/useCreateUser";
+import useRole from "../../hooks/auth & role/useRole";
+import Swal from "sweetalert2";
 
 const GoogleLogin = () => {
   const { signInWithGoogle, setUserLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { refetchRole } = useRole();
 
   //mutation function
   const { mutateAsync: createSaveUser } = useCreateUser();
@@ -15,6 +18,17 @@ const GoogleLogin = () => {
   const handleSignInWithGoogle = async () => {
     try {
       setUserLoading(true);
+
+      // SweetAlert Loading Popup
+      Swal.fire({
+        title: "Verifying your google credentials...",
+        text: "Please wait",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       const result = await signInWithGoogle();
       // Prepare DB user object
       const userInfo = {
@@ -25,8 +39,18 @@ const GoogleLogin = () => {
       //save user in the database
       await createSaveUser(userInfo);
 
-      toast.success("Successfully logged with Google");
-      navigate(location?.state || "/");
+      const roleResult = await refetchRole();
+      if (roleResult?.data === "admin" || roleResult?.data === "staff") {
+        navigate("/dashboard");
+      } else navigate(location?.state || "/");
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Logged In usign google. Welcome on board",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       toast.error(error.message);
     } finally {

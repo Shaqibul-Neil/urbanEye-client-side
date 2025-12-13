@@ -33,15 +33,16 @@ const SignIn = () => {
         },
       });
       const result = await signInUser(data.email, data.password);
-      console.log(result.user);
+      //console.log(result.user);
       //force refresh to get new token so that user role changes
       await refreshUserToken();
       setUser(result?.user);
       //refetch role query
       //queryClient.refetchQueries(["user-role", result?.user?.email]);
-      await refetchRole();
-
-      navigate(location?.state || "/");
+      const roleResult = await refetchRole();
+      if (roleResult?.data === "admin" || roleResult?.data === "staff") {
+        navigate("/dashboard");
+      } else navigate(location?.state || "/");
       reset();
       Swal.fire({
         position: "center",

@@ -19,7 +19,7 @@ const MyPayments = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get("/payments");
-      console.log(res);
+      //console.log(res);
       return res?.data?.payment;
     },
   });

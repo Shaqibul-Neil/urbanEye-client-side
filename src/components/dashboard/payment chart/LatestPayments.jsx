@@ -1,5 +1,5 @@
 const LatestPayments = ({ latestPayments }) => {
-  console.log(latestPayments);
+  //console.log(latestPayments);
   return (
     <div className="overflow-x-auto">
       <table className="table table-sm w-full">

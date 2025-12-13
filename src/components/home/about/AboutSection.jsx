@@ -11,28 +11,28 @@ const AboutSection = () => {
           <img
             src={skyline}
             alt=""
-            className="w-44 h-40 rounded-b-2xl object-cover absolute top-40 right-20 border-12 border-base-200 z-10"
+            className="w-44 h-40 object-cover absolute top-40 right-20 border-12 border-white z-10"
           />
         </div>
         <div>
           <img
             src={ppl}
             alt=""
-            className="w-96 h-96 object-cover  overflow-hidden border-base-200 border-12 rounded-bl-2xl"
+            className="w-96 h-96 object-cover  overflow-hidden border-white border-12"
           />
         </div>
         <div>
           <img
             src={hand}
             alt=""
-            className="rounded-b-2xl w-64 h-64 absolute -top-20 right-50 border-12 border-base-200 object-cover"
+            className="w-64 h-64 absolute -top-20 right-50 border-12 border-white object-cover"
           />
         </div>
         <div>
           <img
             src={student}
             alt=""
-            className="rounded-b-2xl w-48 h-48 absolute top-20 right-40 border-12 border-base-200 object-cover"
+            className="w-48 h-48 absolute top-20 right-40 border-12 border-white object-cover"
           />
         </div>
       </div>

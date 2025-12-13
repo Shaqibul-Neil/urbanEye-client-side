@@ -30,7 +30,7 @@ const UpvotePaymentSuccess = () => {
       });
   }, [sessionId, axiosSecure]);
 
-  console.log(paymentInfo);
+  //console.log(paymentInfo);
   if (loading) return <Loading />;
   //   if (!paymentInfo) {
   //     return (

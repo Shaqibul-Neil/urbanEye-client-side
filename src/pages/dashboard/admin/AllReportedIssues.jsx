@@ -70,7 +70,7 @@ const AllReportedIssues = () => {
       });
       if (!result.isConfirmed) return;
       const res = await issueReject(issueInfo);
-      console.log(res);
+      //console.log(res);
       if (res?.issue?.modifiedCount) {
         await Swal.fire({
           title: "Rejected",

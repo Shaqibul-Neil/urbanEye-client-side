@@ -38,7 +38,7 @@ export default function FeaturesSection() {
             A powerful and transparent platform where citizens can report
             issues, track progress, and help improve their city with ease.
           </p>
-          <button className="px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-indigo-700 transition">
+          <button className="px-6 py-3 border border-primary text-primary rounded-full shadow-md hover:bg-primary hover:text-white  cursor-pointer transition-all duration-300">
             Report an Issue
           </button>
         </div>

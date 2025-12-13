@@ -22,7 +22,7 @@ const GlobeSection = () => {
           <div className="flex justify-center items-center w-64 border-white border rounded-full h-20 wave">
             <div className="flex justify-center items-center w-60 border-primary border rounded-full h-16">
               <Link
-                className="w-56 bg-white text-primary font-bold py-3 px-5 rounded-full shadow-lg text-lg transition duration-300 text-center cursor-pointer relative z-12"
+                className="w-56 bg-primary text-white font-bold py-3 px-5 rounded-full shadow-lg text-lg transition uppercase duration-300 text-center cursor-pointer relative z-12 hover:bg-white hover:text-primary"
                 to={"/all-issues"}
               >
                 Explore Issue

@@ -70,7 +70,7 @@ const ReportedIssues = () => {
       });
       if (!result.isConfirmed) return;
       const res = await deleteIssue(id);
-      console.log(res);
+      //console.log(res);
       if (res?.issue?.deletedCount) {
         //success popup
         await Swal.fire({

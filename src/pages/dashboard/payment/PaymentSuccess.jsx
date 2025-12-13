@@ -18,7 +18,7 @@ const PaymentSuccess = () => {
         axiosSecure
           .post(`/payments/payment-success?session_id=${sessionId}`, sessionId)
           .then((res) => {
-            console.log(res?.data?.payment);
+            //console.log(res?.data?.payment);
             setPaymentInfo(res?.data?.payment);
             // invalidate payment stats
             queryClient.invalidateQueries({ queryKey: ["payment-stats"] });
@@ -28,7 +28,7 @@ const PaymentSuccess = () => {
       }
     } catch (error) {
       toast.error(error.message);
-      console.log(error);
+      //console.log(error);
     }
   }, [sessionId, axiosSecure, queryClient]);
   //console.log(paymentInfo);
@@ -41,7 +41,7 @@ const PaymentSuccess = () => {
     date: new Date(paymentInfo?.paidAt).toLocaleString(),
     method: paymentInfo?.paymentMethod || "Card / Stripe",
   };
-  console.log("receipt", receipt);
+  //console.log("receipt", receipt);
   return (
     <div>
       <div className="flex items-center justify-center px-4 py-12">

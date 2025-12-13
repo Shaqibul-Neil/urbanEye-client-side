@@ -26,7 +26,7 @@ const ManageStaff = () => {
     queryKey: ["all-staffs"],
     queryFn: async () => {
       const { data } = await axiosSecure.get("/staff");
-      console.log(data);
+      //console.log(data);
       return data.staff;
     },
   });
@@ -53,7 +53,7 @@ const ManageStaff = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
   //add staff modal

@@ -35,7 +35,7 @@ const ReportIssues = () => {
       const issuesData = { ...rest, photoURL, userEmail: user?.email };
       //send issues to backend
       const res = await reportIssues(issuesData);
-      console.log(res);
+      //console.log(res);
       const insertedId = res?.issue?.insertedId;
       if (!insertedId)
         throw new Error("Issues can not be submitted at the moment");
@@ -50,7 +50,7 @@ const ReportIssues = () => {
       });
       navigate("/dashboard/my-reported-issues");
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       // error popup
       Swal.fire({
         title: "Something went wrong",

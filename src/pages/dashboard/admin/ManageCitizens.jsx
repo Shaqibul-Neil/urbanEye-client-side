@@ -23,7 +23,7 @@ const ManageCitizens = () => {
     queryKey: ["all-users", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
-      console.log(res.data.users);
+      //console.log(res.data.users);
       return res?.data?.users;
     },
   });

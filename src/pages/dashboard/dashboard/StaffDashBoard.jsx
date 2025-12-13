@@ -58,7 +58,7 @@ const StaffDashBoard = () => {
       return data?.tasks;
     },
   });
-  console.log(resolvedTasks);
+  //console.log(resolvedTasks);
   if (isLoading || taskLoading || resolveLoading) return <Loading />;
   if (isError || taskError || resolveError) return <ErrorComponent />;
   return (
