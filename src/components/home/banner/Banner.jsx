@@ -4,7 +4,6 @@ import globe from "../../../assets/globe.png";
 import { Link } from "react-router";
 import StatsBannerCard from "./StatsBannerCard";
 import { Clock, MessageCircle } from "lucide-react";
-import { MdLocationCity } from "react-icons/md";
 const Banner = () => {
   return (
     <div className="relative bg-base-200 pt-12 lg:pt-0">

@@ -15,11 +15,17 @@ const Main = () => {
   const [loading, setLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
 
-  // Page load এর 3 সেকেন্ড পরে popup দেখাবে
   useEffect(() => {
+    const hasSeenPopup = sessionStorage.getItem("hasSeenPopup");
+    //console.log("yes", hasSeenPopup);
     const timer = setTimeout(() => {
       setLoading(false);
-      setShowPopup(true);
+      //only show popup once per session
+      if (!hasSeenPopup) {
+        //console.log("no", hasSeenPopup);
+        setShowPopup(true);
+        sessionStorage.setItem("hasSeenPopup", true);
+      }
     }, 3000);
     return () => clearTimeout(timer);
   }, []);

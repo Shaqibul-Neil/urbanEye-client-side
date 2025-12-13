@@ -34,7 +34,7 @@ const Profile = () => {
   if (isLoading) return <p>Loading profile...</p>;
   if (isError) return <p>No profile data found!</p>;
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen px-3">
       <div className="bg-white shadow-lg rounded-2xl md:w-4/5">
         <img
           alt="cover photo"
@@ -62,19 +62,19 @@ const Profile = () => {
           <p className="p-2 px-4 text-xs text-primary font-extrabold uppercase">
             {myInfo?.role}
           </p>
-          <p className="text-xl font-medium text-gray-800 ">
+          <p className="text-xl font-medium text-gray-800 mb-4">
             {user?.displayName}
           </p>
-          <div className="w-full rounded-lg">
-            <div className="flex flex-wrap items-center justify-between text-sm text-gray-600 ">
+          <div className="w-full">
+            <div className="flex flex-col gap-4 text-sm text-gray-600 mx-auto md:flex-row md:justify-between md:items-center">
               <div>
-                <p>
+                <p className="text-center md:text-left">
                   Name :{" "}
-                  <span className="font-bold text-gray-600 ">
+                  <span className="font-bold text-gray-600">
                     {user?.displayName}
                   </span>
                 </p>
-                <p>
+                <p className="text-center md:text-left">
                   Email :{" "}
                   <span className="font-bold text-gray-600 ">
                     {user?.email}

@@ -1,4 +1,3 @@
-import React from "react";
 import { Sparkles, Rss, Play, Video, LayoutList } from "lucide-react";
 import { Link } from "react-router";
 
@@ -22,12 +21,8 @@ const ICON_DATA = [
   { icon: Sparkles, color: "bg-yellow-600", name: "Premium" },
 ];
 
-/**
- * A component to display the Podcast Monetization feature card.
- * Features an animated icon marquee on a curved path using Tailwind and custom CSS.
- */
 const NotSubscribed = () => {
-  // We double the ICON_DATA to simulate an infinite marquee loop
+  // double the data to simulate an infinite marquee loop
   const marqueeIcons = [...ICON_DATA, ...ICON_DATA];
 
   return (
@@ -35,7 +30,7 @@ const NotSubscribed = () => {
     <>
       <style>{customStyles}</style>
 
-      <div className="max-w-sm mx-auto bg-white p-2 rounded-3xl shadow-2xl border border-gray-100">
+      <div className="w-full mx-auto bg-white p-2 rounded-3xl shadow-2xl border border-gray-100">
         {/* === Icon Marquee Section === */}
         <div className="relative h-16 overflow-hidden">
           {/* The Marquee Track Container */}

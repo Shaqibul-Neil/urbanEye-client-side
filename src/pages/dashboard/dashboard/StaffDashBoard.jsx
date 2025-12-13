@@ -107,7 +107,7 @@ const StaffDashBoard = () => {
 
       {/* Right Side */}
 
-      <div className="col-span-1 space-y-4">
+      <div className="space-y-4 flex lg:flex-col md:flex-row flex-col">
         {/* Latest Issues */}
         <div className="p-6 rounded-3xl">
           <div className=" space-y-4">

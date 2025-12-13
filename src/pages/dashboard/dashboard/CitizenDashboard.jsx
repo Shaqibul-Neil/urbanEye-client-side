@@ -70,9 +70,9 @@ const CitizenDashboard = () => {
 
       {/* Right Side */}
 
-      <div className="space-y-6 p-6 rounded-3xl flex gap-3 lg:flex-col md:flex-row flex-col">
+      <div className="space-y-6 p-6 rounded-3xl flex lg:gap-3 lg:flex-col md:flex-row flex-col md:gap-5 gap-3 justify-between items-center">
         {/* Latest Issues */}
-        <div>
+        <div className="w-full">
           <div className=" space-y-4">
             <h3 className="text-lg text-secondary font-bold">
               Latest Posted Issues
@@ -81,7 +81,7 @@ const CitizenDashboard = () => {
           </div>
         </div>
         {/* Latest Payments */}
-        <div>
+        <div className="w-full">
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h3 className="text-lg text-secondary font-bold">
@@ -102,7 +102,7 @@ const CitizenDashboard = () => {
         </div>
 
         {/* Haven't Subscribe Yet? */}
-        <div>
+        <div className="w-full">
           <NotSubscribed />
         </div>
       </div>
