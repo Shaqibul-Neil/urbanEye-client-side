@@ -29,6 +29,7 @@ import UpvotePaymentPage from "../pages/upvote/UpvotePaymentPage";
 import UpvotePaymentSuccess from "../pages/upvote/UpvotePaymentSuccess";
 import ErrorPage from "../components/error/error page/ErrorPage";
 import RouteTitle from "./RouteTitle";
+import InvoicePaymentHistory from "../pages/dashboard/admin/InvoicePaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -185,6 +186,16 @@ const router = createBrowserRouter([
           </AdminRoutes>
         ),
       },
+      // {
+      //   path: "invoice-payment-history",
+      //   element: (
+      //     <AdminRoutes>
+      //       <RouteTitle title="Admin - invoice Payment History">
+      //         <InvoicePaymentHistory />
+      //       </RouteTitle>
+      //     </AdminRoutes>
+      //   ),
+      // },
       //Staff Routes
       {
         path: "assigned-issues",

@@ -18,7 +18,6 @@ const GoogleLogin = () => {
   const handleSignInWithGoogle = async () => {
     try {
       setUserLoading(true);
-
       // SweetAlert Loading Popup
       Swal.fire({
         title: "Verifying your google credentials...",
@@ -43,7 +42,7 @@ const GoogleLogin = () => {
       if (roleResult?.data === "admin" || roleResult?.data === "staff") {
         navigate("/dashboard");
       } else navigate(location?.state || "/");
-
+      setUserLoading(false);
       Swal.fire({
         position: "center",
         icon: "success",

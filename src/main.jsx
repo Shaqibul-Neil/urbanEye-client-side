@@ -8,6 +8,7 @@ import router from "./routes/Router";
 import { Toaster } from "react-hot-toast";
 import SubscriptionPopup from "./components/home/popup/SubscriptionPopup";
 import Loading from "./components/loading/Loading";
+import PaymentProvider from "./context/PaymentProvider";
 
 const queryClient = new QueryClient();
 
@@ -36,36 +37,38 @@ const Main = () => {
       {loadingOnLoad && <Loading />}
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <RouterProvider router={router} />
-          <Toaster
-            position="top-right"
-            reverseOrder={false}
-            toastOptions={{
-              success: {
-                style: {
-                  background: "linear-gradient(90deg, #006400, #008000)",
-                  color: "#fff",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: "600",
+          <PaymentProvider>
+            <RouterProvider router={router} />
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+              toastOptions={{
+                success: {
+                  style: {
+                    background: "linear-gradient(90deg, #006400, #008000)",
+                    color: "#fff",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: "600",
+                  },
                 },
-              },
-              error: {
-                style: {
-                  background: "linear-gradient(90deg, #cc0000, #ff004c)",
-                  color: "#fff",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: "600",
+                error: {
+                  style: {
+                    background: "linear-gradient(90deg, #cc0000, #ff004c)",
+                    color: "#fff",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: "600",
+                  },
                 },
-              },
-            }}
-          />
-          {/* Subscription Popup */}
-          {showPopup && (
-            <SubscriptionPopup
-              isOpen={showPopup}
-              onClose={() => setShowPopup(false)}
+              }}
             />
-          )}
+            {/* Subscription Popup */}
+            {showPopup && (
+              <SubscriptionPopup
+                isOpen={showPopup}
+                onClose={() => setShowPopup(false)}
+              />
+            )}
+          </PaymentProvider>
         </AuthProvider>
       </QueryClientProvider>
     </>

@@ -9,8 +9,8 @@ const RightCard = () => {
       </h3>
       <p className="text-secondary text-sm mt-2 ">5 issues resolved today</p>
       <div className="w-3 h-3 bg-primary rounded-full animate-pulse absolute bottom-4 right-4"></div>
-      <div className="w-3 h-3 bg-primary rounded-full animate-pulse absolute bottom-4 right-8"></div>
-      <div className="w-3 h-3 bg-primary rounded-full animate-pulse absolute bottom-4 right-8"></div>
+      <div className="w-3 h-3 bg-white rounded-full animate-pulse absolute bottom-4 right-8"></div>
+      <div className="w-3 h-3 bg-primary rounded-full animate-pulse absolute bottom-4 right-12"></div>
     </div>
   );
 };

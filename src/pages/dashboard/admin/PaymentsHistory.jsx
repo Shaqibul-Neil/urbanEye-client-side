@@ -7,9 +7,12 @@ import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 import { useState } from "react";
 import { MdEmail } from "react-icons/md";
+import { Link } from "react-router";
+import usePayment from "../../../hooks/payment related/usePayment";
 
 const PaymentsHistory = () => {
   const [filterType, setFilterType] = useState("");
+  const { paymentsPDF, setPaymentsPDF } = usePayment();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {
@@ -25,11 +28,17 @@ const PaymentsHistory = () => {
           ...(filterType && { paymentType: filterType }),
         },
       });
+      console.log(res.data);
       return res?.data?.payment;
+    },
+    onSuccess: (data) => {
+      console.log("Payments fetched: ", data);
+      setPaymentsPDF(data);
     },
   });
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
+  console.log("paymentsPDF", paymentsPDF);
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">
@@ -47,16 +56,25 @@ const PaymentsHistory = () => {
             />
           </div>
         </div>
-        <div className="mb-4 w-48 ml-auto">
-          <select
-            value={filterType}
-            onChange={(e) => setFilterType(e.target.value)}
-            className="select select-bordered w-48 py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none"
+        <div className="flex gap-4 items-center w-84 md:ml-auto md:flex-row flex-col">
+          <button
+            onClick={() => setShowPdf(true)}
+            className="cursor-pointer btn btn-outline btn-primary"
           >
-            <option value="">All Types</option>
-            <option value="subscription">Subscription</option>
-            <option value="upvote">Upvote</option>
-          </select>
+            Download PDF
+          </button>
+
+          <div className="w-48">
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              className="select select-bordered w-48 py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none"
+            >
+              <option value="">All Types</option>
+              <option value="subscription">Subscription</option>
+              <option value="upvote">Upvote</option>
+            </select>
+          </div>
         </div>
 
         {/* Table Section */}
