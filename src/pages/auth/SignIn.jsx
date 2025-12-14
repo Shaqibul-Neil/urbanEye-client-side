@@ -44,7 +44,7 @@ const SignIn = () => {
         navigate("/dashboard");
       } else navigate(location?.state || "/");
       reset();
-      Swal.fire({
+      await Swal.fire({
         position: "center",
         icon: "success",
         title: "Logged In Successfully. Welcome on board",

@@ -7,10 +7,10 @@ import useAuth from "../../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
 import useMyInfo from "../../../hooks/citizen related/useMyInfo";
 import useReportIssues from "../../../hooks/citizen related/useReportIssues";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const ReportIssues = () => {
-  //dependencies
+  // dependencies
   const {
     register,
     handleSubmit,
@@ -18,14 +18,37 @@ const ReportIssues = () => {
   } = useForm();
   const { user } = useAuth();
   const navigate = useNavigate();
-  //mutation function
+  const { myInfo } = useMyInfo();
   const { mutateAsync: reportIssues } = useReportIssues();
 
-  //myInfo
-  const { myInfo } = useMyInfo();
-
-  //report issue submit
+  // handle submit & user type logic inside one function
   const handleReportIssues = async (data) => {
+    // Blocked user check
+    if (myInfo?.isBlocked) {
+      return Swal.fire({
+        icon: "error",
+        title: "Account Blocked",
+        text: "Your account is blocked. You cannot submit issues.",
+      });
+    }
+
+    // Free user limit check
+    if (!myInfo?.isPremium && (myInfo?.countIssues ?? 0) >= 3) {
+      return Swal.fire({
+        title: "Free Limit Up",
+        text: "You won't be able to post this! To post again you need to subscribe",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+        confirmButtonText: "Yes, Subscribe",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/my-profile");
+        }
+      });
+    }
+
     try {
       // show loading Swal
       Swal.fire({
@@ -34,32 +57,34 @@ const ReportIssues = () => {
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
       });
+
       const uploadedPhoto = data?.photo[0];
       const photoURL = await imageUpload(uploadedPhoto);
-      //removing photo from data
+
       const { photo, ...rest } = data;
       const issuesData = { ...rest, photoURL, userEmail: user?.email };
-      //send issues to backend
+
+      // send issues to backend
       const res = await reportIssues(issuesData);
-      //console.log(res);
       const insertedId = res?.issue?.insertedId;
+
       if (!insertedId)
-        throw new Error("Issues can not be submitted at the moment");
-      // close loading Swal
+        throw new Error("Issues cannot be submitted at the moment");
+
       Swal.close();
-      //success popup
+
+      // success popup
       await Swal.fire({
         position: "center",
         icon: "success",
-        title: "Your issues has been submitted",
+        title: "Your issue has been submitted",
         showConfirmButton: false,
         timer: 1500,
       });
+
       navigate("/dashboard/my-reported-issues");
     } catch (error) {
       Swal.close();
-      //console.log(error);
-      // error popup
       Swal.fire({
         title: "Something went wrong",
         text: error?.response?.data?.message || "Server error!",
@@ -67,6 +92,7 @@ const ReportIssues = () => {
       });
     }
   };
+
   return (
     <div className="px-5">
       <div>
@@ -82,19 +108,19 @@ const ReportIssues = () => {
             }
           />
         </div>
+
         {/* Form Section */}
         <form
           autoComplete="off"
           className="space-y-10 text-ghost mb-6 mt-12"
           onSubmit={handleSubmit(handleReportIssues)}
         >
-          {/* Issue Details */}
           <div className="bg-white p-6 rounded-4xl space-y-4">
             <h3 className="text-xl font-semibold flex items-center gap-2 text-secondary">
               Issue Details
             </h3>
 
-            {/* Issue Title */}
+            {/* Title */}
             <div className="relative">
               <label className="block text-secondary mb-1">Title *</label>
               <input
@@ -170,7 +196,7 @@ const ReportIssues = () => {
             </div>
           </div>
 
-          {/* Submit */}
+          {/* Single Submit Button */}
           <div className="space-y-2">
             <p className="text-sm text-secondary">
               Free users can report up to 3 issues. Upgrade to premium for
@@ -179,36 +205,14 @@ const ReportIssues = () => {
                 <> — Free Issue Left: {3 - (myInfo?.countIssues || 0)}</>
               )}
             </p>
-
-            {/* Submit Button Logic */}
-            {myInfo?.isBlocked ? (
-              <button
-                type="submit"
-                className="px-10 py-3 rounded-xl font-extrabold bg-gray-400 cursor-not-allowed"
-                disabled
-                title="Your account is blocked. You cannot submit issues."
-              >
-                Submit Issue
-              </button>
-            ) : myInfo?.isPremium || (myInfo?.countIssues ?? 0) < 3 ? (
-              <button
-                type="submit"
-                className="px-10 py-3 rounded-xl font-extrabold bg-primary text-white cursor-pointer"
-              >
-                Submit Issue
-              </button>
-            ) : null}
+            <button
+              type="submit"
+              className="px-10 py-3 rounded-xl font-extrabold bg-primary text-white cursor-pointer"
+            >
+              Submit Issue
+            </button>
           </div>
         </form>
-        {/* Subscribe Link for free users who reached limit */}
-        {!myInfo?.isPremium && (myInfo?.countIssues ?? 0) >= 3 && (
-          <Link
-            to={"/dashboard/my-profile"}
-            className="px-10 py-3 bg-primary text-white font-extrabold rounded-xl cursor-pointer"
-          >
-            Subscribe to Report
-          </Link>
-        )}
       </div>
     </div>
   );

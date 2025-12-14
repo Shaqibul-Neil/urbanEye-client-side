@@ -37,6 +37,16 @@ const EditIssueModal = ({ editIssueRef, currentIssue }) => {
   const { mutateAsync: updateIssue } = useUpdateIssue();
   const handleEditIssues = async (data) => {
     try {
+      editIssueRef.current.close();
+      // show loading Swal
+      Swal.fire({
+        title: "Updating issue Info...",
+        text: "Uploading image and processing...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          setTimeout(() => Swal.showLoading(), 50); // 50ms delay
+        },
+      });
       let photoURL = currentIssue.photoURL;
       if (data.photo && data.photo[0]) {
         photoURL = await imageUpload(data.photo[0]);
@@ -50,7 +60,7 @@ const EditIssueModal = ({ editIssueRef, currentIssue }) => {
         issueId: currentIssue._id,
       };
       const res = await updateIssue(issueData);
-      editIssueRef.current.close();
+
       if (res?.issue?.modifiedCount) {
         await Swal.fire({
           position: "center",

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { getStatusBadge } from "../../../../utilities/getStatusBadge";
 import { MdArrowOutward } from "react-icons/md";
 import { ThumbsUp } from "lucide-react";
@@ -12,12 +12,32 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
   //const { role } = useRole();
 
   const axiosSecure = useAxiosSecure();
-  //upvote
+
   // upvote
   const handleUpvote = async (issue) => {
     const issueInfo = { issueId: issue._id, userEmail: issue.userEmail };
     if (!user) {
-      navigate("/signin");
+      Swal.fire({
+        title: "Want to upvote?",
+        text: "Please login or register if new to share your thoughts",
+        icon: "warning",
+        showCancelButton: true, // Cancel button
+        showDenyButton: true, // Register button
+        confirmButtonText: "Login", // Login button
+        denyButtonText: "Register", // Register button
+        confirmButtonColor: "#2563eb",
+        denyButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Login clicked
+          navigate("/signin");
+        } else if (result.isDenied) {
+          // Register clicked
+          navigate("/signup");
+        }
+        // Cancel clicked
+      });
       return;
     }
 
@@ -86,17 +106,51 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
       });
     }
   };
+  //view details
+  const handleViewDetails = (issue) => {
+    if (!user) {
+      Swal.fire({
+        title: "Want to view details?",
+        text: "Please login or register to see issue details",
+        icon: "warning",
+        showCancelButton: true, // Cancel
+        showDenyButton: true, // Register
+        confirmButtonText: "Login",
+        denyButtonText: "Register",
+        confirmButtonColor: "#2563eb",
+        denyButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+      }).then((result) => {
+        if (result.isConfirmed) navigate("/signin");
+        else if (result.isDenied) navigate("/signup");
+        // Cancel => do nothing
+      });
+      return;
+    }
+
+    // If logged in, navigate to issue details
+    navigate(`/issue/${issue._id}`);
+  };
 
   return (
-    <div className="w-full max-w-sm" key={issue._id}>
+    <div
+      className="w-full max-w-sm transform duration-300 hover:scale-110"
+      key={issue._id}
+    >
       <div className="card-inner relative w-full h-72 bg-white rounded-3xl overflow-hidden">
         <div className="box w-full h-full bg-white rounded-3xl overflow-hidden relative">
           {/* Image Box */}
-          <div className="absolute inset-0">
+          <div
+            className={`absolute inset-0 before:absolute before:inset-0  transform duration-300 hover:scale-110 ${
+              issue.status === "closed"
+                ? "before:bg-black/60"
+                : "before:bg-black/30"
+            }`}
+          >
             <img
               src={issue?.photoURL}
               alt={issue?.title}
-              className={`w-full h-full object-cover absolute inset-0 bg-black/60`}
+              className={`w-full h-full object-cover `}
             />
           </div>
 
@@ -126,15 +180,15 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
                 View Details
               </div>
             </div>
-            <Link
-              to={`/issue/${issue?._id}`}
+            <button
+              onClick={() => handleViewDetails(issue)}
               className="iconBox absolute inset-2.5 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 group"
               data-tip="View details"
             >
               <span className="text-white text-2xl">
                 <MdArrowOutward className="w-10 h-10 group-hover:rotate-30 transition-all" />
               </span>
-            </Link>
+            </button>
           </div>
         </div>
       </div>

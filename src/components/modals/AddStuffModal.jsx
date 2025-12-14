@@ -3,6 +3,7 @@ import imageUpload from "../../utilities/imageUpload";
 import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
   const axiosSecure = useAxiosSecure();
@@ -14,6 +15,17 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
   } = useForm();
   const handleAddStuff = async (data) => {
     try {
+      staffModalRef.current.close();
+      // show loading Swal
+      Swal.fire({
+        title: "Submitting Staff Info...",
+        text: "Uploading image and processing...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          setTimeout(() => Swal.showLoading(), 50); // 50ms delay
+        },
+      });
+
       //store the image and get the link
       const uploadedPhoto = data.photo[0];
       const photoURL = await imageUpload(uploadedPhoto);
@@ -29,7 +41,10 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
       //send data to backend
       const res = await axiosSecure.post("/staff", staffInfo);
       staffRefetch();
-      staffModalRef.current.close();
+
+      // close loading Swal
+      Swal.close();
+      //success popup
       if (res.data.insertedId) {
         await Swal.fire({
           position: "center",
@@ -108,14 +123,16 @@ const AddStuffModal = ({ staffModalRef, staffRefetch }) => {
             <label className="block text-secondary mb-1">Staff Phone *</label>
             <input
               type="tel"
+              maxLength={14}
               {...register("phone", {
                 required: "Phone is required",
                 pattern: {
                   value: /^\+8801[3-9]\d{8}$/,
-                  message: "Please give a valid phone number (+8801XXXXXXXXX)",
+                  message:
+                    "Please give a valid phone number (+8801-[3-9]-XXXXXXXX)",
                 },
               })}
-              placeholder="+8801XXXXXXXXX"
+              placeholder="+8801-[3-9]-XXXXXXXX"
               className="w-full py-2 px-3 bg-gray-100 border border-gray-300 rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1"
             />
             {errors.phone && (

@@ -220,6 +220,7 @@ const IssueDetailsCard = ({ issue, refetch }) => {
           reporter and staff info, and interact with it in real-time.
         </p>
       </div>
+      {/* Issue Details */}
       <div className="md:py-12 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT SIDE - IMAGE */}
@@ -435,6 +436,7 @@ const IssueDetailsCard = ({ issue, refetch }) => {
           />
         </div>
       </div>
+      {/* Issue Tracking */}
       <div className="container mx-auto px-3 md:px-5 lg:px-0 mt-12 text-center">
         <div className="space-y-6">
           {/* Main Heading */}

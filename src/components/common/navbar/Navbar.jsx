@@ -87,9 +87,10 @@ const Navbar = ({ scrolled }) => {
       </div>
 
       <div
-        className={`navbar-center hidden lg:flex bg-white rounded-3xl px-6 py-4 transition-all duration-300 ease-in-out  ${
-          scrolled &&
-          "fixed top-4 left-1/2 transform -translate-x-1/2 md:w-96 w-full lg:px-10 md:px-4 px-1 bg-blue-100/80 backdrop-blur-2xl rounded-3xl z-50 flex justify-center items-center"
+        className={`navbar-center hidden lg:flex rounded-3xl px-6 py-4 transition-all duration-300 ease-in-out  ${
+          scrolled
+            ? "fixed top-4 left-1/2 transform -translate-x-1/2 md:w-96 w-full lg:px-10 md:px-4 px-1 bg-blue-100/80 backdrop-blur-2xl rounded-3xl z-50 flex justify-center items-center border-primary border-2"
+            : "bg-white"
         }`}
       >
         <ul className="flex items-center gap-6 text-primary">

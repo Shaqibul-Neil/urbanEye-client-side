@@ -6,20 +6,25 @@ import {
   FaCheckCircle,
   FaLock,
 } from "react-icons/fa";
+import { FiZap } from "react-icons/fi";
 
 const actionIcons = [
-  { name: "created", icon: <FaRegEdit className="w-5 h-5 text-gray-800" /> },
-  { name: "assigned", icon: <FaUserPlus className="w-5 h-5 text-gray-800" /> },
+  { name: "created", icon: <FaRegEdit className="w-5 h-5 text-primary" /> },
+  { name: "assigned", icon: <FaUserPlus className="w-5 h-5 text-primary" /> },
   {
     name: "in-progress",
-    icon: <FaSpinner className="w-5 h-5 text-gray-800 animate-spin" />,
+    icon: <FaSpinner className="w-5 h-5 text-primary" />,
   },
-  { name: "working", icon: <FaTools className="w-5 h-5 text-gray-800" /> },
+  { name: "working", icon: <FaTools className="w-5 h-5 text-primary" /> },
   {
     name: "resolved",
-    icon: <FaCheckCircle className="w-5 h-5 text-gray-800" />,
+    icon: <FaCheckCircle className="w-5 h-5 text-primary" />,
   },
-  { name: "closed", icon: <FaLock className="w-5 h-5 text-gray-800" /> },
+  {
+    name: "boosted",
+    icon: <FiZap className="w-5 h-5 text-primary" />,
+  },
+  { name: "closed", icon: <FaLock className="w-5 h-5 text-primary" /> },
 ];
 
 const VerticalTimeline = ({ issue }) => {
@@ -27,6 +32,7 @@ const VerticalTimeline = ({ issue }) => {
   const reversedTimeline = [...(timeline || [])].sort(
     (a, b) => new Date(a.at) - new Date(b.at)
   );
+  console.log(timeline);
   return (
     <ul className="steps steps-vertical">
       {reversedTimeline.map((item, index) => {
@@ -34,22 +40,10 @@ const VerticalTimeline = ({ issue }) => {
           item.action.toLowerCase().includes(a.name)
         );
 
-        // Color mapping
-        const circleColor = {
-          created: "bg-blue-200",
-          assigned: "bg-yellow-200",
-          "in-progress": "bg-orange-200",
-          working: "bg-purple-200",
-          resolved: "bg-green-200",
-          closed: "bg-gray-200",
-        };
-
         return (
           <li key={index} className="step step-neutral">
             <span
-              className={`step-icon flex items-center justify-center w-10 h-10 text-white text-xl ${
-                circleColor[actionIconObj?.name] || "bg-gray-400"
-              }`}
+              className={`step-icon flex items-center justify-center w-10 h-10 text-white text-xl bg-white border-primary`}
             >
               {actionIconObj?.icon || "❓"}
             </span>

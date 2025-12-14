@@ -43,10 +43,11 @@ const GoogleLogin = () => {
         navigate("/dashboard");
       } else navigate(location?.state || "/");
       setUserLoading(false);
-      Swal.fire({
+      Swal.close();
+      await Swal.fire({
         position: "center",
         icon: "success",
-        title: "Logged In usign google. Welcome on board",
+        title: "Logged In using google. Welcome on board",
         showConfirmButton: false,
         timer: 1500,
       });

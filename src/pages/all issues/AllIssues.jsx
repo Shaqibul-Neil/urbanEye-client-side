@@ -28,7 +28,7 @@ const AllIssues = () => {
     status: [],
     priority: [],
   });
-  const limit = 8;
+  const limit = 9;
 
   //wait .5s after user stopped typing and then send the signal to backend to fetch
   useEffect(() => {
@@ -154,8 +154,8 @@ const AllIssues = () => {
                       type="search"
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
-                      placeholder="Search..."
-                      className="w-full py-2 pl-10 pr-3 bg-gray-100 border border-primary rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1"
+                      placeholder="Search by issue name or location..."
+                      className="w-full py-2 pl-8 pr-1 bg-gray-100 border border-primary rounded-xl focus:ring-secondary focus:border-secondary focus:outline-none focus:ring-1 placeholder:text-sm"
                     />
                     <Search
                       size={16}
@@ -213,9 +213,9 @@ const AllIssues = () => {
           </div>
         </div>
         {/* Issues Grid */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
           {/* Issues */}
-          <div className="lg:col-span-4 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+          <div className="lg:col-span-3 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
             {issues.map((issue) => (
               <IssueCard
                 issue={issue}
