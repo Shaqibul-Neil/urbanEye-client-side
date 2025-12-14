@@ -19,9 +19,12 @@ const LatestPayments = ({ latestPayments }) => {
                 group-hover:-translate-y-0.5"
                 >
                   <div>
-                    <p className="font-semibold text-secondary text-sm">
-                      {latest?.paymentName}
-                    </p>
+                    <div className="flex justify-between items-center gap-5">
+                      <p className="font-semibold text-secondary text-sm">
+                        {latest?.paymentName}
+                      </p>
+                      <p className="text-gray-500 text-xs">${latest?.amount}</p>
+                    </div>
                     <p className="text-xs text-secondary">
                       {latest?.paymentType} Payment
                     </p>
@@ -29,10 +32,6 @@ const LatestPayments = ({ latestPayments }) => {
                       {new Date(latest?.paidAt).toLocaleDateString()}
                     </p>
                   </div>
-
-                  <span className="text-gray-500 text-sm">
-                    $ {latest?.amount}
-                  </span>
                 </div>
               </td>
             </tr>

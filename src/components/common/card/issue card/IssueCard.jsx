@@ -5,79 +5,86 @@ import { ThumbsUp } from "lucide-react";
 import useAuth from "../../../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
-import useRole from "../../../../hooks/auth & role/useRole";
 
-const IssueCard = ({ issue }) => {
+const IssueCard = ({ issue, onUpvoteSuccess }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   //const { role } = useRole();
 
   const axiosSecure = useAxiosSecure();
   //upvote
+  // upvote
   const handleUpvote = async (issue) => {
-    //not logged in
+    const issueInfo = { issueId: issue._id, userEmail: issue.userEmail };
     if (!user) {
       navigate("/signin");
       return;
     }
-    //admin can not upvote
-    // if (role === "admin") {
-    //   return Swal.fire({
-    //     position: "center",
-    //     icon: "error",
-    //     title: "Your can not upvote admin",
-    //     showConfirmButton: false,
-    //     timer: 1500,
-    //   });
-    // }
-    //if issuer tries to upvote on his posted issue
+
     if (user?.email === issue?.userEmail) {
       return Swal.fire({
         position: "center",
         icon: "error",
-        title: "Your can not upvote on your issue",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    //if issue is already resolved
-    if (issue?.status === "resolved" || issue?.status === "closed") {
-      return Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Your can not upvote on a resolved issue",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    //if same user upvote on the same issue
-    const { data } = await axiosSecure.get(
-      `/payments/check-upvote?issueId=${issue._id}&citizenEmail=${user.email}`
-    );
-
-    if (data.alreadyUpvoted) {
-      return Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "You have already paid for this issue",
+        title: "You cannot upvote your own issue",
         showConfirmButton: false,
         timer: 1500,
       });
     }
 
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will be charged $100 for one upvote",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#10b981",
-      cancelButtonColor: "#ef4444",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate(`/upvote-payment/${issue._id}`);
+    if (
+      issue?.status === "resolved" ||
+      issue?.status === "closed" ||
+      issue?.status === "rejected"
+    ) {
+      return Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "You cannot upvote a resolved issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
+    try {
+      const { data } = await axiosSecure.post(
+        `/issues/${issue._id}/upvote`,
+        issueInfo
+      );
+
+      // already upvoted handled by backend
+      if (data.message === "Already upvoted") {
+        return Swal.fire({
+          position: "center",
+          icon: "info",
+          title: "You have already upvoted this issue",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-    });
+
+      // upvote success
+      if (data.message === "Upvote added successfully") {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Upvote added successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        onUpvoteSuccess(issue._id);
+      }
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message || "Failed to upvote. Try again later.";
+
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: msg,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (
@@ -147,7 +154,7 @@ const IssueCard = ({ issue }) => {
             onClick={() => handleUpvote(issue)}
           >
             <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
-            <span>Upvote {issue?.upvoteCount || 0}</span>
+            <span>Upvote {issue?.totalUpvoteCount || 0}</span>
           </button>
         </div>
       </div>

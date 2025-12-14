@@ -5,7 +5,7 @@ import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
 import toast from "react-hot-toast";
 import Loading from "../../components/loading/Loading";
 
-const UpvotePaymentSuccess = () => {
+const BoostPaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [paymentInfo, setPaymentInfo] = useState("");
@@ -16,13 +16,15 @@ const UpvotePaymentSuccess = () => {
     setLoading(true);
     axiosSecure
       .post(
-        `/payments/upvote-payment-success?session_id=${sessionId}`,
+        `/payments/boost-payment-success?session_id=${sessionId}`,
         sessionId
       )
       .then((res) => {
+        //console.log(res);
         setPaymentInfo(res?.data?.payment);
       })
       .catch((error) => {
+        //console.log(error);
         toast.error(error.message);
       })
       .finally(() => {
@@ -147,4 +149,4 @@ const UpvotePaymentSuccess = () => {
   );
 };
 
-export default UpvotePaymentSuccess;
+export default BoostPaymentSuccess;

@@ -1,6 +1,6 @@
 const Loading = () => {
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center z-[9999] bg-linear-to-br from-white/80 via-white/60 to-white/90 backdrop-blur-sm overflow-hidden">
+    <div className="fixed inset-0 flex flex-col items-center justify-center z-[9999] bg-linear-to-br from-#2563eb via-#e5edf0 to-white backdrop-blur-sm overflow-hidden">
       {/* Circle + icon wrapper */}
 
       <div className="w-52 h-52 flex items-center justify-center z-10 rounded-full spin-circle relative loader-wave">

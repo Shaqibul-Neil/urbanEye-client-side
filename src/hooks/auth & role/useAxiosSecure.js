@@ -5,7 +5,8 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 const axiosSecure = axios.create({
-  baseURL: `https://urbaneye-server-side.vercel.app`,
+  // baseURL: `https://urbaneye-server-side.vercel.app`,
+  baseURL: `http://localhost:5000`,
 });
 
 const useAxiosSecure = () => {

@@ -1,28 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
-import useAuth from "../../../hooks/auth & role/useAuth";
 import { formatDate } from "../../../utilities/formatDate";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
+import useGetAllPayments from "../../../hooks/payment related/useGetAllPayments";
 
 const MyPayments = () => {
-  const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
-  const {
-    data: payments = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["payments", user?.email],
-    enabled: !!user?.email,
-    queryFn: async () => {
-      const res = await axiosSecure.get("/payments");
-      //console.log(res);
-      return res?.data?.payment;
-    },
-  });
+  const { payments, isLoading, isError } = useGetAllPayments();
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
   return (

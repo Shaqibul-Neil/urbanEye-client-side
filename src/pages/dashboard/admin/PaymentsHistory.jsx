@@ -5,40 +5,20 @@ import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router";
 import usePayment from "../../../hooks/payment related/usePayment";
+import useGetAllPayments from "../../../hooks/payment related/useGetAllPayments";
 
 const PaymentsHistory = () => {
   const [filterType, setFilterType] = useState("");
-  const { paymentsPDF, setPaymentsPDF } = usePayment();
-  const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
-  const {
-    data: payments = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["payments", user?.email, filterType],
-    enabled: !!user?.email,
-    queryFn: async () => {
-      const res = await axiosSecure.get("/payments", {
-        params: {
-          ...(filterType && { paymentType: filterType }),
-        },
-      });
-      console.log(res.data);
-      return res?.data?.payment;
-    },
-    onSuccess: (data) => {
-      console.log("Payments fetched: ", data);
-      setPaymentsPDF(data);
-    },
-  });
+  const { setPaymentsPDF } = usePayment();
+
+  const { payments, isLoading, isError } = useGetAllPayments({ filterType });
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
-  console.log("paymentsPDF", paymentsPDF);
   return (
     <div className="lg:px-5 md:px-3 px-1 py-6">
       <div className="space-y-12">
@@ -57,12 +37,12 @@ const PaymentsHistory = () => {
           </div>
         </div>
         <div className="flex gap-4 items-center w-84 md:ml-auto md:flex-row flex-col">
-          <button
-            onClick={() => setShowPdf(true)}
+          <Link
+            to={"/dashboard/invoice-payment-history"}
             className="cursor-pointer btn btn-outline btn-primary"
           >
             Download PDF
-          </button>
+          </Link>
 
           <div className="w-48">
             <select

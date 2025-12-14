@@ -16,8 +16,9 @@ import Heading from "../../heading/Heading";
 import StatusCard from "../status card/StatusCard";
 import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
 
-const IssueDetailsCard = ({ issue }) => {
+const IssueDetailsCard = ({ issue, refetch }) => {
   const { user } = useAuth();
+  //console.log(user);
   const editIssueRef = useRef();
   const [currentIssue, setCurrentIssue] = useState({});
   const navigate = useNavigate();
@@ -82,58 +83,129 @@ const IssueDetailsCard = ({ issue }) => {
   };
   //upvote
   const handleUpvote = async (issue) => {
-    //not logged in
-    if (!user) {
-      navigate("/signin");
-      return;
-    }
-    //if issuer tries to upvote on his posted issue
+    const issueInfo = { issueId: issue._id, userEmail: issue.userEmail };
+
+    //upvote on his own issue
     if (user?.email === issue?.userEmail) {
       return Swal.fire({
         position: "center",
         icon: "error",
-        title: "Your can not upvote on your issue",
+        title: "You cannot upvote your own issue",
         showConfirmButton: false,
         timer: 1500,
       });
     }
-    //if issue is already resolved
-    if (issue?.status === "resolved" || issue?.status === "closed") {
+    //upvote on resolved, closed or rejected issue
+    if (
+      issue?.status === "resolved" ||
+      issue?.status === "closed" ||
+      issue?.status === "rejected"
+    ) {
       return Swal.fire({
         position: "center",
         icon: "info",
-        title: "Your can not upvote on a resolved issue",
+        title: "You cannot upvote a resolved issue",
         showConfirmButton: false,
         timer: 1500,
       });
     }
-    //if same user upvote on the same issue
-    const { data } = await axiosSecure.get(
-      `/payments/check-upvote?issueId=${issue._id}&citizenEmail=${user.email}`
-    );
-    if (data.alreadyUpvoted) {
-      return Swal.fire({
+
+    try {
+      const { data } = await axiosSecure.post(
+        `/issues/${issue._id}/upvote`,
+        issueInfo
+      );
+
+      // already upvoted handled by backend
+      if (data.message === "Already upvoted") {
+        return Swal.fire({
+          position: "center",
+          icon: "info",
+          title: "You have already upvoted this issue",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+
+      // upvote success
+      if (data.message === "Upvote added successfully") {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Upvote added successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // Fetch  issue details to update ui
+        refetch();
+      }
+    } catch (err) {
+      console.error(err);
+      const msg =
+        err?.response?.data?.message || "Failed to upvote. Try again later.";
+
+      Swal.fire({
         position: "center",
-        icon: "info",
-        title: "You have already paid for this issue",
+        icon: "error",
+        title: msg,
         showConfirmButton: false,
         timer: 1500,
       });
     }
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will be charged $100 for one upvote",
-      icon: "warning",
+  };
+  //issue boost
+  const handleBoost = async (issue) => {
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Login Required",
+        text: "You need to login to boost your issue",
+        confirmButtonText: "Ok",
+      }).then(() => navigate("/signin"));
+      return;
+    }
+
+    if (user.email !== issue.userEmail) {
+      return Swal.fire({
+        icon: "error",
+        title: "Cannot Boost",
+        text: "You can only boost your own issues",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
+    if (
+      issue.status === "resolved" ||
+      issue.status === "closed" ||
+      issue.status === "rejected"
+    ) {
+      return Swal.fire({
+        icon: "info",
+        title: "Cannot Boost",
+        text: "You cannot boost a resolved or closed issue",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
+    // SweetAlert confirmation before redirect
+    const result = await Swal.fire({
+      title: "Boost Issue?",
+      text: "Boosting this issue costs 100 TK. Do you want to proceed?",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#10b981",
       cancelButtonColor: "#ef4444",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate(`/upvote-payment/${issue._id}`);
-      }
+      confirmButtonText: "Yes, Boost",
     });
+
+    if (!result.isConfirmed) return;
+
+    // redirect to boost payment page
+    navigate(`/boost-payment/${issue._id}`);
   };
+
   return (
     <div className="container mx-auto px-3 md:px-5 lg:px-0">
       {/* Top Heading */}
@@ -177,6 +249,7 @@ const IssueDetailsCard = ({ issue }) => {
                 >
                   Reporter Information
                 </Tab>
+
                 <Tab
                   selectedClassName="text-primary border-b-2 border-primary"
                   className="cursor-pointer py-1 font-extrabold tracking-tight hover:text-secondary focus:outline-none transition-color duration-300"
@@ -235,28 +308,45 @@ const IssueDetailsCard = ({ issue }) => {
 
                   {user?.email === issue?.userEmail ? (
                     <div className="flex gap-2 items-center">
-                      {issue?.status === "pending" && (
+                      {/* boost btn */}
+                      {issue?.priority === "normal" && (
                         <button
                           className="magicBtn"
-                          onClick={() => handleEditIssues(issue)}
+                          onClick={() => handleBoost(issue)}
                           style={{
-                            "--btn-text": "'Edit'",
+                            "--btn-text": "'Boost'",
                             "--btn-bg": "white",
-                            "--btn-text-color": "#2563eb",
-                            "--btn-border": "#2563eb",
+                            "--btn-text-color": "#10b981",
+                            "--btn-border": "#10b981",
                           }}
                         />
                       )}
-                      <button
-                        className="magicBtn"
-                        onClick={() => handleDeleteIssue(issue._id)}
-                        style={{
-                          "--btn-text": "'Delete'",
-                          "--btn-bg": "white",
-                          "--btn-text-color": "#ef4444",
-                          "--btn-border": "#ef4444",
-                        }}
-                      />
+                      {/* edit and delete btn */}
+                      {issue?.status === "pending" && (
+                        <>
+                          {" "}
+                          <button
+                            className="magicBtn"
+                            onClick={() => handleEditIssues(issue)}
+                            style={{
+                              "--btn-text": "'Edit'",
+                              "--btn-bg": "white",
+                              "--btn-text-color": "#2563eb",
+                              "--btn-border": "#2563eb",
+                            }}
+                          />
+                          <button
+                            className="magicBtn"
+                            onClick={() => handleDeleteIssue(issue._id)}
+                            style={{
+                              "--btn-text": "'Delete'",
+                              "--btn-bg": "white",
+                              "--btn-text-color": "#ef4444",
+                              "--btn-border": "#ef4444",
+                            }}
+                          />
+                        </>
+                      )}
                     </div>
                   ) : (
                     <button
@@ -264,7 +354,7 @@ const IssueDetailsCard = ({ issue }) => {
                       onClick={() => handleUpvote(issue)}
                     >
                       <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
-                      <span>Upvote {issue?.upvoteCount || ""}</span>
+                      <span>Upvote {issue?.totalUpvoteCount || 0}</span>
                     </button>
                   )}
                 </div>

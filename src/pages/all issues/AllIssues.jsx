@@ -87,6 +87,36 @@ const AllIssues = () => {
     });
   };
 
+  //upvote ui update handler--need to replace state not just update thats why using setIssues. issues just reads the data
+  // const handleUpdateUI = (id) => {
+  //   issues.map((issue) => {
+  //     if (issue._id !== id) return;
+  //     const newIssue = {
+  //       ...issue,
+  //       totalUpvoteCount: (issue.totalUpvoteCount || 0) + 1,
+  //     };
+  //     console.log("new Issue", newIssue);
+  //     return newIssue;
+  //   });
+  // };
+  const handleUpdateUI = (id) => {
+    setIssues((prevIssues) => {
+      return prevIssues.map((issue) => {
+        //if issue doesn't match return
+        if (issue._id !== id) {
+          return issue;
+        }
+        //if id matched increase issue count
+        const newIssue = {
+          ...issue,
+          totalUpvoteCount: (issue.totalUpvoteCount || 0) + 1,
+        };
+        console.log(newIssue);
+        return newIssue;
+      });
+    });
+  };
+
   const filtrationProps = { filters: filters, onChange: handleCheckboxChange };
 
   if (loading) return <Loading />;
@@ -162,7 +192,7 @@ const AllIssues = () => {
                     className="drawer-overlay bg-black/20 backdrop-blur-sm w-full"
                   ></label>
 
-                  <ul className="menu md:w-lg w-11/12 mx-auto md:p-10 p-6 text-secondary bg-white rounded-3xl my-auto">
+                  <ul className="menu md:w-lg w-11/12 mx-auto md:p-10 p-6 text-secondary bg-white rounded-3xl my-auto relative z-100">
                     {/* Sidebar content here */}
 
                     {/* By Status */}
@@ -187,7 +217,11 @@ const AllIssues = () => {
           {/* Issues */}
           <div className="lg:col-span-4 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
             {issues.map((issue) => (
-              <IssueCard issue={issue} key={issue._id} />
+              <IssueCard
+                issue={issue}
+                key={issue._id}
+                onUpvoteSuccess={handleUpdateUI}
+              />
             ))}
           </div>
         </div>

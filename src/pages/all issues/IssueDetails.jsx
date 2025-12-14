@@ -7,7 +7,7 @@ import ErrorComponent from "../../components/error/error page/ErrorComponent";
 const IssueDetails = () => {
   const { id } = useParams();
   //issue details data fetch
-  const { issue, isLoading, isError } = useIssueDetails(id);
+  const { issue, isLoading, isError, refetch } = useIssueDetails(id);
 
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
@@ -15,7 +15,7 @@ const IssueDetails = () => {
     <div>
       <div className="container mx-auto">
         {/* main content */}
-        <IssueDetailsCard issue={issue} />
+        <IssueDetailsCard issue={issue} refetch={refetch} />
       </div>
     </div>
   );

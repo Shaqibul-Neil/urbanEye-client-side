@@ -25,11 +25,11 @@ import About from "../pages/about/About";
 import AllIssues from "../pages/all issues/AllIssues";
 import Contact from "../pages/contact/Contact";
 import IssueDetails from "../pages/all issues/IssueDetails";
-import UpvotePaymentPage from "../pages/upvote/UpvotePaymentPage";
-import UpvotePaymentSuccess from "../pages/upvote/UpvotePaymentSuccess";
 import ErrorPage from "../components/error/error page/ErrorPage";
 import RouteTitle from "./RouteTitle";
 import InvoicePaymentHistory from "../pages/dashboard/admin/InvoicePaymentHistory";
+import BoostPaymentSuccess from "../pages/boost/BoostPaymentSuccess";
+import BoostPaymentPage from "../pages/boost/BoostPaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -72,11 +72,11 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/upvote-payment/:id",
+        path: "/boost-payment/:id",
         element: (
           <PrivateRoutes>
-            <RouteTitle title="Upvote Payment">
-              <UpvotePaymentPage />
+            <RouteTitle title="Boost Payment">
+              <BoostPaymentPage />
             </RouteTitle>
           </PrivateRoutes>
         ),
@@ -90,10 +90,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/upvote-payment-success",
+        path: "/boost-payment-success",
         element: (
-          <RouteTitle title="Upvote Payment Success">
-            <UpvotePaymentSuccess />
+          <RouteTitle title="Boost Payment Success">
+            <BoostPaymentSuccess />
           </RouteTitle>
         ),
       },
@@ -186,16 +186,6 @@ const router = createBrowserRouter([
           </AdminRoutes>
         ),
       },
-      // {
-      //   path: "invoice-payment-history",
-      //   element: (
-      //     <AdminRoutes>
-      //       <RouteTitle title="Admin - invoice Payment History">
-      //         <InvoicePaymentHistory />
-      //       </RouteTitle>
-      //     </AdminRoutes>
-      //   ),
-      // },
       //Staff Routes
       {
         path: "assigned-issues",
@@ -251,6 +241,14 @@ const router = createBrowserRouter([
         element: (
           <RouteTitle title="Payment Success">
             <PaymentSuccess />
+          </RouteTitle>
+        ),
+      },
+      {
+        path: "invoice-payment-history",
+        element: (
+          <RouteTitle title="Invoice Payment History">
+            <InvoicePaymentHistory />
           </RouteTitle>
         ),
       },

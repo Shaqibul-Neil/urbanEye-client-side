@@ -115,7 +115,7 @@
   right: -0.375rem;
   background: #fff;
   border-top-left-radius: 50%;
-  z-index: 10;
+  z-index: 1;
 }
 .icon::before {
   position: absolute;

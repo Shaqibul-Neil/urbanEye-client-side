@@ -8,6 +8,7 @@ const useIssueDetails = (id) => {
     data: issue = {},
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ["issue", id],
     queryFn: async ({ queryKey }) => {
@@ -16,7 +17,7 @@ const useIssueDetails = (id) => {
       return res?.data?.issue;
     },
   });
-  return { issue, isLoading, isError };
+  return { issue, isLoading, isError, refetch };
 };
 
 export default useIssueDetails;

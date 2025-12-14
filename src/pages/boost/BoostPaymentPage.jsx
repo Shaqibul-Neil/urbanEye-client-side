@@ -6,6 +6,7 @@ import Loading from "../../components/loading/Loading";
 import ErrorPage from "../../components/error/error page/ErrorPage";
 import useAuth from "../../hooks/auth & role/useAuth";
 import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const paymentMethods = [
   {
@@ -22,7 +23,7 @@ const paymentMethods = [
   },
 ];
 
-const UpvotePaymentPage = ({ totalAmount = 100 }) => {
+const BoostPaymentPage = ({ totalAmount = 100 }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [selected, setSelected] = useState("card");
@@ -38,14 +39,16 @@ const UpvotePaymentPage = ({ totalAmount = 100 }) => {
         issueId: issue?._id,
       };
       //console.log(paymentInfo);
+      //console.log(paymentInfo);
       const result = await axiosSecure.post(
-        "/payments/upvote-checkout-session",
+        `/payments/boost-checkout-session`,
         paymentInfo
       );
       //console.log(result);
       //redirect to checkout page
       window.location.assign(result?.data?.url);
     } catch (error) {
+      toast.error(error.message);
       //console.log(error);
     }
   };
@@ -62,7 +65,7 @@ const UpvotePaymentPage = ({ totalAmount = 100 }) => {
             Complete Your Payment
           </h1>
           <h2 className="md:text-xl font-semibold text-primary">
-            Upvote Issue : {issue?.title}
+            Boost Issue : {issue?.title}
           </h2>
           <p className="text-gray-600">
             Choose a payment method below and proceed to pay. Your selected
@@ -126,4 +129,4 @@ const UpvotePaymentPage = ({ totalAmount = 100 }) => {
   );
 };
 
-export default UpvotePaymentPage;
+export default BoostPaymentPage;
