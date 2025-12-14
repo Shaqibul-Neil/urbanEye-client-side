@@ -6,6 +6,7 @@ import imageUpload from "../../utilities/imageUpload";
 import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
 import useRole from "../../hooks/auth & role/useRole";
 import { useState } from "react";
+import Loading from "../loading/Loading";
 
 const MyProfileUpdateModal = ({ profileUpdateRef }) => {
   const [loading, setLoading] = useState(false);
@@ -47,8 +48,9 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
       };
 
       const res = await axiosSecure.put("users/my-profile", profileData);
-      profileUpdateRef.current.close();
+
       if (res?.data?.profile?.modifiedCount) {
+        setLoading(false);
         await Swal.fire({
           position: "center",
           icon: "success",
@@ -62,9 +64,10 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
       toast.error(error?.message || "Something went wrong");
     } finally {
       setLoading(false);
+      profileUpdateRef.current.close();
     }
   };
-
+  if (loading) return <Loading />;
   return (
     <dialog
       ref={profileUpdateRef}

@@ -15,16 +15,13 @@ const Home = () => {
       </section>
 
       {/* About Us Section */}
-      <div className="bg-base-200">
-        <section className="container mx-auto lg:py-17 md:py-24 py-8 lg:px-6">
+      <div>
+        <section className="container mx-auto lg:py-32 md:py-24 py-8 lg:px-6">
           <AboutSection />
         </section>
       </div>
       {/* Latest Resolved Section */}
-      <section
-        className="container mx-auto lg:py-24 md:py-20 py-8 lg:px-6 px-5 z-5 relative"
-        id="latest-section"
-      >
+      <section className="container mx-auto lg:py-24 md:py-20 py-8 lg:px-6 px-5 z-5 relative">
         <LatestResolved />
       </section>
 
@@ -34,7 +31,10 @@ const Home = () => {
       </section>
 
       {/* Feature Section */}
-      <section className="bg-linear-to-br from-white via-[#f8f9ff] to-white lg:px-6">
+      <section
+        className="bg-linear-to-br from-white via-[#f8f9ff] to-white lg:px-6"
+        id="feature-section"
+      >
         <div className="container mx-auto">
           <FeaturesSection />
         </div>

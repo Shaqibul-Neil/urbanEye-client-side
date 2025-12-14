@@ -26,12 +26,18 @@ const ReportIssues = () => {
 
   //report issue submit
   const handleReportIssues = async (data) => {
-    const uploadedPhoto = data?.photo[0];
-
-    const photoURL = await imageUpload(uploadedPhoto);
-    //removing photo from data
-    const { photo, ...rest } = data;
     try {
+      // show loading Swal
+      Swal.fire({
+        title: "Submitting Issue...",
+        text: "Uploading image and processing...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+      const uploadedPhoto = data?.photo[0];
+      const photoURL = await imageUpload(uploadedPhoto);
+      //removing photo from data
+      const { photo, ...rest } = data;
       const issuesData = { ...rest, photoURL, userEmail: user?.email };
       //send issues to backend
       const res = await reportIssues(issuesData);
@@ -39,9 +45,10 @@ const ReportIssues = () => {
       const insertedId = res?.issue?.insertedId;
       if (!insertedId)
         throw new Error("Issues can not be submitted at the moment");
-
+      // close loading Swal
+      Swal.close();
       //success popup
-      Swal.fire({
+      await Swal.fire({
         position: "center",
         icon: "success",
         title: "Your issues has been submitted",
@@ -50,6 +57,7 @@ const ReportIssues = () => {
       });
       navigate("/dashboard/my-reported-issues");
     } catch (error) {
+      Swal.close();
       //console.log(error);
       // error popup
       Swal.fire({

@@ -19,10 +19,10 @@ const GlobeSection = () => {
           city—one report, one upvote at a time.
         </p>
         <div className="flex justify-center items-center relative z-10 mt-8">
-          <div className="flex justify-center items-center w-64 border-white border rounded-full h-20 wave">
-            <div className="flex justify-center items-center w-60 border-primary border rounded-full h-16">
+          <div className="flex justify-center items-center wave">
+            <div className="flex justify-center items-center lg:w-60 w-56 border-primary border rounded-full h-16">
               <Link
-                className="w-56 bg-primary text-white font-bold py-3 px-5 rounded-full shadow-lg text-lg transition uppercase duration-300 text-center cursor-pointer relative z-12 hover:bg-white hover:text-primary"
+                className="lg:w-56 w-52 bg-primary text-white font-bold py-3 px-5 rounded-full shadow-lg text-lg transition duration-300 text-center cursor-pointer relative z-12 hover:bg-white hover:text-primary"
                 to={"/all-issues"}
               >
                 Explore Issue

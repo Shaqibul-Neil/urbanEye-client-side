@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router";
-import logo from "../../../assets/logo.png";
 import toast from "react-hot-toast";
 import useAuth from "../../../hooks/auth & role/useAuth";
 import MyLinks from "./MyLinks";
+import { Building2 } from "lucide-react";
 
 const Navbar = ({ scrolled }) => {
   const { user, setUser, signOutUser } = useAuth();
@@ -74,8 +74,15 @@ const Navbar = ({ scrolled }) => {
             )}
           </ul>
         </div>
-        <Link to={"/"} className="flex items-center gap-2">
-          <img src={logo} alt="" className="object-cover w-32" />
+        <Link
+          to={"/"}
+          className="flex items-center gap-1 md:text-2xl text-xl font-bold"
+        >
+          <Building2 size={24} className="text-primary" />
+          <span className="text-secondary font-extrabold leading-tight">
+            URBAN
+            <span className="text-primary">i</span>
+          </span>
         </Link>
       </div>
 

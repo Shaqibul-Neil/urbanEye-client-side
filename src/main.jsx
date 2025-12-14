@@ -12,28 +12,28 @@ import Loading from "./components/loading/Loading";
 const queryClient = new QueryClient();
 
 const Main = () => {
-  const [loading, setLoading] = useState(true);
+  const [loadingOnLoad, setLoadingOnLoad] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const hasSeenPopup = sessionStorage.getItem("hasSeenPopup");
     //console.log("yes", hasSeenPopup);
     const timer = setTimeout(() => {
-      setLoading(false);
+      setLoadingOnLoad(false);
       //only show popup once per session
       if (!hasSeenPopup) {
         //console.log("no", hasSeenPopup);
         setShowPopup(true);
         sessionStorage.setItem("hasSeenPopup", true);
       }
-    }, 3000);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
       {/* Loader on initial load */}
-      {loading && <Loading />}
+      {loadingOnLoad && <Loading />}
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <RouterProvider router={router} />

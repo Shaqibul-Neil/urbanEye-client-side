@@ -5,6 +5,8 @@ import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useRef } from "react";
 import MyProfileUpdateModal from "../../../components/modals/MyProfileUpdateModal";
+import Loading from "../../../components/loading/Loading";
+import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -31,8 +33,8 @@ const Profile = () => {
   const handleUpdateModal = () => {
     profileUpdateRef.current.showModal();
   };
-  if (isLoading) return <p>Loading profile...</p>;
-  if (isError) return <p>No profile data found!</p>;
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorComponent />;
   return (
     <div className="flex justify-center items-center h-screen px-3">
       <div className="bg-white shadow-lg rounded-2xl md:w-4/5">
