@@ -40,9 +40,7 @@ const SignIn = () => {
       //refetch role query
       //queryClient.refetchQueries(["user-role", result?.user?.email]);
       const roleResult = await refetchRole();
-      if (roleResult?.data === "admin" || roleResult?.data === "staff") {
-        navigate("/dashboard");
-      } else navigate(location?.state || "/");
+
       reset();
       setUserLoading(false);
       await Swal.fire({
@@ -52,6 +50,12 @@ const SignIn = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      //wait for 50ms before navigating so that the main loading doesn't appear before swal
+      setTimeout(() => {
+        if (roleResult?.data === "admin" || roleResult?.data === "staff") {
+          navigate("/dashboard");
+        } else navigate(location?.state || "/");
+      }, 50);
     } catch (err) {
       if (
         err.code === "auth/invalid-credential" ||

@@ -54,7 +54,7 @@ const GoogleLogin = () => {
         if (roleResult?.data === "admin" || roleResult?.data === "staff") {
           navigate("/dashboard");
         } else navigate(location?.state || "/");
-      }, 1500);
+      }, 50);
     } catch (error) {
       toast.error(error.message);
     } finally {
