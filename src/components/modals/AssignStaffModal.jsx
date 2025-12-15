@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 const AssignStaffModal = ({
   assignModalRef,
   staffs,
+  staffRefetch,
   assignedStaffIssue,
   selectedStaff,
   setSelectedStaff,
@@ -34,7 +35,7 @@ const AssignStaffModal = ({
       },
     };
     const res = await staffAssign(updatedIssue);
-
+    staffRefetch();
     if (res?.issueResult?.modifiedCount && res?.staffResult?.modifiedCount) {
       Swal.fire({
         position: "center",

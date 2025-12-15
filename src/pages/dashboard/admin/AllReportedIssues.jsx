@@ -35,7 +35,7 @@ const AllReportedIssues = () => {
     refetch: staffRefetch,
   } = useQuery({
     queryKey: ["all-staffs", "available"],
-    enabled: !!assignedStaffIssue,
+    //enabled: !!assignedStaffIssue,
     queryFn: async () => {
       const { data } = await axiosSecure.get("/staff");
       return data.staff;
@@ -44,12 +44,13 @@ const AllReportedIssues = () => {
 
   //assign staff modal
   const handleAssignStaffModal = (issue) => {
-    setSelectedStaff({});
+    //setSelectedStaff({});
     // staffRefetch();
     setAssignedStaffIssue(issue);
+
     // reset selected staff
     // setSelectedStaff({});
-    // staffRefetch();
+    //staffRefetch();
     assignModalRef.current.showModal();
   };
 

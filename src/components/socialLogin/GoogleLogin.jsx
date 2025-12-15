@@ -10,7 +10,7 @@ const GoogleLogin = () => {
   const { signInWithGoogle, setUserLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { refetchRole } = useRole();
+  const { refetchRole, roleLoading } = useRole();
 
   //mutation function
   const { mutateAsync: createSaveUser } = useCreateUser();
@@ -39,9 +39,7 @@ const GoogleLogin = () => {
       await createSaveUser(userInfo);
       const roleResult = await refetchRole();
       //role wise navigate
-      if (roleResult?.data === "admin" || roleResult?.data === "staff") {
-        navigate("/dashboard");
-      } else navigate(location?.state || "/");
+
       //setUserLoading(false);
       //close sweet load
       Swal.close();
@@ -52,6 +50,11 @@ const GoogleLogin = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      setTimeout(() => {
+        if (roleResult?.data === "admin" || roleResult?.data === "staff") {
+          navigate("/dashboard");
+        } else navigate(location?.state || "/");
+      }, 1500);
     } catch (error) {
       toast.error(error.message);
     } finally {
