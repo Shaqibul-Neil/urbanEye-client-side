@@ -30,7 +30,7 @@ const actionIcons = [
 const VerticalTimeline = ({ issue }) => {
   const { timeline } = issue || {};
   const reversedTimeline = [...(timeline || [])].sort(
-    (a, b) => new Date(a.at) - new Date(b.at)
+    (a, b) => new Date(b.at) - new Date(a.at)
   );
   console.log(timeline);
   return (

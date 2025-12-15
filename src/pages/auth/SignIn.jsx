@@ -21,7 +21,7 @@ const SignIn = () => {
 
   const handleSignIn = async (data) => {
     try {
-      setUserLoading(true);
+      //setUserLoading(true);
       // SweetAlert Loading Popup
       Swal.fire({
         title: "Logging your account...",
@@ -44,6 +44,7 @@ const SignIn = () => {
         navigate("/dashboard");
       } else navigate(location?.state || "/");
       reset();
+      setUserLoading(false);
       await Swal.fire({
         position: "center",
         icon: "success",

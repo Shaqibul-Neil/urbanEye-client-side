@@ -17,7 +17,7 @@ const GoogleLogin = () => {
 
   const handleSignInWithGoogle = async () => {
     try {
-      setUserLoading(true);
+      //setUserLoading(true);
       // SweetAlert Loading Popup
       Swal.fire({
         title: "Verifying your google credentials...",
@@ -37,12 +37,13 @@ const GoogleLogin = () => {
       };
       //save user in the database
       await createSaveUser(userInfo);
-
       const roleResult = await refetchRole();
+      //role wise navigate
       if (roleResult?.data === "admin" || roleResult?.data === "staff") {
         navigate("/dashboard");
       } else navigate(location?.state || "/");
-      setUserLoading(false);
+      //setUserLoading(false);
+      //close sweet load
       Swal.close();
       await Swal.fire({
         position: "center",
@@ -54,7 +55,7 @@ const GoogleLogin = () => {
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setUserLoading(false);
+      // setUserLoading(false);
     }
   };
   return (
