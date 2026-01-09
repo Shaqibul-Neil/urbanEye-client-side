@@ -7,12 +7,14 @@ import {
   Bell,
   CreditCard,
   Edit,
+  Eye,
   Home,
   HomeIcon,
   ListChecks,
   Mail,
   Mic,
   User,
+  User2Icon,
   UserCog,
   Users,
 } from "lucide-react";
@@ -37,56 +39,89 @@ const DashboardLayout = () => {
   if (roleLoading) return <Loading />;
   return (
     <div className="bg-base-200">
-      {/* Static left bar
-      <aside className="w-16 bg-white p-4 flex flex-col items-center border-r border-gray-100">
-        {/* Icons or anything you want 
-      </aside> */}
       {/* Sidebar */}
       <div className="drawer xl:drawer-open">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Navbar */}
-          <nav className="navbar flex md:justify-between md:flex-row flex-col md:px-6 px-3 rounded-3xl mt-8 items-start md:items-center gap-3">
-            <div className="flex justify-between items-center gap-2">
+          <nav className="navbar md:px-6 px-3 rounded-3xl mt-8 bg-white p-6 md:p-8 shadow-sm border border-gray-100 max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4">
+            {/* LEFT: Header Text */}
+            <div className="flex-1 space-y-4 lg:items-start items-center">
+              <div className="relative">
+                <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900">
+                  Welcome back,{" "}
+                  <span className="text-primary">
+                    {user?.displayName?.split(" ")[0] || "Citizen"}!
+                  </span>
+                </h1>
+
+                <p className="text-sm text-gray-500 mt-2 font-medium">
+                  Here's your URBANi overview for{" "}
+                  <span className="text-secondary font-semibold">
+                    {new Date().toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
+                </p>
+              </div>
+              <div className="flex gap-2 justify-center lg:justify-start">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex justify-center items-center">
+                  <Mail strokeWidth={2.5} className="w-4 h-4 text-primary" />
+                </div>
+                <Link
+                  className="w-8 h-8 bg-green-100 rounded-full flex justify-center items-center"
+                  to={"/"}
+                >
+                  <Home strokeWidth={2.5} className="w-4 h-4 text-success" />
+                </Link>
+                <div className="w-8 h-8 bg-red-100 rounded-full flex justify-center items-center">
+                  <Bell
+                    strokeWidth={2.5}
+                    className="w-4 h-4 text-warning font-black"
+                  />{" "}
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT: Drawer toggle + actions */}
+            <div className="flex flex-row items-start lg:items-center gap-3 justify-center lg:justify-end">
+              {/* Action Button */}
+              <Link
+                to="/dashboard/my-profile"
+                className="px-5 h-10 flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-300"
+              >
+                <Eye /> View Profile
+              </Link>
+              {/* Drawer Toggle */}
               <label
                 htmlFor="my-drawer-4"
-                aria-label="open sidebar"
-                className="btn btn-square btn-primary xl:hidden btn-sm"
+                className="btn btn-square btn-primary btn-sm lg:hidden"
               >
-                {/* Sidebar toggle icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
+                  className="size-6"
                   fill="none"
                   stroke="currentColor"
-                  className="my-1.5 inline-block size-6 xl:hidden"
+                  strokeWidth="2"
                 >
-                  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-                  <path d="M9 4v16"></path>
-                  <path d="M14 10l2 2l-2 2"></path>
+                  <path d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </label>
-              <h2 className="text-3xl text-secondary tracking-tighter font-extrabold">
-                {" "}
-                Welcome Back, {user?.displayName}
-              </h2>
-            </div>
-
-            <div className="flex justify-center md:justify-end items-center gap-4 mx-auto md:mx-0 md:ml:auto">
-              <Link to={"/"}>
-                <HomeIcon className="w-6 h-6" />
-              </Link>
-              <button>
-                <Mail className="w-6 h-6" />
-              </button>
-              <button>
-                <Bell className="w-6 h-6" />
-              </button>
+              {role === "admin" && (
+                <Link
+                  to={"/?edit=true"}
+                  className="px-5 h-10 flex items-center justify-center gap-2 bg-secondary hover:bg-primary text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-300"
+                >
+                  <Edit />
+                  Home Editor
+                </Link>
+              )}
             </div>
           </nav>
+
           {/* Page content here */}
           <main className="my-6">
             <Outlet />
@@ -197,14 +232,6 @@ const DashboardLayout = () => {
                         to={"payments-history"}
                         icon={CreditCard}
                         label={"Payments History"}
-                      />
-                    </li>
-                    {/* Payments History */}
-                    <li>
-                      <SideBarLinks
-                        to={"/?edit=true"}
-                        icon={Edit}
-                        label={"Home Editor"}
                       />
                     </li>
                   </>

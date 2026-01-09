@@ -1,32 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Loading from "../../../components/loading/Loading";
-import AdminPaymentChart from "../../../components/dashboard/payment chart/AdminPaymentChart";
 import useAggregatePayment from "../../../hooks/payment related/useAggregatePayment";
 import useIssueAggregate from "../../../hooks/citizen related/useIssueAggregate";
-import IssueMetrics from "../../../components/dashboard/issue metrics/IssueMetrics";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
-import LatestPayments from "../../../components/dashboard/payment chart/LatestPayments";
-import useLatestPayments from "../../../hooks/payment related/useLatestPayments";
-import { Link } from "react-router";
+import useTopUpvotedIssues from "../../../hooks/dashboard/useTopUpvotedIssues";
+import AdminDashboardLayout from "../../../components/dashboard/admin/AdminDashboardLayout";
 
 const AdminDashboard = () => {
   const axiosSecure = useAxiosSecure();
-  //issue status fetch data aggregation
-  const { statusStats, isLoading, isError } = useIssueAggregate();
-  //total payments data aggregation
+  
+  // Issue status fetch data aggregation
+  const { statusStats, isLoading: statusLoading, isError: statusError } = useIssueAggregate();
+  
+  // Total payments data aggregation
   const { paymentStats, paymentLoading, paymentError } = useAggregatePayment();
-  const {
-    latestPayments,
-    latestLoading: latestPaymentLoading,
-    latestError: latestPaymentError,
-  } = useLatestPayments();
-  const issueCount = statusStats?.reduce(
-    (accu, stats) => accu + stats.count,
-    0
-  );
+  
+  // Top upvoted issues
+  const { topUpvotedIssues, isLoading: upvoteLoading, isError: upvoteError } = useTopUpvotedIssues(5);
 
-  //latest issue for admin dashboard
+  // Calculate total issues
+  const totalIssues = statusStats?.reduce((accu, stats) => accu + stats.count, 0) || 0;
+  const resolvedIssues = statusStats?.find(stat => stat._id === "resolved")?.count || 0;
+
+  // Latest issues for admin dashboard
   const {
     data: latestIssue = [],
     isLoading: latestLoading,
@@ -39,7 +36,7 @@ const AdminDashboard = () => {
     },
   });
 
-  //latest registered users
+  // Latest registered users
   const {
     data: latestUsers = [],
     isLoading: latestUsersLoading,
@@ -51,141 +48,36 @@ const AdminDashboard = () => {
       return data?.user;
     },
   });
-  if (
-    isLoading ||
-    paymentLoading ||
-    latestLoading ||
-    latestUsersLoading ||
-    latestPaymentLoading
-  )
-    return <Loading />;
-  if (
-    isError ||
-    paymentError ||
-    latestError ||
-    latestUsersError ||
-    latestPaymentError
-  )
-    return <ErrorComponent />;
+
+  // Loading state
+  const loading = statusLoading || paymentLoading || latestLoading || 
+                  latestUsersLoading || upvoteLoading;
+
+  // Error state
+  const error = statusError || paymentError || latestError || 
+                latestUsersError || upvoteError;
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorComponent />;
+
   return (
-    <div className="grid lg:grid-cols-4 gap-4 px-5">
-      {/* Left Side Stats */}
-      <div className="lg:col-span-3 space-y-8">
-        {/* Issue Status Cards */}
-        <div className="bg-white p-6 rounded-3xl space-y-4">
-          <h2 className="text-lg text-secondary font-bold">
-            Issue Metrics{" "}
-            <p className="font-normal">Total Submitted Issues: {issueCount}</p>
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-2">
-            {statusStats.map((stat, i) => (
-              <IssueMetrics key={i} stat={stat} />
-            ))}
-          </div>
-        </div>
-
-        {/* Payments Grid */}
-        <div className="col-span-3">
-          <AdminPaymentChart paymentStats={paymentStats} />
-        </div>
-      </div>
-
-      {/* Right Side */}
-
-      <div className="space-y-6 p-6 rounded-3xl flex gap-3 lg:flex-col md:flex-row flex-col">
-        {/* Latest Issues */}
-        <div>
-          <div className=" space-y-4">
-            <h3 className="text-lg text-secondary font-bold">
-              Latest Posted Issues
-            </h3>
-            <div>
-              {latestIssue.map((latest) => (
-                <div
-                  key={latest._id}
-                  className="flex items-center gap-4 p-2 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer transform hover:-translate-y-1 bg-white my-3"
-                >
-                  {/* Profile / Photo */}
-                  <div className="shrink-0 w-12 h-12">
-                    <img
-                      src={latest?.photoURL}
-                      alt={latest?.title}
-                      className="w-full h-full object-cover rounded-full border-2 border-primary"
-                    />
-                  </div>
-
-                  {/* Text */}
-                  <div className="flex flex-col justify-center">
-                    <h3 className="text-sm text-secondary">{latest?.title}</h3>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {latest?.userEmail}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Latest Registered Users */}
-        <div>
-          <div className="space-y-4">
-            <h3 className="text-lg text-secondary font-bold">
-              Latest Registered Users
-            </h3>
-            <div>
-              {latestUsers.map((latest) => (
-                <div
-                  key={latest._id}
-                  className="flex items-center gap-4 p-2 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer transform hover:-translate-y-1 bg-white my-3"
-                >
-                  {/* Profile / Photo */}
-                  <div className="shrink-0 w-12 h-12">
-                    <img
-                      src={latest?.photoURL}
-                      alt={latest?.displayName}
-                      className="w-full h-full object-cover rounded-full border-2 border-primary"
-                    />
-                  </div>
-
-                  {/* Text */}
-                  <div className="flex flex-col justify-center">
-                    <h3 className="text-sm text-secondary">
-                      {latest?.displayName}
-                    </h3>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {latest?.email}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Latest Payments */}
-        <div>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg text-secondary font-bold">
-                Latest Payments
-              </h3>
-              <Link
-                to={"/dashboard/payments-history"}
-                className="underline text-primary text-sm"
-              >
-                View All
-              </Link>
-            </div>
-            <div>
-              {/* Text */}
-              <LatestPayments latestPayments={latestPayments} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AdminDashboardLayout
+      // Metrics data
+      totalIssues={totalIssues}
+      resolvedIssues={resolvedIssues}
+      statusStats={statusStats}
+      
+      // Chart data
+      paymentStats={paymentStats}
+      topUpvotedIssues={topUpvotedIssues}
+      
+      // Table data
+      latestIssues={latestIssue}
+      latestUsers={latestUsers}
+      
+      // Loading state
+      loading={loading}
+    />
   );
 };
 

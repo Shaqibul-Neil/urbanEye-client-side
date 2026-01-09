@@ -1,7 +1,7 @@
 export const getStatusBadge = (status) => {
   switch (status) {
     case "pending":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-yellow-50 text-yellow-700";
     case "in-progress":
       return "bg-blue-100 text-blue-700";
     case "working":
