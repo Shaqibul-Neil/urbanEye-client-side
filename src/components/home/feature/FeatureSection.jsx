@@ -1,27 +1,150 @@
+import { useEffect, useState } from "react";
 import { ShieldCheck, MapPin, Bell, PhoneCall } from "lucide-react";
+import useEditorMode from "../../../hooks/page builder/useEditorMode";
+import useAxios from "../../../hooks/auth & role/useAxios";
+import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
+import Swal from "sweetalert2";
 
 export default function FeaturesSection() {
-  const features = [
-    {
-      icon: <ShieldCheck className="w-8 h-8 text-indigo-600" />,
-      title: "Verified Staff Handling",
-      desc: "Every report is managed by authorized municipal staff, ensuring accountability and quality response.",
+  const [featuresData, setFeaturesData] = useState({
+    content: {
+      mainHeading: "",
+      highlightText: "",
+      description: "",
+      buttonText: "",
+      features: []
     },
-    {
-      icon: <MapPin className="w-8 h-8 text-indigo-600" />,
-      title: "Location-Based Tracking",
-      desc: "Browse reported problems around your area and monitor progress in real time.",
-    },
-    {
-      icon: <Bell className="w-8 h-8 text-indigo-600" />,
-      title: "Instant Status Notifications",
-      desc: "Get notified whenever your submitted issue is assigned, reviewed, or resolved.",
-    },
-    {
-      icon: <PhoneCall className="w-8 h-8 text-indigo-600" />,
-      title: "Emergency Priority System",
-      desc: "Critical public safety concerns are auto-flagged and forwarded to emergency teams instantly.",
-    },
+    styles: {
+      mainHeading: {
+        fontSize: "text-4xl md:text-5xl",
+        fontWeight: "font-extrabold",
+        color: "text-primary"
+      },
+      highlightText: {
+        color: "text-secondary"
+      },
+      description: {
+        color: "text-gray-600"
+      }
+    }
+  });
+
+  const { editMode } = useEditorMode();
+  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
+
+  useEffect(() => {
+    const fetchFeaturesSection = async () => {
+      try {
+        const { data } = await axiosInstance.get("/contents/features-section");
+        if (data?.message) {
+          setFeaturesData(data.message);
+        }
+      } catch (err) {
+        console.error("Failed to fetch features section:", err);
+      }
+    };
+    fetchFeaturesSection();
+  }, [axiosInstance]);
+
+  const handleSave = async () => {
+    try {
+      const payload = {
+        content: featuresData.content,
+        styles: featuresData.styles
+      };
+      
+      await axiosSecure.patch("/contents/features-section", payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      
+      await Swal.fire({
+        timer: 2000,
+        position: "center",
+        icon: "success",
+        title: "Features section saved successfully!",
+        showConfirmButton: false,
+      });
+    } catch (err) {
+      console.error("Failed to save features section:", err);
+      await Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Failed to save features section",
+        text: "Please try again later",
+        showConfirmButton: true,
+      });
+    }
+  };
+
+  const updateContent = (field, value) => {
+    setFeaturesData(prev => ({
+      ...prev,
+      content: {
+        ...prev.content,
+        [field]: value
+      }
+    }));
+  };
+
+  const updateFeature = (index, field, value) => {
+    setFeaturesData(prev => ({
+      ...prev,
+      content: {
+        ...prev.content,
+        features: prev.content.features.map((feature, i) => 
+          i === index ? { ...feature, [field]: value } : feature
+        )
+      }
+    }));
+  };
+
+  const updateStyle = (element, property, value) => {
+    setFeaturesData(prev => ({
+      ...prev,
+      styles: {
+        ...prev.styles,
+        [element]: {
+          ...prev.styles[element],
+          [property]: value
+        }
+      }
+    }));
+  };
+
+  // Helper function to generate className from styles
+  const getClassName = (element) => {
+    const style = featuresData.styles[element];
+    if (!style) return "";
+    
+    return [
+      style.fontSize,
+      style.fontWeight,
+      style.textAlign,
+      style.color,
+      style.padding,
+      style.margin
+    ].filter(Boolean).join(" ");
+  };
+
+  // Store data and functions in window for FeaturesSectionEditor access
+  useEffect(() => {
+    window.featuresSectionData = {
+      featuresData,
+      updateContent,
+      updateFeature,
+      updateStyle,
+      handleSave
+    };
+  }, [featuresData]);
+
+  const icons = [
+    <ShieldCheck className="w-8 h-8 text-indigo-600" />,
+    <MapPin className="w-8 h-8 text-indigo-600" />,
+    <Bell className="w-8 h-8 text-indigo-600" />,
+    <PhoneCall className="w-8 h-8 text-indigo-600" />
   ];
 
   return (
@@ -29,35 +152,53 @@ export default function FeaturesSection() {
       <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Content */}
         <div className="max-w-md space-y-4">
-          <h2 className="font-extrabold text-primary tracking-tight text-4xl md:text-5xl">
-            Build a <span className="text-secondary">Safer Community</span> with
-            Our Public Reporting System
+          <h2 className={`tracking-tight ${getClassName('mainHeading')}`}>
+            {featuresData.content.mainHeading || "Build a"} <span className={getClassName('highlightText')}>
+              {featuresData.content.highlightText || "Safer Community"}
+            </span> with Our Public Reporting System
           </h2>
 
-          <p className="text-gray-600 mb-6 leading-relaxed">
-            A powerful and transparent platform where citizens can report
-            issues, track progress, and help improve their city with ease.
+          <p className={`mb-6 leading-relaxed ${getClassName('description')}`}>
+            {featuresData.content.description || "A powerful and transparent platform where citizens can report issues, track progress, and help improve their city with ease."}
           </p>
-          <button className="px-6 py-3 border border-primary text-primary rounded-full shadow-md hover:bg-primary hover:text-white  cursor-pointer transition-all duration-300">
-            Report an Issue
+          
+          <button className="px-6 py-3 border border-primary text-primary rounded-full shadow-md hover:bg-primary hover:text-white cursor-pointer transition-all duration-300">
+            {featuresData.content.buttonText || "Report an Issue"}
           </button>
         </div>
 
         {/* Right Features Grid */}
         <div className="features grid grid-cols-1 md:grid-cols-2 gap-6">
-          {features.map((item, index) => (
+          {(featuresData.content.features.length > 0 ? featuresData.content.features : [
+            {
+              title: "Verified Staff Handling",
+              description: "Every report is managed by authorized municipal staff, ensuring accountability and quality response."
+            },
+            {
+              title: "Location-Based Tracking", 
+              description: "Browse reported problems around your area and monitor progress in real time."
+            },
+            {
+              title: "Instant Status Notifications",
+              description: "Get notified whenever your submitted issue is assigned, reviewed, or resolved."
+            },
+            {
+              title: "Emergency Priority System",
+              description: "Critical public safety concerns are auto-flagged and forwarded to emergency teams instantly."
+            }
+          ]).map((item, index) => (
             <div
               key={index}
               className={`feature bg-linear-to-br from-white via-[#f8f9ff] to-white backdrop-blur-xl rounded-2xl p-6 shadow-md border border-white transition-transform duration-300 ${
                 index % 2 === 1 ? "md:translate-y-8" : ""
               } hover:scale-110`}
             >
-              <div className="mb-4">{item.icon}</div>
+              <div className="mb-4">{icons[index] || icons[0]}</div>
               <h3 className="text-lg font-semibold text-gray-900 mb-1">
                 {item.title}
               </h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                {item.desc}
+                {item.description}
               </p>
             </div>
           ))}

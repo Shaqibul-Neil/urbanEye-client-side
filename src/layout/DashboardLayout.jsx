@@ -202,7 +202,7 @@ const DashboardLayout = () => {
                     {/* Payments History */}
                     <li>
                       <SideBarLinks
-                        to={"/"}
+                        to={"/?edit=true"}
                         icon={Edit}
                         label={"Home Editor"}
                       />

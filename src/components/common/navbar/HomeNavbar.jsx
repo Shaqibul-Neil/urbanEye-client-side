@@ -18,7 +18,7 @@ const HomeNavbar = () => {
     }
   };
   return (
-    <div className="navbar lg:py-4 md:py-3 md:px-4 px-2 lg:px-6 h-12">
+    <div className="navbar lg:py-4 md:py-3 px-4 lg:px-6 h-12">
       <div className="navbar-start">
         <div className="dropdown">
           <div
@@ -31,7 +31,7 @@ const HomeNavbar = () => {
               className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
+              stroke="white"
             >
               <path
                 strokeLinecap="round"

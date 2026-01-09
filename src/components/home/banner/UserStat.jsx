@@ -42,7 +42,7 @@ const UserStat = () => {
               <Star className="text-blue-800 w-4 h-4" key={i} />
             ))}
           </p>
-          <p className="text-secondary font-bold leading-2 mt-2">
+          <p className="text-secondary font-bold leading-2 mt-2 text-sm md:text-base">
             150K+ worldwide users
           </p>
         </div>

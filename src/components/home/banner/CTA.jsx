@@ -1,10 +1,10 @@
 import { Link } from "react-router";
 
-const CTA = () => {
+const CTA = ({ text = "Explore Issue", link = "/all-issues" }) => {
   return (
-    <div>
+    <div className="mx-auto w-48 md:mx-0">
       <Link
-        to="/all-issues"
+        to={link}
         className="
           relative flex justify-center items-center gap-2
           w-48 px-4 py-2 rounded-full overflow-hidden
@@ -26,7 +26,7 @@ const CTA = () => {
           before:rounded-full
         "
       >
-        Explore Issue
+        {text}
         <svg
           className="
             w-8 h-8 p-2 rounded-full border border-gray-700
