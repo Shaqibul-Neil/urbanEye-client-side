@@ -30,21 +30,24 @@ import RouteTitle from "./RouteTitle";
 import InvoicePaymentHistory from "../pages/dashboard/admin/InvoicePaymentHistory";
 import BoostPaymentSuccess from "../pages/boost/BoostPaymentSuccess";
 import BoostPaymentPage from "../pages/boost/BoostPaymentPage";
+import HomeLayout from "../layout/HomeLayout";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <RouteTitle title="Home">
+        {" "}
+        <HomeLayout />
+      </RouteTitle>
+    ),
+    errorElement: <ErrorPage />,
+  },
   {
     path: "/",
     Component: MainLayout,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: (
-          <RouteTitle title="Home">
-            <Home />
-          </RouteTitle>
-        ),
-      },
       {
         path: "/about",
         element: (

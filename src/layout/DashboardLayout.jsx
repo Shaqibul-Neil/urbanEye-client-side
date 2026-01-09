@@ -6,6 +6,7 @@ import avatarImg from "../assets/placeholder.jpg";
 import {
   Bell,
   CreditCard,
+  Edit,
   Home,
   HomeIcon,
   ListChecks,
@@ -196,6 +197,14 @@ const DashboardLayout = () => {
                         to={"payments-history"}
                         icon={CreditCard}
                         label={"Payments History"}
+                      />
+                    </li>
+                    {/* Payments History */}
+                    <li>
+                      <SideBarLinks
+                        to={"/"}
+                        icon={Edit}
+                        label={"Home Editor"}
                       />
                     </li>
                   </>

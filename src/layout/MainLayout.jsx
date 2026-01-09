@@ -1,28 +1,11 @@
-import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
-import Navbar from "../components/common/navbar/Navbar";
 import Footer from "../components/common/footer/Footer";
+import DefaultHeader from "../components/common/navbar/DefaultHeader";
 
 const MainLayout = () => {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      window.scrollY > 400 ? setScrolled(true) : setScrolled(false);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   return (
     <div>
-      <header className="relative w-full bg-base-200">
-        <div
-          className="container mx-auto lg:px-6
-          "
-        >
-          <Navbar scrolled={scrolled} />
-        </div>
-      </header>
-
+      <DefaultHeader />
       <main>
         <Outlet />
       </main>

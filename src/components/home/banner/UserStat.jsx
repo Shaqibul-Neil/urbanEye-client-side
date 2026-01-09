@@ -1,8 +1,10 @@
+import { Star } from "lucide-react";
+
 const UserStat = () => {
   return (
-    <div className="w-44 h-18 bg-blue-200 rounded-3xl absolute lg:top-10 lg:right-10 z-25 flex items-center justify-center md:-top-40 md:right-10 top-20 right-0 animate-elasticBounce">
-      <div className="w-40 h-14 bg-white rounded-2xl flex items-center gap-2 px-2">
-        <div className="avatar-group -space-x-6">
+    <div className="rounded-4xl flex items-center justify-center">
+      <div className="h-14 bg-white rounded-2xl flex items-center gap-2 px-2">
+        <div className="avatar-group -space-x-5">
           <div className="avatar">
             <div className="w-8">
               <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
@@ -18,6 +20,16 @@ const UserStat = () => {
               <img src="https://img.daisyui.com/images/profile/demo/averagebulk@192.webp" />
             </div>
           </div>
+          <div className="avatar">
+            <div className="w-8">
+              <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+            </div>
+          </div>
+          <div className="avatar">
+            <div className="w-8">
+              <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+            </div>
+          </div>
           <div className="avatar avatar-placeholder">
             <div className="bg-neutral text-neutral-content w-8">
               <span>+99</span>
@@ -25,10 +37,14 @@ const UserStat = () => {
           </div>
         </div>
         <div>
-          <p className="text-primary font-extrabold leading-2 mt-2 text-lg">
-            150K
+          <p className="flex gap-1">
+            {Array.from({ length: 5 }, (_, i) => (
+              <Star className="text-blue-800 w-4 h-4" key={i} />
+            ))}
           </p>
-          <p>users</p>
+          <p className="text-secondary font-bold leading-2 mt-2">
+            150K+ worldwide users
+          </p>
         </div>
       </div>
     </div>

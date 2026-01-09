@@ -3,17 +3,12 @@ import CitizenFeedback from "../../components/home/feedback/CitizenFeedback";
 import HowItWorks from "../../components/home/how it works/HowItWorks";
 import LatestResolved from "../../components/home/latest resolved/LatestResolved";
 import AboutSection from "../../components/home/about/AboutSection";
-import Banner from "../../components/home/banner/Banner";
+
 import GlobeSection from "../../components/home/globe/GlobeSection";
 
 const Home = () => {
   return (
     <div>
-      {/* Banner Section */}
-      <section className="pb-16">
-        <Banner />
-      </section>
-
       {/* About Us Section */}
       <div>
         <section className="container mx-auto lg:py-32 md:py-24 py-8 lg:px-6">

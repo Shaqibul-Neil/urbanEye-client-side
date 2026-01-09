@@ -142,9 +142,7 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
           {/* Image Box */}
           <div
             className={`absolute inset-0 before:absolute before:inset-0  transform duration-300 hover:scale-110 ${
-              issue.status === "closed"
-                ? "before:bg-black/60"
-                : "before:bg-black/30"
+              issue.status === "closed" ? "before:bg-black/60" : ""
             }`}
           >
             <img

@@ -4,7 +4,7 @@ import useAuth from "../../../hooks/auth & role/useAuth";
 import MyLinks from "./MyLinks";
 import { Building2 } from "lucide-react";
 
-const Navbar = ({ scrolled }) => {
+const HomeNavbar = () => {
   const { user, setUser, signOutUser } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -18,7 +18,7 @@ const Navbar = ({ scrolled }) => {
     }
   };
   return (
-    <div className="navbar lg:py-4 md:py-3 md:px-4 px-2 lg:px-0">
+    <div className="navbar lg:py-4 md:py-3 md:px-4 px-2 lg:px-6 h-12">
       <div className="navbar-start">
         <div className="dropdown">
           <div
@@ -78,8 +78,8 @@ const Navbar = ({ scrolled }) => {
           to={"/"}
           className="flex items-center gap-1 md:text-2xl text-xl font-bold"
         >
-          <Building2 size={24} className="text-primary" />
-          <span className="text-secondary font-extrabold leading-tight">
+          <Building2 size={24} className="text-base-200" />
+          <span className="text-white font-extrabold leading-tight">
             URBAN
             <span className="text-primary">i</span>
           </span>
@@ -87,30 +87,51 @@ const Navbar = ({ scrolled }) => {
       </div>
 
       <div
-        className={`navbar-center hidden lg:flex rounded-3xl px-6 py-4 transition-all duration-300 ease-in-out  ${
-          scrolled
-            ? "fixed top-4 left-1/2 transform -translate-x-1/2 md:w-96 w-full lg:px-10 md:px-4 px-1 bg-blue-100/80 backdrop-blur-2xl rounded-3xl z-50 flex justify-center items-center border-primary border-2"
-            : "bg-white"
-        }`}
+        className="navbar-center hidden lg:flex rounded-3xl px-6 py-4 transition-all duration-300 ease-in-out 
+        "
       >
-        <ul className="flex items-center gap-6 text-primary">
+        <ul className="flex items-center gap-6 text-white">
           <li>
-            <MyLinks to={"/"}>Home</MyLinks>
+            <MyLinks
+              to={"/"}
+              className="hover:text-primary transition-all duration-300 flex items-center"
+              variant="home"
+            >
+              Home
+            </MyLinks>
           </li>
           <li>
-            <MyLinks to={"/about"}>About</MyLinks>
+            <MyLinks
+              to={"/about"}
+              className="hover:text-primary transition-all duration-300 flex items-center"
+              variant="home"
+            >
+              About
+            </MyLinks>
           </li>
           <li>
-            <MyLinks to={"/all-issues"}>All Issues</MyLinks>
+            <MyLinks
+              to={"/all-issues"}
+              className="hover:text-primary transition-all duration-300 flex items-center"
+              variant="home"
+            >
+              All Issues
+            </MyLinks>
           </li>
           <li>
-            <MyLinks to={"/contact"}>Contact</MyLinks>
+            <MyLinks
+              to={"/contact"}
+              className="hover:text-primary transition-all duration-300 flex items-center"
+              variant="home"
+            >
+              Contact
+            </MyLinks>
           </li>
         </ul>
       </div>
       <div className="navbar-end">
         {user ? (
-          <div className="dropdown dropdown-end z-50">
+          <div className="dropdown dropdown-end z-100">
             <div
               tabIndex={0}
               role="button"
@@ -129,7 +150,7 @@ const Navbar = ({ scrolled }) => {
             </div>
             <ul
               tabIndex="-1"
-              className="dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-3 shadow space-y-1"
+              className="dropdown-content bg-base-100 rounded-box z-100 mt-3 w-52 p-3 shadow space-y-1"
             >
               <div className="pb-1 border-b border-b-primary space-y-1 text-left">
                 <li className="text-lg font-bold">{user?.displayName}</li>
@@ -137,7 +158,7 @@ const Navbar = ({ scrolled }) => {
               <li className="mt-3">
                 <MyLinks
                   to={"/dashboard"}
-                  className="text-secondary  hover:text-primary transition-all duration-300 flex items-center text-sm"
+                  className="text-secondary hover:text-primary transition-all duration-300 flex items-center text-sm"
                 >
                   DashBoard
                 </MyLinks>
@@ -154,7 +175,7 @@ const Navbar = ({ scrolled }) => {
             </ul>
           </div>
         ) : (
-          <Link to={"/signin"} className={"btn btn-primary rounded-3xl"}>
+          <Link to={"/signin"} className={"btn btn-primary rounded-full"}>
             Sign In
           </Link>
         )}
@@ -163,4 +184,4 @@ const Navbar = ({ scrolled }) => {
   );
 };
 
-export default Navbar;
+export default HomeNavbar;

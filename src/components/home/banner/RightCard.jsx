@@ -2,7 +2,7 @@ import { Clock } from "lucide-react";
 
 const RightCard = () => {
   return (
-    <div className="glass-card relative p-6 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl hover:scale-105 transition-transform duration-300 lg:top-20 md:-right-55 lg:right-0 md:-top-30 top-30">
+    <div className="glass-card relative p-6 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl hover:scale-105 transition-transform duration-300">
       <Clock className="h-6 w-6 text-primary absolute top-4 left-4" />
       <h3 className="text-primary text-lg font-bold mt-8">
         Track Your Impact <br /> in Real Time
