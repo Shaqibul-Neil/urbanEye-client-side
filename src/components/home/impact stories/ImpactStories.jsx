@@ -1,3 +1,6 @@
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { Sparkles, TrendingUp, Award, Users } from "lucide-react";
 import ImpactBeforeAfter from "./ImpactBeforeAfter";
 import beforeWindow from "../../../assets/beforewindow.webp";
 import afterWindow from "../../../assets/afterwindow.webp";
@@ -5,52 +8,85 @@ import beforeGarbage from "../../../assets/beforegarbage.webp";
 import afterGarbage from "../../../assets/aftergarbage.webp";
 import beforePothole from "../../../assets/beforepothole.webp";
 import afterPothole from "../../../assets/afterpothole.webp";
+import afterPipe from "../../../assets/afterpipe.webp";
+import beforePipe from "../../../assets/beforepipe.webp";
 
-const stories = [
+const impactData = [
   {
     title: "Broken Window Repaired",
     location: "Mirpur, Dhaka",
     before: beforeWindow,
     after: afterWindow,
-    days: "1 days",
-    upvotes: 124,
+    days: "3",
+    upvotes: 127,
+    category: "Public Property Issue",
   },
   {
     title: "Garbage Overflow",
     location: "Banani, Dhaka",
     before: beforeGarbage,
     after: afterGarbage,
-    days: "2 days",
+    days: "1",
     upvotes: 89,
+    category: "Garbage Overflow",
   },
   {
     title: "Road Potholes",
     location: "Central Market Road, Sylhet",
     before: beforePothole,
     after: afterPothole,
-    days: "1 days",
-    upvotes: 67,
+    days: "2",
+    upvotes: 156,
+    category: "Road Damage / Potholes",
+  },
+  {
+    title: "Water Leakage",
+    location: "City Park, Chittagong",
+    before: beforePipe,
+    after: afterPipe,
+    days: "3",
+    upvotes: 127,
+    category: "Water Leakage",
   },
 ];
 
 export default function ImpactStories() {
-  return (
-    <section className="py-20">
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
-            Real Impact, <span className="text-primary">Visible Change</span>
-          </h2>
-          <p className="mt-4 text-gray-600">
-            See how citizen-driven priorities turn problems into solutions.
-          </p>
-        </div>
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {stories.map((story, i) => (
-            <ImpactBeforeAfter key={i} {...story} delay={i * 300} />
+  return (
+    <section className="w-full px-5 py-20 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10" ref={ref}>
+        {/* Premium Header Section */}
+        <motion.div
+          className="mb-16"
+          initial={{ y: 40, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-none">
+            Transforming <span className="text-primary">Communities</span>
+          </h1>
+          <p className="text-gray-600 max-w-5xl leading-relaxed font-medium">
+            Witness the power of civic engagement through real before-and-after
+            transformations across our city.
+          </p>
+        </motion.div>
+
+        {/* Impact Stories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {impactData.map((story, index) => (
+            <ImpactBeforeAfter
+              key={index}
+              before={story.before}
+              after={story.after}
+              title={story.title}
+              location={story.location}
+              days={story.days}
+              upvotes={story.upvotes}
+              category={story.category}
+              delay={index * 300}
+            />
           ))}
         </div>
       </div>

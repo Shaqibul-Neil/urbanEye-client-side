@@ -57,7 +57,7 @@ const Home = () => {
       </section>
 
       {/* How It works Section */}
-      <section className="container mx-auto lg:pt-24 md:pt-20 py-16 lg:px-6">
+      <section className="container mx-auto lg:pt-24 md:pt-20 py-10 lg:px-6">
         <EditableWrapper sectionKey="how-it-works-section">
           <HowItWorks />
         </EditableWrapper>

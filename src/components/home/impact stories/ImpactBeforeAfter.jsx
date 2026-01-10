@@ -1,4 +1,4 @@
-import { Clock, Zap } from "lucide-react";
+import { Clock, Zap, MapPin, CheckCircle2 } from "lucide-react";
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
@@ -14,32 +14,19 @@ export default function ImpactBeforeAfter({
   days,
   upvotes,
   delay = 0,
+  category = "Infrastructure",
 }) {
-  const [animatedCount, setAnimatedCount] = useState(0);
+  const [sliderPosition, setSliderPosition] = useState(25);
+  const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
+  // Auto-animate slider on mount
   useEffect(() => {
     if (isInView) {
       const timer = setTimeout(() => {
-        let start = 0;
-        const end = 3;
-        const duration = 2000;
-        const increment = end / (duration / 16);
-
-        const counter = setInterval(() => {
-          start += increment;
-          if (start >= end) {
-            setAnimatedCount(end);
-            clearInterval(counter);
-          } else {
-            setAnimatedCount(Math.floor(start));
-          }
-        }, 16);
-
-        return () => clearInterval(counter);
-      }, delay);
-
+        setSliderPosition(50);
+      }, delay + 800);
       return () => clearTimeout(timer);
     }
   }, [isInView, delay]);
@@ -47,52 +34,166 @@ export default function ImpactBeforeAfter({
   return (
     <motion.div
       ref={ref}
-      initial={{ y: 32, opacity: 0 }}
-      animate={isInView ? { y: 0, opacity: 1 } : { y: 32, opacity: 0 }}
+      initial={{ y: 40, opacity: 0, scale: 0.95 }}
+      animate={
+        isInView
+          ? { y: 0, opacity: 1, scale: 1 }
+          : { y: 40, opacity: 0, scale: 0.95 }
+      }
       transition={{
-        duration: 1,
+        duration: 0.8,
         delay: delay / 1000,
-        ease: "easeOut",
+        ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{
-        scale: 1.05,
-        y: -12,
+        y: -8,
+        scale: 1.02,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
-      className="bg-white rounded-2xl border overflow-hidden shadow-sm cursor-pointer"
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="group cursor-pointer relative"
     >
-      {/* Slider */}
-      <div className="relative h-64 w-full">
-        <ReactCompareSlider
-          itemOne={
-            <ReactCompareSliderImage
-              src={before}
-              alt="Before"
-              className="object-cover"
-            />
-          }
-          itemTwo={
-            <ReactCompareSliderImage
-              src={after}
-              alt="After"
-              className="object-cover"
-            />
-          }
-          className="h-full"
-        />
-      </div>
+      {/* Floating Glow Effect */}
+      <motion.div
+        className={`absolute -inset-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl blur-2xl opacity-0 group-hover:opacity-10 transition-all duration-700`}
+        animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
+      />
 
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        <p className="text-sm text-gray-500 mt-1">{location}</p>
-        <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
-          <span>
-            <Clock className="w-4 h-4 text-primary inline" /> Resolved in {days}
-          </span>
-          <span>
-            <Zap className="w-4 h-4 text-primary inline" /> {upvotes} upvotes
-          </span>
+      {/* Glass Morphism Card */}
+      <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl border border-white/30 overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-500">
+        {/* Category Badge */}
+        <div className="absolute top-4 left-4 z-20">
+          <motion.div
+            className={`inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1.5 rounded-full shadow-lg`}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
+            <CheckCircle2 size={14} className="text-white" />
+            <span className="text-xs font-bold text-white uppercase tracking-wider">
+              {category}
+            </span>
+          </motion.div>
+        </div>
+
+        {/* Success Indicator */}
+        <div className="absolute top-4 right-4 z-20">
+          <motion.div
+            className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-lg"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={
+              isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }
+            }
+            transition={{
+              delay: delay / 1000 + 0.5,
+              duration: 0.6,
+              ease: "backOut",
+            }}
+          >
+            <CheckCircle2 size={16} className="text-white" />
+          </motion.div>
+        </div>
+
+        {/* Before/After Slider */}
+        <div className="relative h-72 w-full overflow-hidden rounded-t-3xl">
+          <ReactCompareSlider
+            itemOne={
+              <ReactCompareSliderImage
+                src={before}
+                alt="Before"
+                className="object-cover"
+              />
+            }
+            itemTwo={
+              <ReactCompareSliderImage
+                src={after}
+                alt="After"
+                className="object-cover"
+              />
+            }
+            position={sliderPosition}
+            onPositionChange={setSliderPosition}
+            className="h-full"
+            handle={
+              <div className="w-12 h-12 bg-white rounded-full shadow-2xl border-4 border-white flex items-center justify-center backdrop-blur-sm">
+                <div
+                  className={`w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center`}
+                >
+                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                </div>
+              </div>
+            }
+          />
+
+          {/* Before/After Labels */}
+          <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full">
+            <span className="text-white text-xs font-semibold">BEFORE</span>
+          </div>
+          <div className="absolute bottom-4 right-4 bg-success backdrop-blur-sm px-3 py-1 rounded-full">
+            <span className="text-white text-xs font-semibold">AFTER</span>
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="p-6 relative">
+          {/* Floating Background Pattern */}
+          <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.02] transform rotate-12 group-hover:rotate-45 transition-transform duration-1000">
+            <CheckCircle2 size={128} className="text-gray-900" />
+          </div>
+
+          <div className="relative z-10">
+            {/* Title & Location */}
+            <div className="mb-4">
+              <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
+                {title}
+              </h3>
+              <div className="flex items-center gap-2 text-gray-500">
+                <MapPin size={14} className="text-gray-400" />
+                <span className="text-sm font-medium">{location}</span>
+              </div>
+            </div>
+
+            {/* Impact Metrics */}
+            <div className="grid grid-cols-2 mb-4">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex items-center gap-1">
+                  <div className="flex items-center justify-center shadow-lg">
+                    <Clock size={16} className="text-primary" />
+                  </div>
+                  <div>
+                    <div className="text-lg font-black text-gray-900">
+                      {days}{" "}
+                      <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
+                        Days
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex items-center gap-1">
+                  <div className="flex items-center justify-center shadow-lg">
+                    <Zap size={16} className="text-primary" />
+                  </div>
+                  <div>
+                    <div className="text-lg font-black text-gray-900">
+                      {upvotes}{" "}
+                      <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
+                        Upvotes
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>
