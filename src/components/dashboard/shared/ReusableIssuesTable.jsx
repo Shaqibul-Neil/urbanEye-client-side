@@ -138,7 +138,7 @@ const ReusableIssuesTable = ({
                 <tr
                   key={issue?._id}
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
-                    i % 2 === 1 ? "bg-gray-50" : "bg-white"
+                    i % 2 === 0 ? "bg-gray-100" : "bg-white"
                   }`}
                 >
                   <th className={`border-l-4 ${getBorder(issue?.status)}`}>
@@ -154,9 +154,8 @@ const ReusableIssuesTable = ({
                   <td className="py-3 px-4 text-center">
                     <p
                       className={`py-1 text-xs badge badge-outline font-bold rounded-full uppercase ${
-                        issue?.priority === "high" &&
-                        issue?.status === "pending"
-                          ? "animate-pulse text-green-700"
+                        issue?.priority === "high"
+                          ? "text-green-700"
                           : issue?.priority === "normal"
                           ? "text-yellow-700"
                           : "text-green-700"

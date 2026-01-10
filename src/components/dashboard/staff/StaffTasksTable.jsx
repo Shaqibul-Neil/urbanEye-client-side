@@ -37,8 +37,8 @@ const StaffTasksTable = ({
       {data.length === 0 ? (
         <p className="text-center py-6 text-gray-500">No tasks found</p>
       ) : (
-        <table className="table w-full">
-          <thead>
+        <table className="table table-zebra w-full">
+          <thead className="bg-gray-50">
             <tr>
               <th>#</th>
               <th>Issue Details & Location</th>
@@ -53,7 +53,12 @@ const StaffTasksTable = ({
           </thead>
           <tbody>
             {data.map((task, index) => (
-              <tr key={task._id}>
+              <tr 
+                key={task._id}
+                className={`${
+                  index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
+                }`}
+              >
                 <td>{index + 1}</td>
 
                 {/* Issue Details & Location */}

@@ -16,6 +16,8 @@ const useStaffAssign = () => {
       //query key invalidate
       queryClient.invalidateQueries(["all-staffs", "available"]);
       queryClient.invalidateQueries(["my-issues"]);
+      queryClient.invalidateQueries(["latest-issue"]); // For admin dashboard
+      queryClient.invalidateQueries(["all-issues"]); // For all reported issues page
     },
   });
   return mutation;

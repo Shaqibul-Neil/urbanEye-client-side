@@ -7,7 +7,26 @@ import {
   Legend,
 } from "recharts";
 
-const StatusPieChart = ({ data, title = "Status Distribution" }) => {
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    console.log(active, payload);
+    const entry = payload[0];
+    return (
+      <div className="bg-white p-3 rounded-lg shadow-lg border">
+        <p className="font-semibold capitalize">{entry.name}</p>
+        <p className="text-sm">Count: {entry.value}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const StatusPieChart = ({
+  data,
+  title = "Status Distribution",
+  totalIssues,
+}) => {
+  //console.log(data);
   // Color mapping for different statuses
   const statusColors = {
     pending: "#FFBB28",
@@ -26,25 +45,13 @@ const StatusPieChart = ({ data, title = "Status Distribution" }) => {
       fill: statusColors[item._id] || statusColors[item.status] || "#8884d8",
     })) || [];
 
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      const data = payload[0];
-      return (
-        <div className="bg-white p-3 rounded-lg shadow-lg border">
-          <p className="font-semibold capitalize">{data.name}</p>
-          <p className="text-sm">Count: {data.value}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-84">
+    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-[336px]">
       <h3 className="text-lg font-bold mb-4 text-secondary text-center">
         {title}
       </h3>
-      <ResponsiveContainer width="100%" height="100%">
+
+      <ResponsiveContainer width="100%" height={300} minHeight={250}>
         <PieChart margin={{ top: 10, right: 10, bottom: 30, left: 10 }}>
           <Pie
             data={chartData}
@@ -53,13 +60,19 @@ const StatusPieChart = ({ data, title = "Status Distribution" }) => {
             outerRadius="80%"
             innerRadius="60%"
             isAnimationActive={false}
-          />
-          <Label position="center" fill="#666" />
+          >
+            <Label
+              position="center"
+              fill="#666"
+              value={totalIssues}
+              className="text-xl font-bold fill-gray-700"
+            />
+          </Pie>
           <Tooltip content={<CustomTooltip />} />
           <Legend
             verticalAlign="bottom"
-            height={36}
-            wrapperStyle={{ fontSize: "12px", paddingTop: "-10px" }}
+            height={64}
+            wrapperStyle={{ fontSize: "12px", marginTop: "-10px" }}
           />
         </PieChart>
       </ResponsiveContainer>

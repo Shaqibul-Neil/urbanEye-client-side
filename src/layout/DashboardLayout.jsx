@@ -67,6 +67,22 @@ const DashboardLayout = () => {
                 </p>
               </div>
               <div className="flex gap-2 justify-center lg:justify-start">
+                {/* Drawer Toggle */}
+                <label
+                  htmlFor="my-drawer-4"
+                  className="btn btn-secondary btn-sm btn-square rounded-full flex items-center justify-center w-8 h-8 p-0 lg:hidden"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="size-4"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                  >
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </label>
                 <div className="w-8 h-8 bg-blue-100 rounded-full flex justify-center items-center">
                   <Mail strokeWidth={2.5} className="w-4 h-4 text-primary" />
                 </div>
@@ -92,30 +108,15 @@ const DashboardLayout = () => {
                 to="/dashboard/my-profile"
                 className="px-5 h-10 flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-300"
               >
-                <Eye /> View Profile
+                <Eye className="w-5 h-5" /> View Profile
               </Link>
-              {/* Drawer Toggle */}
-              <label
-                htmlFor="my-drawer-4"
-                className="btn btn-square btn-primary btn-sm lg:hidden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  className="size-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </label>
+
               {role === "admin" && (
                 <Link
                   to={"/?edit=true"}
                   className="px-5 h-10 flex items-center justify-center gap-2 bg-secondary hover:bg-primary text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-300"
                 >
-                  <Edit />
+                  <Edit className="w-4 h-4" />
                   Home Editor
                 </Link>
               )}

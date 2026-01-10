@@ -5,7 +5,7 @@ import ResolutionRateChart from "../shared/ResolutionRateChart";
 import TopUpvotedIssue from "../shared/TopUpvotedChart";
 import PaymentAreaChart from "../shared/PaymentAreaChart";
 import AdminIssuesTable from "./AdminIssuesTable";
-import AdminUsersTable from "./AdminUsersTable";
+import AdminCitizenTable from "./AdminCitizenTable";
 
 const AdminDashboardLayout = ({
   // Metrics data
@@ -55,12 +55,7 @@ const AdminDashboardLayout = ({
     <div className="px-5 space-y-6">
       {/* Section 1: Issue Metrics (4 Grid Layout) */}
       <div className="bg-white p-6 rounded-3xl">
-        <h2 className="text-lg text-secondary font-bold mb-4">
-          Issue Metrics
-          <span className="font-normal text-base ml-2">
-            Total Submitted Issues: {totalIssues}
-          </span>
-        </h2>
+        <h2 className="text-lg text-secondary font-bold mb-4">Issue Metrics</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left 2 Grids: Cards in 2x2 Layout */}
@@ -107,7 +102,11 @@ const AdminDashboardLayout = ({
           </div>
 
           {/* Status Distribution Pie Chart (1 Grid) */}
-          <StatusPieChart data={pieChartData} title="Status Distribution" />
+          <StatusPieChart
+            data={pieChartData}
+            title="Status Distribution"
+            totalIssues={totalIssues}
+          />
 
           {/* Resolution Rate Chart (1 Grid) */}
           <ResolutionRateChart
@@ -135,13 +134,18 @@ const AdminDashboardLayout = ({
         title="Latest Posted Issues"
         data={latestIssues}
         loading={loading}
+        showSearch={false}
+        showActions={true}
+        limit={5}
       />
 
       {/* Section 4: Latest Citizens (Full Width) */}
-      <AdminUsersTable
+      <AdminCitizenTable
         title="Latest Citizens"
         data={latestUsers}
         loading={loading}
+        showActions={true}
+        limit={5}
       />
     </div>
   );
