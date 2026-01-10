@@ -6,6 +6,8 @@ import PaymentProvider from "../context/PaymentProvider";
 import SubscriptionPopup from "../components/home/popup/SubscriptionPopup";
 import Loading from "../components/loading/Loading";
 import { EditModeProvider } from "../context/EditModeProvider";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +57,8 @@ const AppProviders = ({ children }) => {
                   },
                 }}
               />
-
+              {/* Global Tooltip */}
+              <Tooltip id="global-tooltip" place="top" />
               {showPopup && (
                 <SubscriptionPopup
                   isOpen={showPopup}

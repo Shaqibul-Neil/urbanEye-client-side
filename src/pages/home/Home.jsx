@@ -9,6 +9,7 @@ import GlobeSection from "../../components/home/globe/GlobeSection";
 import EditorTopBar from "../../components/page builder/EditorTopBar";
 import SectionEditor from "../../components/page builder/SectionEditor";
 import useEditorMode from "../../hooks/page builder/useEditorMode";
+import CityPulseDashboard from "../../components/home/city pulse/CityPulseDashboard";
 
 const Home = () => {
   const { editMode } = useEditorMode();
@@ -24,8 +25,11 @@ const Home = () => {
           </EditableWrapper>
         </section>
       </div>
+      <section>
+        <CityPulseDashboard />
+      </section>
       {/* Latest Resolved Section */}
-      <section className="container mx-auto lg:pb-24 md:pb-20 py-8 lg:px-6 px-5 z-5 relative">
+      <section className="container mx-auto lg:pb-24 md:pb-20 py-16 lg:px-6 px-5 z-5 relative">
         <LatestResolved />
       </section>
 
@@ -56,7 +60,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-linear-to-br from-white via-[#f8f9ff] to-white lg:py-24 md:py-16 lg:px-6 py-16">
+      <section className="lg:py-24 md:py-16 lg:px-6 py-16 px-5">
         <div className="container mx-auto">
           <CitizenFeedback />
         </div>

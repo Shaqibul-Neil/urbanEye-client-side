@@ -15,19 +15,31 @@ const SectionEditor = () => {
     // Get the appropriate save function based on active section
     if (activeSection === "banner" && window.bannerData?.handleSave) {
       window.bannerData.handleSave();
-    } else if (activeSection === "about-section" && window.aboutSectionData?.handleSave) {
+    } else if (
+      activeSection === "about-section" &&
+      window.aboutSectionData?.handleSave
+    ) {
       window.aboutSectionData.handleSave();
-    } else if (activeSection === "globe-section" && window.globeSectionData?.handleSave) {
+    } else if (
+      activeSection === "globe-section" &&
+      window.globeSectionData?.handleSave
+    ) {
       window.globeSectionData.handleSave();
-    } else if (activeSection === "features-section" && window.featuresSectionData?.handleSave) {
+    } else if (
+      activeSection === "features-section" &&
+      window.featuresSectionData?.handleSave
+    ) {
       window.featuresSectionData.handleSave();
-    } else if (activeSection === "how-it-works-section" && window.howItWorksSectionData?.handleSave) {
+    } else if (
+      activeSection === "how-it-works-section" &&
+      window.howItWorksSectionData?.handleSave
+    ) {
       window.howItWorksSectionData.handleSave();
     }
   };
 
   return (
-    <div className="fixed right-6 top-24 w-96 bg-white shadow-xl rounded-xl z-[9999] max-h-[80vh] overflow-y-auto">
+    <div className="fixed md:right-6 top-24 md:w-96 w-[80%] right-10 bg-white shadow-xl rounded-xl z-[9999] max-h-[80vh] overflow-y-auto">
       <div className="flex justify-between items-center p-4 border-b">
         <h3 className="font-bold capitalize">Editing: {activeSection}</h3>
         <div className="flex gap-2">
@@ -53,7 +65,9 @@ const SectionEditor = () => {
         {activeSection === "about-section" && <AboutSectionEditor />}
         {activeSection === "globe-section" && <GlobeSectionEditor />}
         {activeSection === "features-section" && <FeaturesSectionEditor />}
-        {activeSection === "how-it-works-section" && <HowItWorksSectionEditor />}
+        {activeSection === "how-it-works-section" && (
+          <HowItWorksSectionEditor />
+        )}
       </div>
     </div>
   );

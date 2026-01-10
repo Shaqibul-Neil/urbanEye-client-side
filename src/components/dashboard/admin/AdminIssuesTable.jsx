@@ -238,7 +238,8 @@ const AdminIssuesTable = ({
                             <button
                               className="w-8 h-8 bg-blue-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
                               onClick={() => handleAssignStaffModal(issue)}
-                              data-tip="Assign Staff"
+                              data-tooltip-id="global-tooltip"
+                              data-tooltip-content="Assign Staff"
                             >
                               <UserPlus
                                 size={16}
@@ -246,11 +247,11 @@ const AdminIssuesTable = ({
                                 className="w-4 h-4 text-primary"
                               />{" "}
                             </button>
-
                             <button
                               className="w-8 h-8 bg-red-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
                               onClick={() => handleReject(issue)}
-                              tool-tip="Reject Issue"
+                              data-tooltip-id="global-tooltip"
+                              data-tooltip-content="Reject Issue"
                             >
                               <XCircle
                                 size={16}

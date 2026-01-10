@@ -180,6 +180,8 @@ const ReusableIssuesTable = ({
                       <button
                         className="w-8 h-8 bg-blue-100 rounded-full flex justify-center items-center cursor-pointer"
                         onClick={() => handleEditIssues(issue)}
+                        data-tooltip-id="global-tooltip"
+                        data-tooltip-content="Edit Issue"
                       >
                         <Edit
                           strokeWidth={2.5}
@@ -189,8 +191,10 @@ const ReusableIssuesTable = ({
 
                       {/* Details Button */}
                       <Link
-                        className="w-8 h-8 bg-amber-100 rounded-full flex justify-center items-center cursor-pointer"
+                        className="w-8 h-8 bg-amber-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
                         to={`/issue/${issue?._id}`}
+                        data-tooltip-id="global-tooltip"
+                        data-tooltip-content="View Details"
                       >
                         <Eye
                           strokeWidth={2.5}
@@ -200,8 +204,10 @@ const ReusableIssuesTable = ({
 
                       {/* Delete Button */}
                       <button
-                        className="w-8 h-8 bg-red-100 rounded-full flex justify-center items-center cursor-pointer"
+                        className="w-8 h-8 bg-red-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
                         onClick={() => handleDeleteIssue(issue._id)}
+                        data-tooltip-id="global-tooltip"
+                        data-tooltip-content="Delete Issue"
                       >
                         <Trash2
                           strokeWidth={2.5}

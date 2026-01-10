@@ -59,7 +59,7 @@ const ReportedIssues = () => {
               {/* Page content here */}
               <label
                 htmlFor="my-drawer-1"
-                className="btn drawer-button btn-outline btn-primary"
+                className="btn drawer-button btn-outline btn-primary rounded-3xl"
               >
                 Filter By
               </label>

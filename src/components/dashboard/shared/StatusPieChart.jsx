@@ -29,11 +29,12 @@ const StatusPieChart = ({
   //console.log(data);
   // Color mapping for different statuses
   const statusColors = {
-    pending: "#FFBB28",
-    "in-progress": "#00C49F",
-    rejected: "#FF8042",
+    pending: "#f59e0b",
+    "in-progress": "#10b981",
+    working: "#090979",
+    rejected: "#ef4444",
     resolved: "#0088FE",
-    assigned: "#8884d8",
+    assigned: "#090979",
     closed: "#475569",
   };
 

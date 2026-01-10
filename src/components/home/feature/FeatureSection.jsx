@@ -12,21 +12,21 @@ export default function FeaturesSection() {
       highlightText: "",
       description: "",
       buttonText: "",
-      features: []
+      features: [],
     },
     styles: {
       mainHeading: {
         fontSize: "text-4xl md:text-5xl",
         fontWeight: "font-extrabold",
-        color: "text-primary"
+        color: "text-primary",
       },
       highlightText: {
-        color: "text-secondary"
+        color: "text-secondary",
       },
       description: {
-        color: "text-gray-600"
-      }
-    }
+        color: "text-gray-600",
+      },
+    },
   });
 
   const { editMode } = useEditorMode();
@@ -51,15 +51,15 @@ export default function FeaturesSection() {
     try {
       const payload = {
         content: featuresData.content,
-        styles: featuresData.styles
+        styles: featuresData.styles,
       };
-      
+
       await axiosSecure.patch("/contents/features-section", payload, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      
+
       await Swal.fire({
         timer: 2000,
         position: "center",
@@ -80,37 +80,37 @@ export default function FeaturesSection() {
   };
 
   const updateContent = (field, value) => {
-    setFeaturesData(prev => ({
+    setFeaturesData((prev) => ({
       ...prev,
       content: {
         ...prev.content,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
   const updateFeature = (index, field, value) => {
-    setFeaturesData(prev => ({
+    setFeaturesData((prev) => ({
       ...prev,
       content: {
         ...prev.content,
-        features: prev.content.features.map((feature, i) => 
+        features: prev.content.features.map((feature, i) =>
           i === index ? { ...feature, [field]: value } : feature
-        )
-      }
+        ),
+      },
     }));
   };
 
   const updateStyle = (element, property, value) => {
-    setFeaturesData(prev => ({
+    setFeaturesData((prev) => ({
       ...prev,
       styles: {
         ...prev.styles,
         [element]: {
           ...prev.styles[element],
-          [property]: value
-        }
-      }
+          [property]: value,
+        },
+      },
     }));
   };
 
@@ -118,15 +118,17 @@ export default function FeaturesSection() {
   const getClassName = (element) => {
     const style = featuresData.styles[element];
     if (!style) return "";
-    
+
     return [
       style.fontSize,
       style.fontWeight,
       style.textAlign,
       style.color,
       style.padding,
-      style.margin
-    ].filter(Boolean).join(" ");
+      style.margin,
+    ]
+      .filter(Boolean)
+      .join(" ");
   };
 
   // Store data and functions in window for FeaturesSectionEditor access
@@ -136,7 +138,7 @@ export default function FeaturesSection() {
       updateContent,
       updateFeature,
       updateStyle,
-      handleSave
+      handleSave,
     };
   }, [featuresData]);
 
@@ -144,24 +146,27 @@ export default function FeaturesSection() {
     <ShieldCheck className="w-8 h-8 text-indigo-600" />,
     <MapPin className="w-8 h-8 text-indigo-600" />,
     <Bell className="w-8 h-8 text-indigo-600" />,
-    <PhoneCall className="w-8 h-8 text-indigo-600" />
+    <PhoneCall className="w-8 h-8 text-indigo-600" />,
   ];
 
   return (
     <section className="lg:py-24 py-16 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="lg:px-6 px-5 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Content */}
         <div className="max-w-md space-y-4">
-          <h2 className={`tracking-tight ${getClassName('mainHeading')}`}>
-            {featuresData.content.mainHeading || "Build a"} <span className={getClassName('highlightText')}>
+          <h2 className={`tracking-tight ${getClassName("mainHeading")}`}>
+            {featuresData.content.mainHeading || "Build a"}{" "}
+            <span className={getClassName("highlightText")}>
               {featuresData.content.highlightText || "Safer Community"}
-            </span> with Our Public Reporting System
+            </span>{" "}
+            with Our Public Reporting System
           </h2>
 
-          <p className={`mb-6 leading-relaxed ${getClassName('description')}`}>
-            {featuresData.content.description || "A powerful and transparent platform where citizens can report issues, track progress, and help improve their city with ease."}
+          <p className={`mb-6 leading-relaxed ${getClassName("description")}`}>
+            {featuresData.content.description ||
+              "A powerful and transparent platform where citizens can report issues, track progress, and help improve their city with ease."}
           </p>
-          
+
           <button className="px-6 py-3 border border-primary text-primary rounded-full shadow-md hover:bg-primary hover:text-white cursor-pointer transition-all duration-300">
             {featuresData.content.buttonText || "Report an Issue"}
           </button>
@@ -169,24 +174,31 @@ export default function FeaturesSection() {
 
         {/* Right Features Grid */}
         <div className="features grid grid-cols-1 md:grid-cols-2 gap-6">
-          {(featuresData.content.features.length > 0 ? featuresData.content.features : [
-            {
-              title: "Verified Staff Handling",
-              description: "Every report is managed by authorized municipal staff, ensuring accountability and quality response."
-            },
-            {
-              title: "Location-Based Tracking", 
-              description: "Browse reported problems around your area and monitor progress in real time."
-            },
-            {
-              title: "Instant Status Notifications",
-              description: "Get notified whenever your submitted issue is assigned, reviewed, or resolved."
-            },
-            {
-              title: "Emergency Priority System",
-              description: "Critical public safety concerns are auto-flagged and forwarded to emergency teams instantly."
-            }
-          ]).map((item, index) => (
+          {(featuresData.content.features.length > 0
+            ? featuresData.content.features
+            : [
+                {
+                  title: "Verified Staff Handling",
+                  description:
+                    "Every report is managed by authorized municipal staff, ensuring accountability and quality response.",
+                },
+                {
+                  title: "Location-Based Tracking",
+                  description:
+                    "Browse reported problems around your area and monitor progress in real time.",
+                },
+                {
+                  title: "Instant Status Notifications",
+                  description:
+                    "Get notified whenever your submitted issue is assigned, reviewed, or resolved.",
+                },
+                {
+                  title: "Emergency Priority System",
+                  description:
+                    "Critical public safety concerns are auto-flagged and forwarded to emergency teams instantly.",
+                },
+              ]
+          ).map((item, index) => (
             <div
               key={index}
               className={`feature bg-linear-to-br from-white via-[#f8f9ff] to-white backdrop-blur-xl rounded-2xl p-6 shadow-md border border-white transition-transform duration-300 ${

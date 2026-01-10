@@ -188,6 +188,8 @@ const ManageStaff = () => {
                         <button
                           className="w-8 h-8 bg-blue-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
                           onClick={() => handleUpdateStaff(staff)}
+                          data-tooltip-id="global-tooltip"
+                          data-tooltip-content="Update Staff"
                         >
                           <Edit
                             size={16}
@@ -200,6 +202,8 @@ const ManageStaff = () => {
                         <button
                           className="w-8 h-8 bg-red-100 rounded-full flex justify-center items-center cursor-pointer"
                           onClick={() => handleDeleteStaff(staff)}
+                          data-tooltip-id="global-tooltip"
+                          data-tooltip-content="Delete Staff"
                         >
                           <Trash
                             size={18}

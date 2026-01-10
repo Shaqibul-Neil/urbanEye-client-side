@@ -1,49 +1,46 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../hooks/auth & role/useAuth";
-import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Heading from "../../../components/common/heading/Heading";
 import SubHeading from "../../../components/common/heading/SubHeading";
 import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
-import { useEffect, useState } from "react";
-import { MdEmail } from "react-icons/md";
+import { useState } from "react";
 import { Link } from "react-router";
-import usePayment from "../../../hooks/payment related/usePayment";
+
 import useGetAllPayments from "../../../hooks/payment related/useGetAllPayments";
+import { Download } from "lucide-react";
 
 const PaymentsHistory = () => {
   const [filterType, setFilterType] = useState("");
-  const { setPaymentsPDF } = usePayment();
 
   const { payments, isLoading, isError } = useGetAllPayments({ filterType });
 
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
   return (
-    <div className="lg:px-5 md:px-3 px-1 py-6">
+    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
       <div className="space-y-12">
         {/* Title Section */}
-        <div className="flex justify-between items-center gap-10 md:flex-row flex-col">
-          <div className="space-y-2">
+        <div className="space-y-2">
+          <div className="flex justify-between items-center w-full gap-4">
             <Heading
               label={"Payments History"}
               className={"text-4xl md:text-5xl pb-1"}
             />
-            <SubHeading
-              label={
-                "Track all user payments, view details, and manage transactions—all from one centralized dashboard."
-              }
-            />
+            <Link
+              to={"/dashboard/invoice-payment-history"}
+              className="cursor-pointer btn-primary w-8 h-8 flex justify-center items-center rounded-full"
+            >
+              <Download className="w-6 h-6 text-primary" />
+            </Link>
           </div>
-        </div>
-        <div className="flex gap-4 items-center w-84 md:ml-auto md:flex-row flex-col">
-          <Link
-            to={"/dashboard/invoice-payment-history"}
-            className="cursor-pointer btn btn-outline btn-primary"
-          >
-            Download PDF
-          </Link>
 
+          <SubHeading
+            label={
+              "Track all user payments, view details, and manage transactions—all from one centralized dashboard."
+            }
+          />
+        </div>
+
+        <div className="flex gap-4 items-center justify-center md:ml-auto md:flex-row flex-col">
           <div className="w-48">
             <select
               value={filterType}
@@ -84,7 +81,7 @@ const PaymentsHistory = () => {
               {payments.map((payment, i) => (
                 <tr
                   key={payment?._id}
-                  className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
+                  className={`transition-all duration-300 hover:shadow-md ${
                     payment.paymentType !== "subscription"
                       ? "bg-[#FFF7F0] hover:bg-orange-100"
                       : "bg-green-50 hover:bg-green-100"

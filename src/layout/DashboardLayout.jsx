@@ -44,20 +44,20 @@ const DashboardLayout = () => {
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Navbar */}
-          <nav className="navbar md:px-6 px-3 rounded-3xl mt-8 bg-white p-6 md:p-8 shadow-sm border border-gray-100 max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4">
+          <nav className="navbar md:px-6 px-3 rounded-3xl mt-8 bg-[linear-gradient(90deg,#020024_0%,#090979_35%,#00D4FF_100%)] p-6 md:p-8 shadow-sm border border-gray-100 max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4">
             {/* LEFT: Header Text */}
             <div className="flex-1 space-y-4 lg:items-start items-center">
               <div className="relative">
-                <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900">
+                <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-200">
                   Welcome back,{" "}
                   <span className="text-primary">
                     {user?.displayName?.split(" ")[0] || "Citizen"}!
                   </span>
                 </h1>
 
-                <p className="text-sm text-gray-500 mt-2 font-medium">
+                <p className="text-sm text-gray-50 mt-2 font-medium">
                   Here's your URBANi overview for{" "}
-                  <span className="text-secondary font-semibold">
+                  <span className="text-white font-semibold">
                     {new Date().toLocaleDateString("en-US", {
                       weekday: "long",
                       month: "long",
@@ -136,8 +136,8 @@ const DashboardLayout = () => {
             className="drawer-overlay"
           ></label>
 
-          <div className="flex min-h-full flex-col items-start md:w-1/3 w-2/3 lg:w-60 bg-primary rounded-r-4xl shadow-xl">
-            <div className="mx-auto bg-[#1e4ec4] w-full rounded-tr-4xl pb-8">
+          <div className="flex min-h-full flex-col items-start md:w-1/3 w-2/3 lg:w-60 bg-black rounded-r-4xl shadow-xl">
+            <div className="mx-auto bg-[#090979] w-full rounded-tr-4xl pb-8">
               {/* General Info */}
               <div className="flex flex-col items-center justify-center gap-3 pt-12 ">
                 {/* Avatar */}
@@ -254,17 +254,17 @@ const DashboardLayout = () => {
 
                 {/* General Links */}
                 {/* Home */}
-                <li>
+                {/* <li>
                   <SideBarLinks to={"/"} icon={Home} label={"Home"} />
                 </li>
                 {/* Profile */}
-                <li>
+                {/*<li>
                   <SideBarLinks
                     to={"my-profile"}
                     icon={User}
                     label={"My Profile"}
                   />
-                </li>
+                </li> */}
                 {/* Logout */}
                 <li>
                   <SideBarLinks

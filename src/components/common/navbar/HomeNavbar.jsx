@@ -57,21 +57,6 @@ const HomeNavbar = () => {
             <li>
               <MyLinks to={"/contact"}>Contact</MyLinks>
             </li>
-
-            {user ? (
-              <></>
-            ) : (
-              <>
-                <li>
-                  <Link
-                    to={"/signin"}
-                    className={"btn btn-success text-black mb-2"}
-                  >
-                    Login
-                  </Link>
-                </li>
-              </>
-            )}
           </ul>
         </div>
         <Link

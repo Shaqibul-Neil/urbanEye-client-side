@@ -4,7 +4,7 @@ import skyline from "../../../assets/skyline.jpg";
 const CitizenFeedback = () => {
   return (
     <section>
-      <div className="px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center lg:ml-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center lg:ml-4">
         {/* Left Content */}
         <div
           className="w-full lg:h-160 h-96 space-y-4 bg-cover bg-center p-6 rounded-2xl relative z-5"

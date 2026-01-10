@@ -99,7 +99,7 @@ const AdminCitizenTable = ({
               {displayData.map((user, i) => (
                 <tr
                   key={user?._id}
-                  className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
+                  className={`transition-all duration-300 hover:shadow-md ${
                     i % 2 === 0 ? "bg-gray-100" : "bg-white"
                   }`}
                 >
@@ -152,6 +152,8 @@ const AdminCitizenTable = ({
                           <button
                             className="w-8 h-8 bg-green-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
                             onClick={() => handleBlockUnblock(false, user)}
+                            data-tooltip-id="global-tooltip"
+                            data-tooltip-content="Unblock User"
                           >
                             <CircleCheckBig
                               size={18}
@@ -163,6 +165,8 @@ const AdminCitizenTable = ({
                           <button
                             className="w-8 h-8 bg-red-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
                             onClick={() => handleBlockUnblock(true, user)}
+                            data-tooltip-id="global-tooltip"
+                            data-tooltip-content="Block User"
                           >
                             <PencilOff
                               size={16}

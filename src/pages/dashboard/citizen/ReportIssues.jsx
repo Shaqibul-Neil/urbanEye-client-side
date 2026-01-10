@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import useMyInfo from "../../../hooks/citizen related/useMyInfo";
 import useReportIssues from "../../../hooks/citizen related/useReportIssues";
 import { useNavigate } from "react-router";
+import { Send } from "lucide-react";
 
 const ReportIssues = () => {
   // dependencies
@@ -94,7 +95,7 @@ const ReportIssues = () => {
   };
 
   return (
-    <div className="px-5">
+    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
       <div>
         {/* Title Section */}
         <div className="space-y-2">
@@ -115,7 +116,7 @@ const ReportIssues = () => {
           className="space-y-10 text-ghost mb-6 mt-12"
           onSubmit={handleSubmit(handleReportIssues)}
         >
-          <div className="bg-white p-6 rounded-4xl space-y-4">
+          <div className="space-y-4">
             <h3 className="text-xl font-semibold flex items-center gap-2 text-secondary">
               Issue Details
             </h3>
@@ -207,9 +208,9 @@ const ReportIssues = () => {
             </p>
             <button
               type="submit"
-              className="px-10 py-3 rounded-xl font-extrabold bg-primary text-white cursor-pointer"
+              className="px-10 py-3 rounded-3xl font-extrabold bg-primary text-white cursor-pointer hover:bg-secondary transition-colors duration-300 flex justify-center items-center gap-2"
             >
-              Submit Issue
+              <Send className="w-4 h-4" /> <span>Submit Issue</span>
             </button>
           </div>
         </form>

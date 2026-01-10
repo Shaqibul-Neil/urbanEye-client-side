@@ -38,7 +38,7 @@ const AssignedIssues = () => {
   if (issuesLoading) return <Loading />;
   if (issuesError) return <ErrorComponent />;
   return (
-    <div className="lg:px-5 md:px-3 px-1 py-6">
+    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
       <div className="space-y-8">
         {/* Title */}
         <div className="space-y-2">
@@ -107,7 +107,7 @@ const AssignedIssues = () => {
                   Current Status
                 </th>
 
-                <th className="py-3 px-4 border-b-2 border-blue-600/20">
+                <th className="py-3 px-4 border-b-2 border-blue-600/20 text-center">
                   Action
                 </th>
               </tr>
@@ -119,11 +119,7 @@ const AssignedIssues = () => {
                 <tr
                   className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${getBg(
                     issue?.status
-                  )} ${
-                    issue?.priority === "high" &&
-                    issue?.status === "pending" &&
-                    "animate-pulse"
-                  }`}
+                  )}`}
                   key={issue?._id}
                 >
                   <th
@@ -174,13 +170,20 @@ const AssignedIssues = () => {
                   </td>
 
                   <td className="py-3 px-4">
-                    <button
-                      className="btn btn-primary w-24 btn-sm text-white transition-transform duration-200 hover:scale-105"
-                      onClick={() => handleChangeStatus(issue)}
-                    >
-                      <RefreshCw size={16} color="#ffffff" strokeWidth={1.5} />{" "}
-                      Status
-                    </button>
+                    <div className="w-8 mx-auto">
+                      <button
+                        className="w-8 h-8 bg-blue-100 rounded-full flex justify-center items-center cursor-pointer hover:scale-105 transition-transform duration-200"
+                        onClick={() => handleChangeStatus(issue)}
+                        data-tooltip-id="global-tooltip"
+                        data-tooltip-content="Change Status"
+                      >
+                        <RefreshCw
+                          size={16}
+                          strokeWidth={2.5}
+                          className="w-4 h-4 text-blue-800"
+                        />{" "}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
