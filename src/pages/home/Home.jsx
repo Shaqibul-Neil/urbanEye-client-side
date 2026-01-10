@@ -10,6 +10,7 @@ import EditorTopBar from "../../components/page builder/EditorTopBar";
 import SectionEditor from "../../components/page builder/SectionEditor";
 import useEditorMode from "../../hooks/page builder/useEditorMode";
 import CityPulseDashboard from "../../components/home/city pulse/CityPulseDashboard";
+import ImpactStories from "../../components/home/impact stories/ImpactStories";
 
 const Home = () => {
   const { editMode } = useEditorMode();
@@ -25,9 +26,12 @@ const Home = () => {
           </EditableWrapper>
         </section>
       </div>
+
+      {/* City Pulse Dashboard Section */}
       <section>
         <CityPulseDashboard />
       </section>
+
       {/* Latest Resolved Section */}
       <section className="container mx-auto lg:pb-24 md:pb-20 py-16 lg:px-6 px-5 z-5 relative">
         <LatestResolved />
@@ -57,6 +61,13 @@ const Home = () => {
         <EditableWrapper sectionKey="how-it-works-section">
           <HowItWorks />
         </EditableWrapper>
+      </section>
+
+      {/* Impact Stories Section */}
+      <section className="bg-linear-to-br from-white via-[#f8f9ff] to-white lg:px-6">
+        <div className="container mx-auto">
+          <ImpactStories />
+        </div>
       </section>
 
       {/* Testimonials */}
