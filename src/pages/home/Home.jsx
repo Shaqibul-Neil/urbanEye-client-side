@@ -33,12 +33,12 @@ const Home = () => {
       </section>
 
       {/* Latest Resolved Section */}
-      <section className="container mx-auto lg:pb-24 md:pb-20 py-16 lg:px-6 px-5 z-5 relative">
+      <section className="container mx-auto lg:py-20 md:py-16 py-16 lg:px-6 px-5 z-5 relative">
         <LatestResolved />
       </section>
 
       {/* Globe Section */}
-      <section className="container mx-auto lg:mt-40 lg:mb-20 md:mt-24 mt-40 md:py-12 py-8 lg:px-6 bg-secondary lg:rounded-3xl relative h-[550px]">
+      <section className="container mx-auto lg:mt-40 lg:mb-20 md:mt-48 mt-60 md:py-12 py-8 lg:px-6 bg-secondary lg:rounded-3xl relative h-[550px]">
         <EditableWrapper sectionKey="globe-section">
           <GlobeSection />
         </EditableWrapper>

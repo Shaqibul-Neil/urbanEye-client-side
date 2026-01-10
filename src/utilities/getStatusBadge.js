@@ -71,3 +71,20 @@ export const getBar = (status) => {
       return "#9ca3af"; // default = gray
   }
 };
+// Lucide icon name based on status
+export const getIconName = (status) => {
+  switch (status) {
+    case "pending":
+      return "AlertTriangle"; // pending = alert
+    case "in-progress":
+      return "Loader"; // in-progress = loading spinner
+    case "working":
+      return "Tool"; // working = wrench/tool
+    case "resolved":
+      return "CheckCircle"; // resolved = success
+    case "closed":
+      return "XCircle"; // closed = canceled/closed
+    default:
+      return "Info"; // default info icon
+  }
+};

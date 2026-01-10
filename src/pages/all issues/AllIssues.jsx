@@ -213,7 +213,7 @@ const AllIssues = () => {
           </div>
         </div>
         {/* Issues Grid */}
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
           {/* Issues */}
           <div className="lg:col-span-3 md:col-span-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
             {issues.map((issue) => (
@@ -224,6 +224,7 @@ const AllIssues = () => {
               />
             ))}
           </div>
+          <div>Abc</div>
         </div>
         {/* Pagination Button */}
         <div className="flex justify-center gap-2 mt-10">

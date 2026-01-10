@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router";
-import { getStatusBadge } from "../../../../utilities/getStatusBadge";
+import { getBar, getStatusBadge } from "../../../../utilities/getStatusBadge";
 import { MdArrowOutward } from "react-icons/md";
-import { ThumbsUp } from "lucide-react";
+import { CheckCircle2, ThumbsUp } from "lucide-react";
 import useAuth from "../../../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
+import StatusBadge from "./StatusBadge";
 
 const IssueCard = ({ issue, onUpvoteSuccess }) => {
   const navigate = useNavigate();
@@ -164,19 +165,13 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
           </p>
 
           {/* Issue Status */}
-          <p
-            className={`px-3 py-1 text-xs font-bold rounded-full uppercase absolute bottom-4 left-4 ${getStatusBadge(
-              issue?.status
-            )}`}
-          >
-            {issue?.status}
-          </p>
+            {/* Status Badge */}
+        <StatusBadge status={issue?.status} />
 
-          <div className="icon absolute bottom-1.5 right-1.5 w-24 h-24 rounded-tl-[50%] tooltip">
+
+          <div className="icon absolute bottom-1.5 right-1.5 w-20 h-20 rounded-tl-[50%] tooltip">
             <div className="tooltip-content">
-              <div className="animate-bounce text-white text-sm font-black">
-                View Details
-              </div>
+              <div className="text-white text-sm font-black">View Details</div>
             </div>
             <button
               onClick={() => handleViewDetails(issue)}
@@ -184,7 +179,7 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
               data-tip="View details"
             >
               <span className="text-white text-2xl">
-                <MdArrowOutward className="w-10 h-10 group-hover:rotate-30 transition-all" />
+                <MdArrowOutward className="w-8 h-8 group-hover:rotate-30 transition-all" />
               </span>
             </button>
           </div>

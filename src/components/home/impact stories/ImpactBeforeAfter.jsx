@@ -14,7 +14,6 @@ export default function ImpactBeforeAfter({
   days,
   upvotes,
   delay = 0,
-  category = "Infrastructure",
 }) {
   const [sliderPosition, setSliderPosition] = useState(25);
   const [isHovered, setIsHovered] = useState(false);
@@ -52,7 +51,7 @@ export default function ImpactBeforeAfter({
       }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group cursor-pointer relative"
+      className="relative"
     >
       {/* Floating Glow Effect */}
       <motion.div
@@ -62,20 +61,6 @@ export default function ImpactBeforeAfter({
 
       {/* Glass Morphism Card */}
       <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl border border-white/30 overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-500">
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4 z-20">
-          <motion.div
-            className={`inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1.5 rounded-full shadow-lg`}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
-          >
-            <CheckCircle2 size={14} className="text-white" />
-            <span className="text-xs font-bold text-white uppercase tracking-wider">
-              {category}
-            </span>
-          </motion.div>
-        </div>
-
         {/* Success Indicator */}
         <div className="absolute top-4 right-4 z-20">
           <motion.div
@@ -113,14 +98,15 @@ export default function ImpactBeforeAfter({
             }
             position={sliderPosition}
             onPositionChange={setSliderPosition}
-            className="h-full"
+            className="h-full cursor-w-resize"
             handle={
-              <div className="w-12 h-12 bg-white rounded-full shadow-2xl border-4 border-white flex items-center justify-center backdrop-blur-sm">
+              <div className="w-12 h-12 bg-white rounded-full shadow-2xl border-4 border-white flex items-center justify-center backdrop-blur-sm cursor-w-resize ">
                 <div
                   className={`w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center`}
                 >
                   <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
+                {/* Horizontal line indicator */}
               </div>
             }
           />

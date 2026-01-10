@@ -28,7 +28,7 @@ const LatestResolved = () => {
           Latest <span className="text-secondary">Resolved</span> Issues
         </h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {issues.map((issue) => (
           <IssueCard key={issue._id} issue={issue} />
         ))}

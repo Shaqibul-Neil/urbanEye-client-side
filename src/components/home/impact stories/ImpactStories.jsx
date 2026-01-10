@@ -1,6 +1,5 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Sparkles, TrendingUp, Award, Users } from "lucide-react";
 import ImpactBeforeAfter from "./ImpactBeforeAfter";
 import beforeWindow from "../../../assets/beforewindow.webp";
 import afterWindow from "../../../assets/afterwindow.webp";
@@ -19,7 +18,6 @@ const impactData = [
     after: afterWindow,
     days: "3",
     upvotes: 127,
-    category: "Public Property Issue",
   },
   {
     title: "Garbage Overflow",
@@ -28,7 +26,6 @@ const impactData = [
     after: afterGarbage,
     days: "1",
     upvotes: 89,
-    category: "Garbage Overflow",
   },
   {
     title: "Road Potholes",
@@ -37,7 +34,6 @@ const impactData = [
     after: afterPothole,
     days: "2",
     upvotes: 156,
-    category: "Road Damage / Potholes",
   },
   {
     title: "Water Leakage",
@@ -46,7 +42,6 @@ const impactData = [
     after: afterPipe,
     days: "3",
     upvotes: 127,
-    category: "Water Leakage",
   },
 ];
 
@@ -84,7 +79,6 @@ export default function ImpactStories() {
               location={story.location}
               days={story.days}
               upvotes={story.upvotes}
-              category={story.category}
               delay={index * 300}
             />
           ))}
