@@ -44,11 +44,11 @@ const PremiumMetricCard = ({
     >
       {/* Subtle Glow Effect */}
       <div
-        className={`absolute -inset-2 ${gradient} rounded-3xl blur-2xl opacity-10 group-hover:opacity-20 transition-all duration-700`}
+        className={`absolute -inset-2 ${gradient} rounded-3xl blur-2xl opacity-4 group-hover:opacity-20 transition-all duration-700`}
       ></div>
 
       {/* Glass Morphism Card with Subtle Shadow */}
-      <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl p-4 shadow-sm border border-white/30 overflow-hidden group-hover:shadow-md transition-all duration-500">
+      <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl md:p-4 p-2 shadow-sm border border-white/30 overflow-hidden group-hover:shadow-md transition-all duration-500">
         {/* Floating Background Pattern */}
         <div className="absolute top-0 right-0 w-40 h-40 opacity-[0.03] transform rotate-12 group-hover:rotate-45 transition-transform duration-1000">
           <Icon size={100} className="text-gray-900" />
@@ -58,7 +58,7 @@ const PremiumMetricCard = ({
         <div
           className={`absolute top-6 right-6 w-10 h-10 ${gradient} rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500`}
         >
-          <Icon size={20} className="text-white" />
+          <Icon size={18} className="text-white" />
         </div>
 
         {/* Content */}
@@ -84,7 +84,7 @@ const PremiumMetricCard = ({
             </div>
 
             {/* Premium Progress Indicator */}
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                 <div
                   className={`h-full ${gradient} rounded-full transition-all duration-2000 ease-out`}
@@ -100,14 +100,9 @@ const PremiumMetricCard = ({
                 <TrendingUp size={14} />
                 <span className="font-semibold">Active</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
-
-        {/* Premium Bottom Accent */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 h-2 ${gradient} opacity-60`}
-        ></div>
 
         {/* Hover Shine Effect */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">

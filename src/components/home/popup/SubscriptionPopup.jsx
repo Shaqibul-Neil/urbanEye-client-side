@@ -55,7 +55,7 @@ const SubscriptionPopup = ({ isOpen, onClose }) => {
             <Lottie
               animationData={popup}
               loop
-              className="w-64 h-64 lg:w-80 lg:h-80"
+              className="w-64 h-44 lg:w-80 lg:h-60"
             />
             <div>
               <h2 className="text-2xl font-bold text-center text-primary">

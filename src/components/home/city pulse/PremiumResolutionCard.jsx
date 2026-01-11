@@ -32,25 +32,25 @@ const PremiumResolutionCard = ({ avgTime }) => {
         isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
       }`}
     >
-      {/* Premium Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-purple-50/50"></div>
+      {/* Premium Background Gradient
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-purple-50/50"></div> */}
 
       <div className="relative z-10">
         <div className="flex items-center gap-4 mb-8">
-          <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <Clock size={24} className="text-white" />
+          <div className="w-10 h-10 bg-indigo-50 rounded-2xl flex items-center justify-center shadow-lg">
+            <Clock size={20} className="text-indigo-800" />
           </div>
           <div>
-            <h3 className="text-xl font-black text-gray-800">
+            <h3 className="text-lg font-black text-gray-800">
               Resolution Time
             </h3>
-            <p className="text-sm text-gray-500 font-medium">
+            <p className="text-xs text-gray-500 font-medium">
               Average completion rate
             </p>
           </div>
         </div>
 
-        <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center justify-center">
           <div className="relative w-40 h-40">
             <svg
               className="w-40 h-40 transform -rotate-90"
@@ -60,7 +60,7 @@ const PremiumResolutionCard = ({ avgTime }) => {
               <circle
                 cx="50"
                 cy="50"
-                r="35"
+                r="30"
                 stroke="currentColor"
                 strokeWidth="6"
                 fill="transparent"
@@ -70,7 +70,7 @@ const PremiumResolutionCard = ({ avgTime }) => {
               <circle
                 cx="50"
                 cy="50"
-                r="35"
+                r="30"
                 stroke="url(#resolutionGradient)"
                 strokeWidth="6"
                 fill="transparent"
@@ -95,10 +95,10 @@ const PremiumResolutionCard = ({ avgTime }) => {
 
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-4xl font-black text-gray-900 mb-1">
+                <div className="text-2xl font-black text-gray-900 mb-1">
                   {avgTime}
                 </div>
-                <div className="text-sm text-gray-500 font-bold uppercase tracking-wider">
+                <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">
                   Days
                 </div>
               </div>

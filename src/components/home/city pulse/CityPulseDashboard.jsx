@@ -50,7 +50,7 @@ export default function CityPulseDashboard() {
 
     fetchPulseData();
   }, [axiosInstance]);
-
+  console.log(pulseData);
   if (loading) {
     return (
       <section className="w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-5 py-16">
@@ -102,7 +102,7 @@ export default function CityPulseDashboard() {
     (pulseData.inProgress || 0) +
     (pulseData.working || 0) +
     (pulseData.resolved || 0);
-
+  console.log(pulseData);
   return (
     <section className="w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-5 py-16 relative overflow-hidden">
       {/* Premium Background Elements */}
@@ -112,78 +112,78 @@ export default function CityPulseDashboard() {
 
       <div className="max-w-7xl mx-auto relative z-10 container md:pb-8 py-8 lg:px-6 px-1">
         {/* Premium Header Section */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-4 bg-white/80 backdrop-blur-xl px-8 py-4 rounded-2xl shadow-xl border border-white/30 mb-8 transform hover:scale-105 transition-all duration-500">
+        <div className="text-center mb-12">
+          {/* <div className="inline-flex items-center gap-4 bg-white/80 backdrop-blur-xl px-8 py-4 rounded-2xl shadow-xl border border-white/30 mb-8 transform hover:scale-105 transition-all duration-500">
             <Activity size={24} className="text-blue-600" />
             <span className="text-sm font-bold text-gray-600 uppercase tracking-[0.2em]">
               Live Analytics
             </span>
             <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-          </div>
+          </div> */}
 
-          <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-none">
+          <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 leading-none">
             City <span className="text-primary">Pulse</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed font-medium">
+          <p className="text-gray-600 max-w-5xl mx-auto leading-relaxed font-medium">
             Real-time insights into civic engagement and issue resolution across
             the urban landscape
           </p>
         </div>
 
         {/* Section 1: Premium Stats Overview Cards (4 Cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <PremiumMetricCard
             title="Open Issues"
             count={pulseData.open}
             icon={AlertTriangle}
-            gradient="bg-gradient-to-r from-red-500 to-red-600"
+            gradient="bg-gradient-to-r from-red-400/80 to-red-500/60"
             delay={0}
           />
           <PremiumMetricCard
             title="In Progress"
             count={pulseData.inProgress}
             icon={Clock}
-            gradient="bg-gradient-to-r from-amber-500 to-orange-500"
+            gradient="bg-gradient-to-r from-amber-400/80 to-orange-500/60"
             delay={300}
           />
           <PremiumMetricCard
             title="Working"
             count={pulseData.working}
             icon={Settings}
-            gradient="bg-gradient-to-r from-blue-500 to-blue-600"
+            gradient="bg-gradient-to-r from-blue-400/80 to-blue-600/60"
             delay={600}
           />
           <PremiumMetricCard
             title="Resolved"
             count={pulseData.resolved}
             icon={CheckCircle2}
-            gradient="bg-gradient-to-r from-green-500 to-emerald-600"
+            gradient="bg-gradient-to-r from-green-400/80 to-emerald-600/60"
             delay={900}
           />
         </div>
 
         {/* Section 2: Premium Analytics Grid (lg:grid-cols-4) */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-10 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-6 md:mb-20 mb-12 items-center">
           {/* Premium Top Categories - 2 Grids */}
-          <div className="lg:col-span-2 col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-sm border border-white/30 relative overflow-hidden mb-8 lg:mb-0">
+          <div className="lg:col-span-2 col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-sm border border-white/30 relative overflow-hidden mt-8 lg:mt-0 md:h-60 order-2">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-indigo-50/50"></div>
 
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
-                  <BarChart3 size={24} className="text-white" />
+                <div className="w-10 h-10 bg-indigo-50 rounded-2xl flex items-center justify-center shadow-lg">
+                  <BarChart3 size={20} className="text-indigo-800" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-black text-gray-800">
+                  <h3 className="text-lg font-black text-gray-800">
                     Top Categories
                   </h3>
-                  <p className="text-sm text-gray-500 font-medium">
+                  <p className="text-xs text-gray-500 font-medium">
                     Most reported civic issues
                   </p>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-1">
                 {pulseData.categories.slice(0, 3).map((category, index) => (
                   <PremiumCategoryBar
                     key={category.name}
@@ -195,13 +195,13 @@ export default function CityPulseDashboard() {
               </div>
             </div>
           </div>
-          <div className="col-span-2 flex md:flex-row flex-col gap-10 justify-between items-center">
+          <div className="col-span-2 flex md:flex-row flex-col gap-6 justify-between items-center">
             {/* Premium Resolution Time - 1 Grid */}
             <PremiumResolutionCard avgTime={pulseData.avgResolutionTime} />
 
             {/* Resolution Rate Chart - 1 Grid */}
             <CityPulseResolutionRateChart
-              totalIssues={totalIssues}
+              totalIssues={pulseData.total}
               resolvedIssues={pulseData.resolved}
             />
           </div>

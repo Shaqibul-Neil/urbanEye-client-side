@@ -165,17 +165,16 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
           </p>
 
           {/* Issue Status */}
-            {/* Status Badge */}
-        <StatusBadge status={issue?.status} />
-
+          {/* Status Badge */}
+          <StatusBadge status={issue?.status} />
 
           <div className="icon absolute bottom-1.5 right-1.5 w-20 h-20 rounded-tl-[50%] tooltip">
-            <div className="tooltip-content">
+            <div className="tooltip-content relative left-2 -top-6 bg-primary px-3 py-1 rounded-full shadow-md">
               <div className="text-white text-sm font-black">View Details</div>
             </div>
             <button
               onClick={() => handleViewDetails(issue)}
-              className="iconBox absolute inset-2.5 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 group"
+              className="iconBox absolute inset-2.5 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 group cursor-pointer"
               data-tip="View details"
             >
               <span className="text-white text-2xl">

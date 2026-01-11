@@ -66,7 +66,9 @@ export const getBar = (status) => {
     case "resolved":
       return "#16a34a"; // deep green
     case "closed":
-      return "#9ca3af"; // deep gray
+      return "#9ca3af";
+    case "rejected":
+      return "#ef4444"; // deep red
     default:
       return "#9ca3af"; // default = gray
   }
@@ -79,11 +81,13 @@ export const getIconName = (status) => {
     case "in-progress":
       return "Loader"; // in-progress = loading spinner
     case "working":
-      return "Tool"; // working = wrench/tool
+      return "Target"; // working = target
     case "resolved":
       return "CheckCircle"; // resolved = success
     case "closed":
-      return "XCircle"; // closed = canceled/closed
+      return "Lock"; // closed = canceled/closed
+    case "rejected":
+      return "XCircle";
     default:
       return "Info"; // default info icon
   }
