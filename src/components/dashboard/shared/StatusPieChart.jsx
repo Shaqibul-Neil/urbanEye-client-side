@@ -9,7 +9,7 @@ import {
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    console.log(active, payload);
+    //console.log(active, payload);
     const entry = payload[0];
     return (
       <div className="bg-white p-3 rounded-lg shadow-lg border">

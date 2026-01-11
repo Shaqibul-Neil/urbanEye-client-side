@@ -14,6 +14,8 @@ import PremiumResolutionCard from "./PremiumResolutionCard";
 import CityPulseResolutionRateChart from "./CityPulseResolutionRateChart";
 import InteractiveHeatMap from "./InteractiveHeatMap";
 import "./CityPulse.css";
+import { easeOut, motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 // Main Award-Winning CityPulse Dashboard Component
 export default function CityPulseDashboard() {
@@ -29,7 +31,7 @@ export default function CityPulseDashboard() {
         );
         setPulseData(response.data);
       } catch (error) {
-        console.error("Failed to fetch pulse data:", error);
+        toast.error("Failed to fetch pulse data:", error);
         // Fallback to mock data for demonstration
         setPulseData({
           open: 12,
@@ -50,7 +52,7 @@ export default function CityPulseDashboard() {
 
     fetchPulseData();
   }, [axiosInstance]);
-  console.log(pulseData);
+  //console.log(pulseData);
   if (loading) {
     return (
       <section className="w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-5 py-16">
@@ -102,7 +104,7 @@ export default function CityPulseDashboard() {
     (pulseData.inProgress || 0) +
     (pulseData.working || 0) +
     (pulseData.resolved || 0);
-  console.log(pulseData);
+  //console.log(pulseData);
   return (
     <section className="w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-5 py-16 relative overflow-hidden">
       {/* Premium Background Elements */}
@@ -121,13 +123,28 @@ export default function CityPulseDashboard() {
             <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
           </div> */}
 
-          <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 leading-none">
+          <motion.h2
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-3xl md:text-5xl font-black text-gray-900 mb-2 leading-none"
+          >
             City <span className="text-primary">Pulse</span>
-          </h1>
-          <p className="text-gray-600 max-w-5xl mx-auto leading-relaxed font-medium">
-            Real-time insights into civic engagement and issue resolution across
-            the urban landscape
-          </p>
+          </motion.h2>
+          <motion.p
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+            className="text-gray-600 max-w-5xl mx-auto leading-relaxed font-medium"
+          >
+            Gain real-time insights into civic engagement, tracking how
+            residents interact with local services, report issues, and follow up
+            on resolutions across the urban landscape. Monitor patterns,
+            identify hotspots, and understand the pulse of the city as it
+            evolves, all in a single intuitive dashboard.
+          </motion.p>
         </div>
 
         {/* Section 1: Premium Stats Overview Cards (4 Cards) */}
@@ -165,7 +182,13 @@ export default function CityPulseDashboard() {
         {/* Section 2: Premium Analytics Grid (lg:grid-cols-4) */}
         <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-6 md:mb-20 mb-12 items-center">
           {/* Premium Top Categories - 2 Grids */}
-          <div className="lg:col-span-2 col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-sm border border-white/30 relative overflow-hidden mt-8 lg:mt-0 md:h-60 order-2">
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="lg:col-span-2 col-span-1 bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-sm border border-white/30 relative overflow-hidden mt-8 lg:mt-0 md:h-60 order-2"
+          >
             <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-indigo-50/50"></div>
 
             <div className="relative z-10">
@@ -194,8 +217,14 @@ export default function CityPulseDashboard() {
                 ))}
               </div>
             </div>
-          </div>
-          <div className="col-span-2 flex md:flex-row flex-col gap-6 justify-between items-center">
+          </motion.div>
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+            className="col-span-2 flex md:flex-row flex-col gap-6 justify-between items-center"
+          >
             {/* Premium Resolution Time - 1 Grid */}
             <PremiumResolutionCard avgTime={pulseData.avgResolutionTime} />
 
@@ -204,7 +233,7 @@ export default function CityPulseDashboard() {
               totalIssues={pulseData.total}
               resolvedIssues={pulseData.resolved}
             />
-          </div>
+          </motion.div>
         </div>
 
         {/* Section 3: Interactive Heat Map */}

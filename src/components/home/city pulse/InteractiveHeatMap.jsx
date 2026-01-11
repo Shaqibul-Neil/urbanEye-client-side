@@ -2,6 +2,8 @@ import { useState } from "react";
 import { MapContainer, TileLayer, Circle } from "react-leaflet";
 import { Layers } from "lucide-react";
 import "leaflet/dist/leaflet.css";
+import { motion } from "framer-motion";
+import { AnimatedMapCircle } from "./AnimatedMapCircle";
 
 const InteractiveHeatMap = () => {
   const [selectedArea, setSelectedArea] = useState(null);
@@ -70,37 +72,23 @@ const InteractiveHeatMap = () => {
     },
   ];
 
-  const getMarkerColor = (intensity) => {
-    switch (intensity) {
-      case "high":
-        return "#ef4444"; // Red
-      case "medium":
-        return "#f59e0b"; // Amber
-      case "low":
-        return "#10b981"; // Green
-      default:
-        return "#6b7280";
-    }
-  };
-
-  const getMarkerRadius = (intensity) => {
-    switch (intensity) {
-      case "high":
-        return 900;
-      case "medium":
-        return 600;
-      case "low":
-        return 400;
-      default:
-        return 500;
-    }
-  };
-
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 shadow-sm border border-gray-700 overflow-hidden">
+    <motion.div
+      initial={{ y: 40, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 shadow-sm border border-gray-700 overflow-hidden"
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-6 flex-col md:flex-row">
-        <div className="flex items-center gap-4 flex-col md:flex-row">
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          className="flex items-center gap-4 flex-col md:flex-row"
+        >
           <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm">
             <Layers size={20} className="text-white" />
           </div>
@@ -110,10 +98,16 @@ const InteractiveHeatMap = () => {
               Real-time civic issue distribution
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Legend */}
-        <div className="flex items-center gap-4">
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          className="flex items-center gap-4"
+        >
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
             <span className="text-xs text-gray-300">High</span>
@@ -126,11 +120,17 @@ const InteractiveHeatMap = () => {
             <div className="w-3 h-3 rounded-full bg-green-500"></div>
             <span className="text-xs text-gray-300">Low</span>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Map Container */}
-      <div className="md:h-96 h-64 rounded-2xl overflow-hidden shadow-inner border border-gray-600 relative">
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+        className="md:h-96 h-64 rounded-2xl overflow-hidden shadow-inner border border-gray-600 relative"
+      >
         <MapContainer
           center={[23.8103, 90.4125]}
           zoom={12}
@@ -143,20 +143,10 @@ const InteractiveHeatMap = () => {
           />
 
           {heatmapData.map((point, index) => (
-            <Circle
+            <AnimatedMapCircle
               key={index}
-              center={point.position}
-              radius={getMarkerRadius(point.intensity)}
-              pathOptions={{
-                fillColor: getMarkerColor(point.intensity),
-                color: getMarkerColor(point.intensity),
-                weight: 2,
-                opacity: 0.8,
-                fillOpacity: 0.6,
-              }}
-              eventHandlers={{
-                click: () => setSelectedArea(point),
-              }}
+              point={point}
+              onSelect={setSelectedArea}
             />
           ))}
         </MapContainer>
@@ -225,34 +215,52 @@ const InteractiveHeatMap = () => {
             </p>
           </div>
         )}
-      </div>
+      </motion.div>
 
       {/* Stats Bar */}
       <div className="grid md:grid-cols-3 gap-4 mt-6">
-        <div className="text-center p-4 bg-gray-800/50 rounded-xl border border-gray-600">
-          <div className="text-2xl font-bold text-white">
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="text-center p-4 bg-white rounded-xl border border-gray-600"
+        >
+          <div className="text-2xl font-bold text-gray-800">
             {heatmapData.length}
           </div>
-          <div className="text-xs text-gray-400 uppercase tracking-wider">
+          <div className="text-xs text-gray-700 uppercase tracking-wider">
             Active Zones
           </div>
-        </div>
-        <div className="text-center p-4 bg-gray-800/50 rounded-xl border border-gray-600">
-          <div className="text-2xl font-bold text-white">
+        </motion.div>
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+          className="text-center p-4 bg-white rounded-xl border border-gray-600"
+        >
+          <div className="text-2xl font-bold text-gray-800">
             {heatmapData.reduce((sum, point) => sum + point.count, 0)}
           </div>
-          <div className="text-xs text-gray-400 uppercase tracking-wider">
+          <div className="text-xs text-gray-700 uppercase tracking-wider">
             Total Issues
           </div>
-        </div>
-        <div className="text-center p-4 bg-gray-800/50 rounded-xl border border-gray-600">
-          <div className="text-2xl font-bold text-white">92%</div>
-          <div className="text-xs text-gray-400 uppercase tracking-wider">
+        </motion.div>
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+          className="text-center p-4 bg-white rounded-xl border border-gray-600"
+        >
+          <div className="text-2xl font-bold text-gray-800">92%</div>
+          <div className="text-xs text-gray-700 uppercase tracking-wider">
             Coverage
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

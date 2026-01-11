@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { Edit, Eye, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
@@ -105,7 +106,9 @@ const ReusableIssuesTable = ({
   }
 
   return (
-    <div className={`w-full bg-white px-4 pt-2 pb-4 rounded-3xl ${className}`}>
+    <div
+      className={`w-full bg-white md:px-4 pt-2 pb-4 rounded-3xl ${className}`}
+    >
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg text-secondary font-bold">{title}</h3>
         {viewAllLink && (
@@ -121,7 +124,12 @@ const ReusableIssuesTable = ({
       {displayData.length === 0 ? (
         <p className="text-center py-6 text-gray-500">No issues found</p>
       ) : (
-        <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="overflow-x-auto rounded-lg shadow-lg border border-gray-200"
+        >
           <table className="table table-zebra w-full min-w-[900px]">
             <thead className="bg-gray-50">
               <tr>
@@ -137,7 +145,7 @@ const ReusableIssuesTable = ({
               {displayData.map((issue, i) => (
                 <tr
                   key={issue?._id}
-                  className={`transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${
+                  className={`transition-all duration-800 hover:scale-[1.01] hover:shadow-md ${
                     i % 2 === 0 ? "bg-gray-100" : "bg-white"
                   }`}
                 >
@@ -220,7 +228,7 @@ const ReusableIssuesTable = ({
               ))}
             </tbody>
           </table>
-        </div>
+        </motion.div>
       )}
 
       {/* Edit issue Modal */}

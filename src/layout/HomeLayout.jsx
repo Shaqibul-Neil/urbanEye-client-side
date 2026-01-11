@@ -11,7 +11,7 @@ const HomeLayout = () => {
   const { setEditMode } = useEditorMode();
   //detect edit mode from search params
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get("edit"));
+  //console.log(searchParams.get("edit"));
   //get the role
   const { role } = useRole();
   useEffect(() => {
@@ -24,7 +24,7 @@ const HomeLayout = () => {
     <div>
       {/* Navbar + Banner together */}
       <section className="relative">
-        <EditableWrapper sectionKey="banner">
+        <EditableWrapper sectionKey="banner-section">
           <Banner />
         </EditableWrapper>
 

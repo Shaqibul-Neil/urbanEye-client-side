@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router";
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import { MdLogout, MdOutlineDashboard } from "react-icons/md";
 import SideBarLinks from "../components/common/sidebarLinks/SideBarLinks";
 import useAuth from "../hooks/auth & role/useAuth";
@@ -9,12 +9,9 @@ import {
   Edit,
   Eye,
   Home,
-  HomeIcon,
   ListChecks,
   Mail,
   Mic,
-  User,
-  User2Icon,
   UserCog,
   Users,
 } from "lucide-react";
@@ -26,6 +23,8 @@ const DashboardLayout = () => {
   const { user, signOutUser, setUser } = useAuth();
   const { role, roleLoading } = useRole();
   const navigate = useNavigate();
+  const location = useLocation();
+  //console.log(location);
   const handleLogout = () => {
     try {
       signOutUser();
@@ -48,9 +47,9 @@ const DashboardLayout = () => {
             {/* LEFT: Header Text */}
             <div className="flex-1 space-y-4 lg:items-start items-center">
               <div className="relative">
-                <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-200">
+                <h1 className="text-2xl sm:text-4xl font-extrabold text-accent">
                   Welcome back,{" "}
-                  <span className="text-primary">
+                  <span className="text-white">
                     {user?.displayName?.split(" ")[0] || "Citizen"}!
                   </span>
                 </h1>
@@ -70,14 +69,14 @@ const DashboardLayout = () => {
                 {/* Drawer Toggle */}
                 <label
                   htmlFor="my-drawer-4"
-                  className="btn btn-secondary btn-sm btn-square rounded-full flex items-center justify-center w-8 h-8 p-0 lg:hidden"
+                  className="btn bg-white btn-sm btn-square rounded-full flex items-center justify-center w-8 h-8 p-0 lg:hidden"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     className="size-4"
                     fill="none"
-                    stroke="white"
+                    stroke="#020617"
                     strokeWidth="2"
                   >
                     <path d="M4 6h16M4 12h16M4 18h16" />
@@ -104,12 +103,14 @@ const DashboardLayout = () => {
             {/* RIGHT: Drawer toggle + actions */}
             <div className="flex flex-row items-start lg:items-center gap-3 justify-center lg:justify-end">
               {/* Action Button */}
-              <Link
-                to="/dashboard/my-profile"
-                className="px-5 h-10 flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-300"
-              >
-                <Eye className="w-5 h-5" /> View Profile
-              </Link>
+              {location.pathname !== "/dashboard/my-profile" && (
+                <Link
+                  to="/dashboard/my-profile"
+                  className="px-5 h-10 flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-300"
+                >
+                  <Eye className="w-5 h-5" /> View Profile
+                </Link>
+              )}
 
               {role === "admin" && (
                 <Link

@@ -6,13 +6,16 @@ import useAuth from "../../../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
 import StatusBadge from "./StatusBadge";
+import { useRef, useState } from "react";
+import { motion, scale, useInView } from "framer-motion";
 
-const IssueCard = ({ issue, onUpvoteSuccess }) => {
+const IssueCard = ({ issue, onUpvoteSuccess, delay }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  //const { role } = useRole();
-
   const axiosSecure = useAxiosSecure();
+  const [isHovered, setIsHovered] = useState(25);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   // upvote
   const handleUpvote = async (issue) => {
@@ -134,15 +137,36 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
   };
 
   return (
-    <div
-      className="w-full max-w-sm transform duration-300 hover:scale-110"
+    <motion.div
+      ref={ref}
+      initial={{ y: 40, opacity: 0, scale: 0.95 }}
+      animate={
+        isInView
+          ? { y: 0, opacity: 1, scale: 1 }
+          : { y: 40, opacity: 0, scale: 0.95 }
+      }
+      transition={{
+        duration: 0.6,
+        delay: delay / 1000,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
+      whileHover={{
+        y: -8,
+        scale: 1.02,
+        transition: { duration: 0.3, ease: "easeOut" },
+      }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="w-full max-w-sm"
       key={issue._id}
     >
       <div className="card-inner relative w-full h-72 bg-white rounded-3xl overflow-hidden">
         <div className="box w-full h-full bg-white rounded-3xl overflow-hidden relative">
           {/* Image Box */}
-          <div
-            className={`absolute inset-0 before:absolute before:inset-0  transform duration-300 hover:scale-110 ${
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.6 }}
+            className={`absolute inset-0 before:absolute before:inset-0  ${
               issue.status === "closed" ? "before:bg-black/60" : ""
             }`}
           >
@@ -151,7 +175,7 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
               alt={issue?.title}
               className={`w-full h-full object-cover `}
             />
-          </div>
+          </motion.div>
 
           {/* Priority Badge */}
           <p
@@ -172,15 +196,22 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
             <div className="tooltip-content relative left-2 -top-6 bg-primary px-3 py-1 rounded-full shadow-md">
               <div className="text-white text-sm font-black">View Details</div>
             </div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.5 }}
               onClick={() => handleViewDetails(issue)}
-              className="iconBox absolute inset-2.5 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 group cursor-pointer"
+              className="iconBox absolute inset-2.5 bg-primary rounded-full flex items-center justify-center group cursor-pointer"
               data-tip="View details"
+              aria-label="View details of this issue"
             >
-              <span className="text-white text-2xl">
-                <MdArrowOutward className="w-8 h-8 group-hover:rotate-30 transition-all" />
-              </span>
-            </button>
+              <motion.span
+                className=" text-2xl"
+                whileHover={{ rotate: 15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <MdArrowOutward className="w-8 h-8 text-white" />
+              </motion.span>
+            </motion.button>
           </div>
         </div>
       </div>
@@ -204,7 +235,7 @@ const IssueCard = ({ issue, onUpvoteSuccess }) => {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

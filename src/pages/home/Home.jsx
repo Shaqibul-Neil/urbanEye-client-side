@@ -3,6 +3,7 @@ import CitizenFeedback from "../../components/home/feedback/CitizenFeedback";
 import HowItWorks from "../../components/home/how it works/HowItWorks";
 import LatestResolved from "../../components/home/latest resolved/LatestResolved";
 import AboutSection from "../../components/home/about/AboutSection";
+import Banner from "../../components/home/banner/Banner";
 import EditableWrapper from "../../components/page builder/EditableWrapper";
 
 import GlobeSection from "../../components/home/globe/GlobeSection";
@@ -18,6 +19,7 @@ const Home = () => {
     <div>
       {editMode && <EditorTopBar />}
       {editMode && <SectionEditor />}
+
       {/* About Us Section */}
       <div>
         <section className="container mx-auto lg:pb-24 pb-16 pt-8 lg:px-6">

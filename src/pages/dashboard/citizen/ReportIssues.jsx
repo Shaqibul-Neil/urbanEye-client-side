@@ -9,6 +9,7 @@ import useMyInfo from "../../../hooks/citizen related/useMyInfo";
 import useReportIssues from "../../../hooks/citizen related/useReportIssues";
 import { useNavigate } from "react-router";
 import { Send } from "lucide-react";
+import { motion } from "framer-motion";
 
 const ReportIssues = () => {
   // dependencies
@@ -98,31 +99,49 @@ const ReportIssues = () => {
     <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
       <div>
         {/* Title Section */}
-        <div className="space-y-2">
-          <Heading
-            label={"Report a Public Infrastructure Issue"}
-            className={"text-4xl md:text-5xl pb-1"}
-          />
-          <SubHeading
-            label={
-              "Help us keep the city safe and efficient by reporting issues quickly."
-            }
-          />
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex items-center gap-4"
+        >
+          <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+          <div className="space-y-2">
+            <Heading
+              label={"Report a Public Infrastructure Issue"}
+              className={"md:text-4xl text-3xl lg:text-5xl pb-1"}
+            />
+            <SubHeading
+              label={
+                "Help us keep the city safe and efficient by reporting issues quickly."
+              }
+            />
+          </div>
+        </motion.div>
 
         {/* Form Section */}
         <form
           autoComplete="off"
-          className="space-y-10 text-ghost mb-6 mt-12"
+          className="space-y-10 text-ghost mb-6 mt-12 px-4"
           onSubmit={handleSubmit(handleReportIssues)}
         >
           <div className="space-y-4">
-            <h3 className="text-xl font-semibold flex items-center gap-2 text-secondary">
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="text-xl font-semibold flex items-center gap-2 text-secondary"
+            >
               Issue Details
-            </h3>
+            </motion.h3>
 
             {/* Title */}
-            <div className="relative">
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
               <label className="block text-secondary mb-1">Title *</label>
               <input
                 type="text"
@@ -133,10 +152,15 @@ const ReportIssues = () => {
               {errors.title && (
                 <p className="text-red-500">{errors.title.message}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Description */}
-            <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="relative"
+            >
               <label className="block text-secondary mb-1">Description *</label>
               <textarea
                 {...register("description", {
@@ -148,10 +172,15 @@ const ReportIssues = () => {
               {errors.description && (
                 <p className="text-red-500">{errors.description.message}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Category */}
-            <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="relative"
+            >
               <label className="block text-secondary mb-1">Category *</label>
               <select
                 {...register("category", { required: "Category is required" })}
@@ -167,10 +196,15 @@ const ReportIssues = () => {
               {errors.category && (
                 <p className="text-red-500">{errors.category.message}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Upload Images */}
-            <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="relative"
+            >
               <label className="block text-secondary mb-1">Upload Image</label>
               <input
                 type="file"
@@ -180,10 +214,15 @@ const ReportIssues = () => {
               {errors.photo && (
                 <p className="text-red-500">{errors.photo.message}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Location */}
-            <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="relative"
+            >
               <label className="block text-secondary mb-1">Location *</label>
               <input
                 type="text"
@@ -194,11 +233,16 @@ const ReportIssues = () => {
               {errors.location && (
                 <p className="text-red-500">{errors.location.message}</p>
               )}
-            </div>
+            </motion.div>
           </div>
 
           {/* Single Submit Button */}
-          <div className="space-y-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+            className="space-y-2"
+          >
             <p className="text-sm text-secondary">
               Free users can report up to 3 issues. Upgrade to premium for
               unlimited reports.
@@ -212,7 +256,7 @@ const ReportIssues = () => {
             >
               <Send className="w-4 h-4" /> <span>Submit Issue</span>
             </button>
-          </div>
+          </motion.div>
         </form>
       </div>
     </div>

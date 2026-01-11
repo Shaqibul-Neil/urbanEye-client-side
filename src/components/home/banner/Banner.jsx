@@ -1,92 +1,106 @@
-import { useEffect, useState } from "react";
-import bannerImg from "../../../assets/banner.png";
-import HomeNavbar from "../../common/navbar/HomeNavbar";
-import BannerHeading from "./BannerHeading";
-import CTA from "./CTA";
-import RightCard from "./RightCard";
-import UserStat from "./UserStat";
+import { useEffect, useState, createContext, useContext } from "react";
+import { motion } from "framer-motion";
+import { Radar, ArrowRight } from "lucide-react";
 import useEditorMode from "../../../hooks/page builder/useEditorMode";
 import useAxios from "../../../hooks/auth & role/useAxios";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Swal from "sweetalert2";
+import HomeNavbar from "../../common/navbar/HomeNavbar";
+import CTA from "./CTA";
+import toast from "react-hot-toast";
+
+// Create context for Banner data
+const BannerSectionContext = createContext();
+
+export const useBannerSectionData = () => {
+  const context = useContext(BannerSectionContext);
+  if (!context) {
+    throw new Error(
+      "useBannerSectionData must be used within BannerSectionProvider"
+    );
+  }
+  return context;
+};
+
+const pulseVariants = {
+  animate: {
+    scale: [1, 2.5],
+    opacity: [0.6, 0],
+  },
+};
 
 const Banner = () => {
-  const [banner, setBanner] = useState({
+  const [bannerData, setBannerData] = useState({
     content: {
-      title: "",
-      paragraph: "",
-      ctaText: "",
-      ctaLink: "",
-      issueResolved: "",
-      issuesReported: "",
+      mainHeading: "The City",
+      highlightText1: "Speaks.",
+      highlightText2: "Listen.",
+      description:
+        "A living civic intelligence system that tracks, visualizes, and resolves urban issues in real time — powered by community data.",
+      primaryButtonText: "Explore Issues",
+      secondaryButtonText: "Report an Issue",
+      stat1Value: "2.4K+",
+      stat1Label: "Issues Tracked",
+      stat2Value: "87%",
+      stat2Label: "Resolution Rate",
     },
     styles: {
-      title: {
-        fontSize: "text-5xl",
-        fontWeight: "font-black",
+      mainHeading: {
+        fontSize: "text-4xl md:text-5xl",
+        fontWeight: "font-extrabold",
         color: "text-white",
+        textAlign: "leading-tight",
       },
-      paragraph: {
-        fontSize: "text-lg md:text-xl",
-        color: "text-white",
+      highlightText1: {
+        color: "text-indigo-400",
+      },
+      highlightText2: {
+        color: "text-purple-400",
+      },
+      description: {
+        fontSize: "text-lg",
+        color: "text-gray-400",
+        maxWidth: "max-w-xl",
       },
     },
   });
-
+  const [scrolled, setScrolled] = useState(false);
   const { editMode } = useEditorMode();
   const axiosInstance = useAxios();
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    const fetchBanner = async () => {
+    const handleScroll = () => {
+      window.scrollY > 400 ? setScrolled(true) : setScrolled(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchBannerSection = async () => {
       try {
-        const { data } = await axiosInstance.get("/contents/banners");
+        const { data } = await axiosInstance.get("/contents/banner-section");
         if (data?.message) {
-          // Transform old format to new format
-          const transformedData = {
-            content: {
-              title: data.message.title || "",
-              paragraph: data.message.paragraph || "",
-              ctaText: data.message.ctaText || "",
-              ctaLink: data.message.ctaLink || "",
-              issueResolved: data.message.issueResolved || "",
-              issuesReported: data.message.issuesReported || "",
-            },
-            styles: data.message.styles || {
-              title: {
-                fontSize: "text-5xl",
-                fontWeight: "font-black",
-                color: "text-white",
-              },
-              paragraph: {
-                fontSize: "text-lg md:text-xl",
-                color: "text-white",
-              },
-            },
-          };
-          setBanner(transformedData);
+          setBannerData(data.message);
+          //console.log("bannerData", data.message);
         }
       } catch (err) {
-        console.error(err);
+        toast.error("Failed to fetch banner section:", err);
       }
     };
-    fetchBanner();
+    fetchBannerSection();
   }, [axiosInstance]);
-
+  //console.log("bannerData2", bannerData);
   const handleSave = async () => {
     try {
+      //console.log("Banner data to save:", bannerData);
       const payload = {
-        title: banner.content.title,
-        paragraph: banner.content.paragraph,
-        ctaText: banner.content.ctaText,
-        ctaLink: banner.content.ctaLink,
-        issueResolved: banner.content.issueResolved,
-        issuesReported: banner.content.issuesReported,
-        userStats: banner.content.userStats,
-        styles: banner.styles,
+        content: bannerData.content,
+        styles: bannerData.styles,
       };
 
-      await axiosSecure.patch("/contents/banners", payload, {
+      await axiosSecure.patch("/contents/banner-section", payload, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -96,15 +110,15 @@ const Banner = () => {
         timer: 2000,
         position: "center",
         icon: "success",
-        title: "Banner saved successfully!",
+        title: "Banner section updated successfully!",
         showConfirmButton: false,
       });
     } catch (err) {
-      console.error(err);
+      //console.error("Failed to save banner section:", err);
       await Swal.fire({
         position: "center",
         icon: "error",
-        title: "Failed to save banner",
+        title: "Failed to save banner section",
         text: "Please try again later",
         showConfirmButton: true,
       });
@@ -112,7 +126,7 @@ const Banner = () => {
   };
 
   const updateContent = (field, value) => {
-    setBanner((prev) => ({
+    setBannerData((prev) => ({
       ...prev,
       content: {
         ...prev.content,
@@ -122,7 +136,7 @@ const Banner = () => {
   };
 
   const updateStyle = (element, property, value) => {
-    setBanner((prev) => ({
+    setBannerData((prev) => ({
       ...prev,
       styles: {
         ...prev.styles,
@@ -136,7 +150,7 @@ const Banner = () => {
 
   // Helper function to generate className from styles
   const getClassName = (element) => {
-    const style = banner.styles[element];
+    const style = bannerData.styles[element];
     if (!style) return "";
 
     return [
@@ -146,6 +160,7 @@ const Banner = () => {
       style.color,
       style.padding,
       style.margin,
+      style.maxWidth,
     ]
       .filter(Boolean)
       .join(" ");
@@ -153,76 +168,148 @@ const Banner = () => {
 
   // Store data and functions in window for BannerEditor access
   useEffect(() => {
-    window.bannerData = {
-      bannerData: banner,
+    window.bannerSectionData = {
+      bannerData,
       updateContent,
       updateStyle,
       handleSave,
     };
-  }, [banner]);
-  //console.log(banner);
+  }, [bannerData]);
+
   return (
-    <section
-      className="relative w-full bg-cover bg-center lg:mb-16 md:mb-20 mb-24 object-cover py-24"
-      style={{
-        backgroundImage: `url(${bannerImg})`,
-      }}
+    <BannerSectionContext.Provider
+      value={{ bannerData, updateContent, updateStyle, handleSave }}
     >
-      {/* Overlay for better text visibility */}
-      <div className="absolute inset-0 bg-black/40"></div>
-      <header className="fixed pt-2 left-0 top-0 z-[200] w-full">
-        <div className="container mx-auto lg:px-6 rounded-full bg-black/40 backdrop-blur-xl  w-full z-50">
-          <HomeNavbar variant="home" />
-        </div>
-      </header>
-      <BannerHeading />
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-8 md:px-16 pt-16 md:text-left text-center">
-        {/* Left Content - Display Only */}
-        <div className="text-white mb-8 md:mb-0 space-y-4">
-          <p className={`tracking-tighter ${getClassName("title")}`}>
-            {banner.content.title || "Your Banner Title Here"}
-          </p>
+      <section className="relative overflow-hidden border border-gray-800 bg-gradient-to-br from-[#0f172a] via-[#020617] to-[#0b1020] lg:h-[95vh] mb-24">
+        {/* Animated Background Glow */}
+        <motion.div
+          className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.15),transparent_40%),radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.12),transparent_40%)]"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
 
-          <p className={getClassName("paragraph")}>
-            {banner.content.paragraph || "Your banner description goes here"}
-          </p>
+        <header className="fixed pt-2 left-0 top-0 z-[200] w-full">
+          <div
+            className={`container mx-auto lg:px-6 rounded-full w-full z-50 ${
+              scrolled
+                ? "bg-black/40 backdrop-blur-xl"
+                : "bg-white/40 backdrop-blur-xl"
+            }`}
+          >
+            <HomeNavbar variant="home" />
+          </div>
+        </header>
+        {/* Content */}
+        <div className="relative z-10 grid md:grid-cols-2 gap-10 p-10 md:p-16 items-center mt-20">
+          {/* LEFT */}
+          <div className="space-y-6">
+            <motion.h1
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className={getClassName("mainHeading")}
+            >
+              {bannerData.content.mainHeading || "The City"}{" "}
+              <span className={getClassName("highlightText1")}>
+                {bannerData.content.highlightText1 || "Speaks."}
+              </span>
+              <br />
+              We{" "}
+              <span className={getClassName("highlightText2")}>
+                {bannerData.content.highlightText2 || "Listen."}
+              </span>
+            </motion.h1>
 
-          <CTA
-            text={banner.content.ctaText || "Get Started"}
-            link={banner.content.ctaLink || "#"}
-          />
-        </div>
+            <motion.p
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.2 }}
+              className={getClassName("description")}
+            >
+              {bannerData.content.description ||
+                "A living civic intelligence system that tracks, visualizes, and resolves urban issues in real time — powered by community data."}
+            </motion.p>
 
-        {/* Right Content - Display Only */}
-        <div className="text-white flex flex-col gap-4 md:items-end items-center">
-          {/* Issue stats */}
-          <div className="flex gap-4 flex-col md:flex-row">
-            <div className="flex flex-col text-center bg-white rounded-4xl p-4 w-48">
-              <h3 className="text-4xl text-black font-bold text-center">
-                {banner.content.issueResolved || "0"}
-              </h3>
-              <p className="text-center text-black font-semibold">
-                Issues resolved <br /> last month
-              </p>
-            </div>
+            {/* CTA */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex gap-4 pt-4 flex-col lg:flex-row"
+            >
+              <CTA
+                text={bannerData.content.primaryButtonText || "Explore Issues"}
+              />
 
-            {/* Issues Reported */}
-            <div className="px-8 py-4 bg-white rounded-4xl">
+              <button className="px-4 py-2 rounded-full w-48 border border-gray-700 text-gray-300 hover:border-indigo-500 transition">
+                {bannerData.content.secondaryButtonText || "Report an Issue"}
+              </button>
+            </motion.div>
+
+            {/* Micro Stats */}
+            <div className="flex gap-6 pt-6">
               <div>
-                <h3 className="text-4xl text-black font-bold text-center">
-                  {banner.content.issuesReported || "0"}
-                </h3>
-                <p className="text-center text-black font-semibold">
-                  Issues <br /> reported
-                </p>
+                <div className="text-2xl font-bold text-white">
+                  {bannerData.content.stat1Value || "2.4K+"}
+                </div>
+                <div className="text-xs text-gray-500 uppercase">
+                  {bannerData.content.stat1Label || "Issues Tracked"}
+                </div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">
+                  {bannerData.content.stat2Value || "87%"}
+                </div>
+                <div className="text-xs text-gray-500 uppercase">
+                  {bannerData.content.stat2Label || "Resolution Rate"}
+                </div>
               </div>
             </div>
           </div>
-          {/* user stats */}
-          <UserStat />
+
+          {/* RIGHT — Sonar / City Radar */}
+          <div className="relative h-[320px] flex items-center justify-center">
+            {/* Radar Core */}
+            <div className="relative w-40 h-40 rounded-full bg-indigo-500/10 border border-indigo-400/30 flex items-center justify-center">
+              <Radar className="text-indigo-400 w-10 h-10 z-10" />
+
+              {/* Sonar Waves */}
+              {[0, 1, 2].map((i) => (
+                <motion.span
+                  key={i}
+                  variants={pulseVariants}
+                  animate="animate"
+                  transition={{
+                    duration: 4,
+                    delay: i * 1.2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                  }}
+                  className="absolute inset-0 rounded-full border border-indigo-400"
+                />
+              ))}
+            </div>
+
+            {/* Floating Issue Pings */}
+            {[
+              { top: "20%", left: "65%" },
+              { top: "65%", left: "25%" },
+            ].map((pos, i) => (
+              <motion.div
+                key={i}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.6 + i * 0.3 }}
+                className="absolute"
+                style={pos}
+              >
+                <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_12px_#ef4444]" />
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </BannerSectionContext.Provider>
   );
 };
 

@@ -6,6 +6,8 @@ import useEditorMode from "../../../hooks/page builder/useEditorMode";
 import useAxios from "../../../hooks/auth & role/useAxios";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const GlobeSection = () => {
   const [globeData, setGlobeData] = useState({
@@ -14,27 +16,27 @@ const GlobeSection = () => {
       subtitle: "",
       description: "",
       ctaText: "",
-      ctaLink: ""
+      ctaLink: "",
     },
     styles: {
       mainTitle: {
         fontSize: "md:text-5xl text-4xl",
         fontWeight: "font-bold",
         color: "text-white",
-        textAlign: "text-center"
+        textAlign: "text-center",
       },
       subtitle: {
-        fontSize: "md:text-5xl text-4xl", 
+        fontSize: "md:text-5xl text-4xl",
         fontWeight: "font-bold",
         color: "text-white",
-        textAlign: "text-center"
+        textAlign: "text-center",
       },
       description: {
         fontSize: "",
         color: "text-white/80",
-        textAlign: "text-center"
-      }
-    }
+        textAlign: "text-center",
+      },
+    },
   });
 
   const { editMode } = useEditorMode();
@@ -49,7 +51,7 @@ const GlobeSection = () => {
           setGlobeData(data.message);
         }
       } catch (err) {
-        console.error("Failed to fetch globe section:", err);
+        toast.error("Failed to fetch globe section:", err);
       }
     };
     fetchGlobeSection();
@@ -59,15 +61,15 @@ const GlobeSection = () => {
     try {
       const payload = {
         content: globeData.content,
-        styles: globeData.styles
+        styles: globeData.styles,
       };
-      
+
       await axiosSecure.patch("/contents/globe-section", payload, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      
+
       await Swal.fire({
         timer: 2000,
         position: "center",
@@ -76,7 +78,7 @@ const GlobeSection = () => {
         showConfirmButton: false,
       });
     } catch (err) {
-      console.error("Failed to save globe section:", err);
+      //console.error("Failed to save globe section:", err);
       await Swal.fire({
         position: "center",
         icon: "error",
@@ -88,25 +90,25 @@ const GlobeSection = () => {
   };
 
   const updateContent = (field, value) => {
-    setGlobeData(prev => ({
+    setGlobeData((prev) => ({
       ...prev,
       content: {
         ...prev.content,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
   const updateStyle = (element, property, value) => {
-    setGlobeData(prev => ({
+    setGlobeData((prev) => ({
       ...prev,
       styles: {
         ...prev.styles,
         [element]: {
           ...prev.styles[element],
-          [property]: value
-        }
-      }
+          [property]: value,
+        },
+      },
     }));
   };
 
@@ -114,15 +116,17 @@ const GlobeSection = () => {
   const getClassName = (element) => {
     const style = globeData.styles[element];
     if (!style) return "";
-    
+
     return [
       style.fontSize,
       style.fontWeight,
       style.textAlign,
       style.color,
       style.padding,
-      style.margin
-    ].filter(Boolean).join(" ");
+      style.margin,
+    ]
+      .filter(Boolean)
+      .join(" ");
   };
 
   // Store data and functions in window for GlobeSectionEditor access
@@ -131,7 +135,7 @@ const GlobeSection = () => {
       globeData,
       updateContent,
       updateStyle,
-      handleSave
+      handleSave,
     };
   }, [globeData]);
 
@@ -143,24 +147,39 @@ const GlobeSection = () => {
         </div>
       </div>
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 lg:w-1/2 w-full space-y-4 px-5">
-        <h2 className={getClassName('mainTitle')}>
+        <motion.h2
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }} // Automatic trigger
+          viewport={{ once: true, amount: 0.3 }} // 30% screen trigger
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className={getClassName("mainTitle")}
+        >
           {globeData.content.mainTitle || "Urban Issues"}
-          <br /> 
+          <br />
           {globeData.content.subtitle || "Shared Citizen Solutions"}
-        </h2>
-        <p className={getClassName('description')}>
-          {globeData.content.description || "URBANi empowers citizens to highlight issues, collaborate with neighbors, and see real solutions unfold. Together, we transform our city—one report, one upvote at a time."}
-        </p>
-        <div className="flex justify-center items-center relative z-10 mt-8">
-          <div className="flex justify-center items-center">
-            <div className="flex justify-center items-center rounded-full h-16">
-              <CTA 
-                text={globeData.content.ctaText || "Explore Issue"}
-                link={globeData.content.ctaLink || "/all-issues"}
-              />
-            </div>
-          </div>
-        </div>
+        </motion.h2>
+        <motion.p
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          className={getClassName("description")}
+        >
+          {globeData.content.description ||
+            "URBANi empowers citizens to highlight issues, collaborate with neighbors, and see real solutions unfold. Together, we transform our city—one report, one upvote at a time."}
+        </motion.p>
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="flex justify-center items-center rounded-full h-16"
+        >
+          <CTA
+            text={globeData.content.ctaText || "Explore Issue"}
+            link={globeData.content.ctaLink || "/all-issues"}
+          />
+        </motion.div>
       </div>
     </>
   );

@@ -2,26 +2,36 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../auth & role/useAxiosSecure";
 import useAuth from "../auth & role/useAuth";
 
-const useStaffAssignIssue = (filters = {}) => {
+const useStaffAssignIssue = (searchText = "", page = 0, limit = 5, filters = {}, sortBy = "date-desc") => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { status = "", priority = "" } = filters;
+  const { status = "" } = filters;
+  const skip = page * limit;
+
   const {
-    data: assignedIssues = [],
+    data: response = {},
     isLoading: issuesLoading,
     isError: issuesError,
     refetch: refetchAssignIssues,
   } = useQuery({
-    queryKey: ["issues", user?.email, status, priority],
+    queryKey: ["issues", user?.email, searchText, page, limit, status, sortBy],
     enabled: !!user?.email,
     queryFn: async () => {
       const { data } = await axiosSecure.get(
-        `/issues/staff/assigned-issues?staffEmail=${user?.email}&status=${status}&priority=${priority}`
+        `/issues/staff/assigned-issues?staffEmail=${user?.email}&status=${status}&searchText=${searchText}&limit=${limit}&skip=${skip}&sortBy=${sortBy}`
       );
-      return data?.issues;
+      return data;
     },
+    keepPreviousData: true,
   });
-  return { assignedIssues, issuesLoading, issuesError, refetchAssignIssues };
+
+  return { 
+    assignedIssues: response?.issues || [], 
+    pagination: response?.pagination || {},
+    issuesLoading, 
+    issuesError, 
+    refetchAssignIssues 
+  };
 };
 
 export default useStaffAssignIssue;

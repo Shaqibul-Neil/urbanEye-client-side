@@ -624,3 +624,7 @@ const AllIssues = () => {
 };
 
 export default AllIssues;
+
+// Status Filter → Backend
+// Other filters & sort → Frontend
+// Search → Backend

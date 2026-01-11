@@ -7,6 +7,8 @@ import useEditorMode from "../../../hooks/page builder/useEditorMode";
 import useAxios from "../../../hooks/auth & role/useAxios";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Swal from "sweetalert2";
+import { easeOut, motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 // Create context for AboutSection data
 const AboutSectionContext = createContext();
@@ -71,7 +73,7 @@ const AboutSection = () => {
           setAboutData(data.message);
         }
       } catch (err) {
-        console.error("Failed to fetch about section:", err);
+        toast.error("Failed to fetch about section:", err);
       }
     };
     fetchAboutSection();
@@ -98,7 +100,7 @@ const AboutSection = () => {
         showConfirmButton: false,
       });
     } catch (err) {
-      console.error("Failed to save about section:", err);
+      toast.error("Failed to save about section:", err);
       await Swal.fire({
         position: "center",
         icon: "error",
@@ -165,60 +167,93 @@ const AboutSection = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 items-center">
         {/* Left Side - Images (unchanged) */}
-        <div className="relative">
-          <div>
-            <img
-              src={skyline}
-              alt=""
-              className="w-44 h-40 object-cover absolute top-40 right-20 border-12 border-white z-10"
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.4 }}
+          className="relative"
+        >
+          {/** Staggered images */}
+          {[
+            {
+              src: skyline,
+              className:
+                "w-44 h-40 object-cover absolute top-40 right-20 border-12 border-white z-10",
+            },
+            {
+              src: ppl,
+              className:
+                "w-96 h-96 object-cover overflow-hidden border-white border-12",
+            },
+            {
+              src: hand,
+              className:
+                "w-64 h-64 absolute -top-20 right-50 border-12 border-white object-cover",
+            },
+            {
+              src: student,
+              className:
+                "w-48 h-48 absolute top-20 right-40 border-12 border-white object-cover",
+            },
+          ].map((img, i) => (
+            <motion.img
+              key={i}
+              src={img.src}
+              alt={`img-${i}`}
+              className={img.className}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, ease: easeOut, delay: i * 0.3 }} // stagger by 0.3s each
             />
-          </div>
-          <div>
-            <img
-              src={ppl}
-              alt=""
-              className="w-96 h-96 object-cover  overflow-hidden border-white border-12"
-            />
-          </div>
-          <div>
-            <img
-              src={hand}
-              alt=""
-              className="w-64 h-64 absolute -top-20 right-50 border-12 border-white object-cover"
-            />
-          </div>
-          <div>
-            <img
-              src={student}
-              alt=""
-              className="w-48 h-48 absolute top-20 right-40 border-12 border-white object-cover"
-            />
-          </div>
-        </div>
+          ))}
+        </motion.div>
 
         {/* Right side - Content Display Only */}
-        <div className="space-y-4 px-5 relative">
-          <h2 className={`tracking-tight ${getClassName("mainHeading")}`}>
+        <div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.4 }}
+          className="space-y-4 px-5 relative"
+        >
+          <motion.h2
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={`tracking-tight ${getClassName("mainHeading")}`}
+          >
             {aboutData.content.mainHeading || "URBANi is a"}{" "}
             <span className={getClassName("highlightText")}>
               {aboutData.content.highlightText || "citizen-focused platform"}
             </span>{" "}
             that lets residents
-          </h2>
+          </motion.h2>
 
-          <p className={`leading-relaxed ${getClassName("paragraph1")}`}>
+          <motion.p
+            className={`leading-relaxed ${getClassName("paragraph1")}`}
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+          >
             {aboutData.content.paragraph1 ||
               "report public issues directly to local authorities. From potholes and broken streetlights to stray animals and pollution hazards, every report is tracked for timely resolution."}
-          </p>
+          </motion.p>
 
-          <p className={`leading-relaxed ${getClassName("paragraph2")}`}>
+          <motion.p
+            className={`leading-relaxed ${getClassName("paragraph2")}`}
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+          >
             {aboutData.content.paragraph2 || "Our mission is simple:"}{" "}
             <strong>
               {aboutData.content.strongText || "empower communities"}
             </strong>{" "}
             to actively improve their neighborhoods, ensure transparency, and
             make cities safer and cleaner for everyone.
-          </p>
+          </motion.p>
         </div>
       </div>
     </AboutSectionContext.Provider>

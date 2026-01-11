@@ -57,6 +57,9 @@ const HomeNavbar = () => {
             <li>
               <MyLinks to={"/contact"}>Contact</MyLinks>
             </li>
+            <li>
+              <MyLinks to={"/career"}>Career</MyLinks>
+            </li>
           </ul>
         </div>
         <Link
@@ -110,6 +113,15 @@ const HomeNavbar = () => {
               variant="home"
             >
               Contact
+            </MyLinks>
+          </li>
+          <li>
+            <MyLinks
+              to={"/career"}
+              className="hover:text-primary transition-all duration-300 flex items-center"
+              variant="home"
+            >
+              Career
             </MyLinks>
           </li>
         </ul>

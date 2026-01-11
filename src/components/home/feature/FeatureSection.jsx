@@ -4,6 +4,8 @@ import useEditorMode from "../../../hooks/page builder/useEditorMode";
 import useAxios from "../../../hooks/auth & role/useAxios";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export default function FeaturesSection() {
   const [featuresData, setFeaturesData] = useState({
@@ -41,7 +43,7 @@ export default function FeaturesSection() {
           setFeaturesData(data.message);
         }
       } catch (err) {
-        console.error("Failed to fetch features section:", err);
+        toast.error("Failed to fetch features section:", err);
       }
     };
     fetchFeaturesSection();
@@ -68,7 +70,7 @@ export default function FeaturesSection() {
         showConfirmButton: false,
       });
     } catch (err) {
-      console.error("Failed to save features section:", err);
+      //console.error("Failed to save features section:", err);
       await Swal.fire({
         position: "center",
         icon: "error",
@@ -154,22 +156,40 @@ export default function FeaturesSection() {
       <div className="lg:px-6 px-5 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Content */}
         <div className="max-w-md space-y-4">
-          <h2 className={`tracking-tight ${getClassName("mainHeading")}`}>
+          <motion.h2
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={`tracking-tight ${getClassName("mainHeading")}`}
+          >
             {featuresData.content.mainHeading || "Build a"}{" "}
             <span className={getClassName("highlightText")}>
               {featuresData.content.highlightText || "Safer Community"}
             </span>{" "}
             with Our Public Reporting System
-          </h2>
+          </motion.h2>
 
-          <p className={`mb-6 leading-relaxed ${getClassName("description")}`}>
+          <motion.p
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+            className={`mb-6 leading-relaxed ${getClassName("description")}`}
+          >
             {featuresData.content.description ||
               "A powerful and transparent platform where citizens can report issues, track progress, and help improve their city with ease."}
-          </p>
-
-          <button className="px-6 py-3 border border-primary text-primary rounded-full shadow-md hover:bg-primary hover:text-white cursor-pointer transition-all duration-300">
-            {featuresData.content.buttonText || "Report an Issue"}
-          </button>
+          </motion.p>
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+          >
+            <button className="px-6 py-3 border border-primary text-primary rounded-full shadow-md hover:bg-primary hover:text-white cursor-pointer transition-all duration-300">
+              {featuresData.content.buttonText || "Report an Issue"}
+            </button>
+          </motion.div>
         </div>
 
         {/* Right Features Grid */}
@@ -199,7 +219,15 @@ export default function FeaturesSection() {
                 },
               ]
           ).map((item, index) => (
-            <div
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+                delay: index * 0.4,
+              }}
               key={index}
               className={`feature bg-linear-to-br from-white via-[#f8f9ff] to-white backdrop-blur-xl rounded-2xl p-6 shadow-md border border-white transition-transform duration-300 ${
                 index % 2 === 1 ? "md:translate-y-8" : ""
@@ -212,7 +240,7 @@ export default function FeaturesSection() {
               <p className="text-gray-600 text-sm leading-relaxed">
                 {item.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

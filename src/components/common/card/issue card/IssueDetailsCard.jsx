@@ -140,7 +140,7 @@ const IssueDetailsCard = ({ issue, refetch }) => {
         refetch();
       }
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       const msg =
         err?.response?.data?.message || "Failed to upvote. Try again later.";
 

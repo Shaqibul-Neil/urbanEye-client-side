@@ -12,7 +12,7 @@
   --color-primary: #2563eb;
   --color-success: #10b981;
   --color-accent: #38bdf8;
-  --color-secondary: #1e293b;
+  --color-secondary: #020617;
   --color-ghost: #475569;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
@@ -21,6 +21,43 @@
 * {
   font-family: "Urbanist", sans-serif;
 }
+.sonar-core {
+  width: 14px;
+  height: 14px;
+  background: #22d3ee;
+  border-radius: 50%;
+  z-index: 5;
+  position: relative;
+}
+
+.sonar-ring {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  animation: sonar 6s infinite ease-out;
+}
+
+.ring-2 {
+  animation-delay: 2s;
+}
+
+.ring-3 {
+  animation-delay: 4s;
+}
+
+@keyframes sonar {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
 .banText {
   font-family: "Asset", serif;
 }

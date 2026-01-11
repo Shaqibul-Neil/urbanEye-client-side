@@ -8,32 +8,22 @@ const BannerEditor = () => {
   const [handleSave, setHandleSave] = useState(null);
 
   useEffect(() => {
-    // Get data from window (set by Banner component)
-    const checkForData = () => {
-      if (window.bannerData) {
-        setBannerData(window.bannerData.bannerData);
-        setUpdateContent(() => window.bannerData.updateContent);
-        setUpdateStyle(() => window.bannerData.updateStyle);
-        setHandleSave(() => window.bannerData.handleSave);
-      } else {
-        // Retry after a short delay if data isn't available yet
-        setTimeout(checkForData, 100);
+    const checkForBannerData = () => {
+      if (window.bannerSectionData) {
+        setBannerData(window.bannerSectionData.bannerData);
+        setUpdateContent(() => window.bannerSectionData.updateContent);
+        setUpdateStyle(() => window.bannerSectionData.updateStyle);
+        setHandleSave(() => window.bannerSectionData.handleSave);
       }
     };
-    checkForData();
 
-    // Set up interval to keep data in sync
-    const interval = setInterval(() => {
-      if (window.bannerData) {
-        setBannerData(window.bannerData.bannerData);
-      }
-    }, 100);
-
+    checkForBannerData();
+    const interval = setInterval(checkForBannerData, 100);
     return () => clearInterval(interval);
   }, []);
 
   if (!bannerData || !updateContent || !updateStyle || !handleSave) {
-    return <div>Loading banner editor...</div>;
+    return <div>Loading editor...</div>;
   }
 
   const fontSizeOptions = [
@@ -45,7 +35,9 @@ const BannerEditor = () => {
     { value: "text-3xl", label: "3XL" },
     { value: "text-4xl", label: "4XL" },
     { value: "text-5xl", label: "5XL" },
-    { value: "text-lg md:text-xl", label: "LG/XL Responsive" }
+    { value: "text-6xl", label: "6XL" },
+    { value: "text-4xl md:text-5xl", label: "4XL/5XL Responsive" },
+    { value: "text-4xl md:text-6xl", label: "4XL/6XL Responsive" }
   ];
 
   const fontWeightOptions = [
@@ -53,21 +45,17 @@ const BannerEditor = () => {
     { value: "font-medium", label: "Medium" },
     { value: "font-semibold", label: "Semibold" },
     { value: "font-bold", label: "Bold" },
-    { value: "font-black", label: "Black" }
-  ];
-
-  const textAlignOptions = [
-    { value: "text-left", label: "Left" },
-    { value: "text-center", label: "Center" },
-    { value: "text-right", label: "Right" }
+    { value: "font-extrabold", label: "Extra Bold" }
   ];
 
   const colorOptions = [
     { value: "text-white", label: "White" },
+    { value: "text-indigo-400", label: "Indigo 400" },
+    { value: "text-purple-400", label: "Purple 400" },
+    { value: "text-gray-400", label: "Gray 400" },
+    { value: "text-gray-300", label: "Gray 300" },
     { value: "text-primary", label: "Primary Blue" },
-    { value: "text-secondary", label: "Secondary Dark" },
-    { value: "text-gray-300", label: "Light Gray" },
-    { value: "text-black", label: "Black" }
+    { value: "text-secondary", label: "Secondary Dark" }
   ];
 
   return (
@@ -100,69 +88,115 @@ const BannerEditor = () => {
       {activeTab === "content" && (
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Main Title</label>
-            <textarea
-              value={bannerData.content?.title || ""}
-              onChange={(e) => updateContent('title', e.target.value)}
+            <label className="block text-sm font-medium mb-2">Main Heading</label>
+            <input
+              type="text"
+              value={bannerData.content.mainHeading}
+              onChange={(e) => updateContent("mainHeading", e.target.value)}
               className="w-full p-2 border rounded"
-              rows="2"
-              placeholder="Main banner title..."
+              placeholder="The City"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Highlight Text 1</label>
+            <input
+              type="text"
+              value={bannerData.content.highlightText1}
+              onChange={(e) => updateContent("highlightText1", e.target.value)}
+              className="w-full p-2 border rounded"
+              placeholder="Speaks."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Highlight Text 2</label>
+            <input
+              type="text"
+              value={bannerData.content.highlightText2}
+              onChange={(e) => updateContent("highlightText2", e.target.value)}
+              className="w-full p-2 border rounded"
+              placeholder="Listen."
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-2">Description</label>
             <textarea
-              value={bannerData.content?.paragraph || ""}
-              onChange={(e) => updateContent('paragraph', e.target.value)}
+              value={bannerData.content.description}
+              onChange={(e) => updateContent("description", e.target.value)}
               className="w-full p-2 border rounded"
               rows="3"
-              placeholder="Banner description..."
+              placeholder="A living civic intelligence system..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">CTA Button Text</label>
+            <label className="block text-sm font-medium mb-2">Primary Button Text</label>
             <input
               type="text"
-              value={bannerData.content?.ctaText || ""}
-              onChange={(e) => updateContent('ctaText', e.target.value)}
+              value={bannerData.content.primaryButtonText}
+              onChange={(e) => updateContent("primaryButtonText", e.target.value)}
               className="w-full p-2 border rounded"
-              placeholder="Button text..."
+              placeholder="Explore Issues"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">CTA Button Link</label>
+            <label className="block text-sm font-medium mb-2">Secondary Button Text</label>
             <input
               type="text"
-              value={bannerData.content?.ctaLink || ""}
-              onChange={(e) => updateContent('ctaLink', e.target.value)}
+              value={bannerData.content.secondaryButtonText}
+              onChange={(e) => updateContent("secondaryButtonText", e.target.value)}
               className="w-full p-2 border rounded"
-              placeholder="Button link..."
+              placeholder="Report an Issue"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Issues Resolved</label>
-            <input
-              type="text"
-              value={bannerData.content?.issueResolved || ""}
-              onChange={(e) => updateContent('issueResolved', e.target.value)}
-              className="w-full p-2 border rounded"
-              placeholder="Number of issues resolved..."
-            />
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-sm font-medium mb-2">Stat 1 Value</label>
+              <input
+                type="text"
+                value={bannerData.content.stat1Value}
+                onChange={(e) => updateContent("stat1Value", e.target.value)}
+                className="w-full p-2 border rounded"
+                placeholder="2.4K+"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Stat 1 Label</label>
+              <input
+                type="text"
+                value={bannerData.content.stat1Label}
+                onChange={(e) => updateContent("stat1Label", e.target.value)}
+                className="w-full p-2 border rounded"
+                placeholder="Issues Tracked"
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Issues Reported</label>
-            <input
-              type="text"
-              value={bannerData.content?.issuesReported || ""}
-              onChange={(e) => updateContent('issuesReported', e.target.value)}
-              className="w-full p-2 border rounded"
-              placeholder="Number of issues reported..."
-            />
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-sm font-medium mb-2">Stat 2 Value</label>
+              <input
+                type="text"
+                value={bannerData.content.stat2Value}
+                onChange={(e) => updateContent("stat2Value", e.target.value)}
+                className="w-full p-2 border rounded"
+                placeholder="87%"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Stat 2 Label</label>
+              <input
+                type="text"
+                value={bannerData.content.stat2Label}
+                onChange={(e) => updateContent("stat2Label", e.target.value)}
+                className="w-full p-2 border rounded"
+                placeholder="Resolution Rate"
+              />
+            </div>
           </div>
         </div>
       )}
@@ -170,15 +204,15 @@ const BannerEditor = () => {
       {/* Style Tab */}
       {activeTab === "style" && (
         <div className="space-y-6">
-          {/* Main Title Styles */}
+          {/* Main Heading Styles */}
           <div className="border-b pb-4">
-            <h4 className="font-medium mb-3">Main Title</h4>
+            <h4 className="font-medium mb-3">Main Heading</h4>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium mb-1">Font Size</label>
                 <select
-                  value={bannerData.styles?.title?.fontSize || "text-5xl"}
-                  onChange={(e) => updateStyle('title', 'fontSize', e.target.value)}
+                  value={bannerData.styles.mainHeading.fontSize}
+                  onChange={(e) => updateStyle('mainHeading', 'fontSize', e.target.value)}
                   className="w-full p-1 border rounded text-sm"
                 >
                   {fontSizeOptions.map(option => (
@@ -189,8 +223,8 @@ const BannerEditor = () => {
               <div>
                 <label className="block text-xs font-medium mb-1">Font Weight</label>
                 <select
-                  value={bannerData.styles?.title?.fontWeight || "font-black"}
-                  onChange={(e) => updateStyle('title', 'fontWeight', e.target.value)}
+                  value={bannerData.styles.mainHeading.fontWeight}
+                  onChange={(e) => updateStyle('mainHeading', 'fontWeight', e.target.value)}
                   className="w-full p-1 border rounded text-sm"
                 >
                   {fontWeightOptions.map(option => (
@@ -198,11 +232,11 @@ const BannerEditor = () => {
                   ))}
                 </select>
               </div>
-              <div>
+              <div className="col-span-2">
                 <label className="block text-xs font-medium mb-1">Color</label>
                 <select
-                  value={bannerData.styles?.title?.color || "text-white"}
-                  onChange={(e) => updateStyle('title', 'color', e.target.value)}
+                  value={bannerData.styles.mainHeading.color}
+                  onChange={(e) => updateStyle('mainHeading', 'color', e.target.value)}
                   className="w-full p-1 border rounded text-sm"
                 >
                   {colorOptions.map(option => (
@@ -213,15 +247,49 @@ const BannerEditor = () => {
             </div>
           </div>
 
-          {/* Paragraph Styles */}
+          {/* Highlight Text 1 Styles */}
           <div className="border-b pb-4">
+            <h4 className="font-medium mb-3">Highlight Text 1</h4>
+            <div>
+              <label className="block text-xs font-medium mb-1">Color</label>
+              <select
+                value={bannerData.styles.highlightText1.color}
+                onChange={(e) => updateStyle('highlightText1', 'color', e.target.value)}
+                className="w-full p-1 border rounded text-sm"
+              >
+                {colorOptions.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Highlight Text 2 Styles */}
+          <div className="border-b pb-4">
+            <h4 className="font-medium mb-3">Highlight Text 2</h4>
+            <div>
+              <label className="block text-xs font-medium mb-1">Color</label>
+              <select
+                value={bannerData.styles.highlightText2.color}
+                onChange={(e) => updateStyle('highlightText2', 'color', e.target.value)}
+                className="w-full p-1 border rounded text-sm"
+              >
+                {colorOptions.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Description Styles */}
+          <div>
             <h4 className="font-medium mb-3">Description</h4>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium mb-1">Font Size</label>
                 <select
-                  value={bannerData.styles?.paragraph?.fontSize || "text-lg md:text-xl"}
-                  onChange={(e) => updateStyle('paragraph', 'fontSize', e.target.value)}
+                  value={bannerData.styles.description.fontSize}
+                  onChange={(e) => updateStyle('description', 'fontSize', e.target.value)}
                   className="w-full p-1 border rounded text-sm"
                 >
                   {fontSizeOptions.map(option => (
@@ -232,8 +300,8 @@ const BannerEditor = () => {
               <div>
                 <label className="block text-xs font-medium mb-1">Color</label>
                 <select
-                  value={bannerData.styles?.paragraph?.color || "text-white"}
-                  onChange={(e) => updateStyle('paragraph', 'color', e.target.value)}
+                  value={bannerData.styles.description.color}
+                  onChange={(e) => updateStyle('description', 'color', e.target.value)}
                   className="w-full p-1 border rounded text-sm"
                 >
                   {colorOptions.map(option => (
@@ -242,35 +310,6 @@ const BannerEditor = () => {
                 </select>
               </div>
             </div>
-          </div>
-
-          {/* Reset Button Only */}
-          <div className="pt-4 border-t">
-            <button
-              onClick={() => {
-                // Reset to default styles
-                const defaultStyles = {
-                  title: {
-                    fontSize: "text-5xl",
-                    fontWeight: "font-black",
-                    color: "text-white"
-                  },
-                  paragraph: {
-                    fontSize: "text-lg md:text-xl",
-                    color: "text-white"
-                  }
-                };
-                
-                Object.keys(defaultStyles).forEach(element => {
-                  Object.keys(defaultStyles[element]).forEach(property => {
-                    updateStyle(element, property, defaultStyles[element][property]);
-                  });
-                });
-              }}
-              className="btn btn-outline btn-sm"
-            >
-              Reset to Default Styles
-            </button>
           </div>
         </div>
       )}

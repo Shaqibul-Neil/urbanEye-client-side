@@ -13,8 +13,8 @@ const SectionEditor = () => {
 
   const handleSave = () => {
     // Get the appropriate save function based on active section
-    if (activeSection === "banner" && window.bannerData?.handleSave) {
-      window.bannerData.handleSave();
+    if (activeSection === "banner-section" && window.bannerSectionData?.handleSave) {
+      window.bannerSectionData.handleSave();
     } else if (
       activeSection === "about-section" &&
       window.aboutSectionData?.handleSave
@@ -61,7 +61,7 @@ const SectionEditor = () => {
       </div>
 
       <div className="p-4">
-        {activeSection === "banner" && <BannerEditor />}
+        {activeSection === "banner-section" && <BannerEditor />}
         {activeSection === "about-section" && <AboutSectionEditor />}
         {activeSection === "globe-section" && <GlobeSectionEditor />}
         {activeSection === "features-section" && <FeaturesSectionEditor />}

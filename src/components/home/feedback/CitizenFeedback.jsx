@@ -1,6 +1,6 @@
 import FeedbackSlider from "./FeedbackSlider";
 import skyline from "../../../assets/skyline.jpg";
-
+import { motion } from "framer-motion";
 const CitizenFeedback = () => {
   return (
     <section>
@@ -12,19 +12,31 @@ const CitizenFeedback = () => {
         >
           <div className="flex relative">
             <div className="bg-white md:w-80 w-56 px-2 py-1  z-11 absolute -left-6 -top-7 middle">
-              <h2 className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl">
-                Hear Form Our
-              </h2>
+              <motion.h2
+                initial={{ y: 40, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl"
+              >
+                See What Our
+              </motion.h2>
             </div>
             <div className="bg-white md:w-96 w-60 px-2 rounded-r-2xl py-2 absolute top-1 md:top-6 md:-left-6 -left-6 z-10 second">
-              <h2 className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl">
+              <motion.h2 initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl">
                 Satisfied Clients
-              </h2>
+              </motion.h2>
             </div>
             <div className="bg-white md:w-80 w-56 px-2 py-2 absolute md:top-20 top-10.5 -left-6 rounded-br-3xl">
-              <h2 className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl">
+              <motion.h2 initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl">
                 Have To Say
-              </h2>
+              </motion.h2>
             </div>
 
             <div className="w-52 p-3 rounded-2xl absolute lg:top-120 top-64 right-0 bg-primary flex justify-center group hover:bg-white transition-all duration-300 cursor-pointer">

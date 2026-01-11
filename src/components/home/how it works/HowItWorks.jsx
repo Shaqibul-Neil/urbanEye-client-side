@@ -4,6 +4,8 @@ import useEditorMode from "../../../hooks/page builder/useEditorMode";
 import useAxios from "../../../hooks/auth & role/useAxios";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const HowItWorks = () => {
   const [howItWorksData, setHowItWorksData] = useState({
@@ -11,21 +13,21 @@ const HowItWorks = () => {
       mainHeading: "",
       highlightText: "",
       description: "",
-      steps: []
+      steps: [],
     },
     styles: {
       mainHeading: {
         fontSize: "text-4xl md:text-5xl",
         fontWeight: "font-extrabold",
-        color: "text-primary"
+        color: "text-primary",
       },
       highlightText: {
-        color: "text-secondary"
+        color: "text-secondary",
       },
       description: {
-        color: "text-gray-600"
-      }
-    }
+        color: "text-gray-600",
+      },
+    },
   });
 
   const { editMode } = useEditorMode();
@@ -35,12 +37,14 @@ const HowItWorks = () => {
   useEffect(() => {
     const fetchHowItWorksSection = async () => {
       try {
-        const { data } = await axiosInstance.get("/contents/how-it-works-section");
+        const { data } = await axiosInstance.get(
+          "/contents/how-it-works-section"
+        );
         if (data?.message) {
           setHowItWorksData(data.message);
         }
       } catch (err) {
-        console.error("Failed to fetch how it works section:", err);
+        toast.error("Failed to fetch how it works section:", err);
       }
     };
     fetchHowItWorksSection();
@@ -50,15 +54,15 @@ const HowItWorks = () => {
     try {
       const payload = {
         content: howItWorksData.content,
-        styles: howItWorksData.styles
+        styles: howItWorksData.styles,
       };
-      
+
       await axiosSecure.patch("/contents/how-it-works-section", payload, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      
+
       await Swal.fire({
         timer: 2000,
         position: "center",
@@ -67,7 +71,7 @@ const HowItWorks = () => {
         showConfirmButton: false,
       });
     } catch (err) {
-      console.error("Failed to save how it works section:", err);
+      //console.error("Failed to save how it works section:", err);
       await Swal.fire({
         position: "center",
         icon: "error",
@@ -79,37 +83,37 @@ const HowItWorks = () => {
   };
 
   const updateContent = (field, value) => {
-    setHowItWorksData(prev => ({
+    setHowItWorksData((prev) => ({
       ...prev,
       content: {
         ...prev.content,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
   const updateStep = (index, field, value) => {
-    setHowItWorksData(prev => ({
+    setHowItWorksData((prev) => ({
       ...prev,
       content: {
         ...prev.content,
-        steps: prev.content.steps.map((step, i) => 
+        steps: prev.content.steps.map((step, i) =>
           i === index ? { ...step, [field]: value } : step
-        )
-      }
+        ),
+      },
     }));
   };
 
   const updateStyle = (element, property, value) => {
-    setHowItWorksData(prev => ({
+    setHowItWorksData((prev) => ({
       ...prev,
       styles: {
         ...prev.styles,
         [element]: {
           ...prev.styles[element],
-          [property]: value
-        }
-      }
+          [property]: value,
+        },
+      },
     }));
   };
 
@@ -117,15 +121,17 @@ const HowItWorks = () => {
   const getClassName = (element) => {
     const style = howItWorksData.styles[element];
     if (!style) return "";
-    
+
     return [
       style.fontSize,
       style.fontWeight,
       style.textAlign,
       style.color,
       style.padding,
-      style.margin
-    ].filter(Boolean).join(" ");
+      style.margin,
+    ]
+      .filter(Boolean)
+      .join(" ");
   };
 
   // Store data and functions in window for HowItWorksSectionEditor access
@@ -135,7 +141,7 @@ const HowItWorks = () => {
       updateContent,
       updateStep,
       updateStyle,
-      handleSave
+      handleSave,
     };
   }, [howItWorksData]);
 
@@ -143,47 +149,75 @@ const HowItWorks = () => {
     <UserPlus className="lg:w-7 w-5 h-5 lg:h-7 text-indigo-600" />,
     <FileText className="lg:w-7 w-5 h-5 lg:h-7 text-indigo-600" />,
     <Eye className="lg:w-7 w-5 h-5 lg:h-7 text-indigo-600" />,
-    <MapPin className="lg:w-7 w-5 h-5 lg:h-7 text-indigo-600" />
+    <MapPin className="lg:w-7 w-5 h-5 lg:h-7 text-indigo-600" />,
   ];
 
-  const steps = howItWorksData.content.steps.length > 0 ? howItWorksData.content.steps : [
-    {
-      title: "Registration",
-      description: "Sign up to start reporting and track issues."
-    },
-    {
-      title: "Post an Issue",
-      description: "Submit any public issue with details and location."
-    },
-    {
-      title: "View Issues",
-      description: "See issues reported by other citizens for transparency."
-    },
-    {
-      title: "Track Issues",
-      description: "Monitor updates and see real-time progress of issues."
-    }
-  ];
+  const steps =
+    howItWorksData.content.steps.length > 0
+      ? howItWorksData.content.steps
+      : [
+          {
+            title: "Registration",
+            description: "Sign up to start reporting and track issues.",
+          },
+          {
+            title: "Post an Issue",
+            description: "Submit any public issue with details and location.",
+          },
+          {
+            title: "View Issues",
+            description:
+              "See issues reported by other citizens for transparency.",
+          },
+          {
+            title: "Track Issues",
+            description:
+              "Monitor updates and see real-time progress of issues.",
+          },
+        ];
 
   return (
     <div>
       {/* Title Section */}
       <div className="text-center px-3">
-        <h2 className={`tracking-tight ${getClassName('mainHeading')}`}>
-          Our <span className={getClassName('highlightText')}>
+        <motion.h2
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className={`tracking-tight ${getClassName("mainHeading")}`}
+        >
+          Our{" "}
+          <span className={getClassName("highlightText")}>
             {howItWorksData.content.highlightText || "Proven"}
-          </span> Work Process
-        </h2>
-        <p className={`mt-4 text-center ${getClassName('description')}`}>
-          {howItWorksData.content.description || "Our platform is designed to make reporting public issues simple, transparent, and effective. From the moment you register, you gain the ability to submit detailed reports, view problems reported by others in your community, and track progress in real time."}
-        </p>
+          </span>{" "}
+          Work Process
+        </motion.h2>
+        <motion.p
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          className={`mt-4 text-center ${getClassName("description")}`}
+        >
+          {howItWorksData.content.description ||
+            "Our platform is designed to make reporting public issues simple, transparent, and effective. From the moment you register, you gain the ability to submit detailed reports, view problems reported by others in your community, and track progress in real time."}
+        </motion.p>
       </div>
 
       {/* How it works */}
       <div>
         <div className="flex items-center justify-between w-full max-w-6xl mx-auto lg:px-6 px-2 py-16 overflow-x-auto">
           {steps.map((item, index) => (
-            <div
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+                delay: index * 0.4,
+              }}
               key={index}
               className="relative flex-1 flex flex-col items-center"
             >
@@ -207,7 +241,7 @@ const HowItWorks = () => {
               {index !== steps.length - 1 && (
                 <div className="absolute top-1/2 right-0 w-full h-1 bg-secondary -z-10 transform translate-x-1/2"></div>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

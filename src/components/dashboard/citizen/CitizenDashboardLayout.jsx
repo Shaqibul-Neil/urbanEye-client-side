@@ -53,7 +53,7 @@ const CitizenDashboardLayout = ({
   }
 
   return (
-    <div className="px-5 space-y-6">
+    <div className="space-y-6 max-w-[95%] mx-auto">
       {/* Section 1: Issue Metrics (4 Grid Layout) */}
       <div className="bg-white p-6 rounded-3xl">
         <h2 className="text-lg text-secondary font-bold mb-4">Issue Metrics</h2>

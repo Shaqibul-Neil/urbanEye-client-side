@@ -7,8 +7,9 @@ import useAxiosSecure from "../../hooks/auth & role/useAxiosSecure";
 import useRole from "../../hooks/auth & role/useRole";
 import { useState } from "react";
 import Loading from "../loading/Loading";
+import { motion } from "framer-motion";
 
-const MyProfileUpdateModal = ({ profileUpdateRef }) => {
+const MyProfileUpdateModal = ({ profileUpdateRef, isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const { user, updateUser, setUser } = useAuth();
   const { role } = useRole();
@@ -73,7 +74,12 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
       ref={profileUpdateRef}
       className="modal modal-bottom sm:modal-middle"
     >
-      <div className="modal-box">
+      <motion.div
+        className="modal-box"
+        initial={{ y: 100, opacity: 0 }}
+        animate={isOpen ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <form
           autoComplete="off"
           className="space-y-6 text-ghost md:p-6 p-1"
@@ -87,7 +93,12 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
             />
           </div>
           {/* My Name */}
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+          >
             <label className="block text-secondary mb-1">Update Name</label>
             <input
               type="text"
@@ -100,10 +111,15 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
             )}
-          </div>
+          </motion.div>
 
           {/* My Photo image */}
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
             <label className="block text-secondary mb-1">Update Photo</label>
             <input
               type="file"
@@ -111,26 +127,34 @@ const MyProfileUpdateModal = ({ profileUpdateRef }) => {
               className="file-input w-full rounded-xl bg-gray-100"
               placeholder="Your Photo"
             />{" "}
-          </div>
+          </motion.div>
 
           {/* Register button */}
-          <button
-            className={`w-full py-2 bg-primary text-white cursor-pointer rounded-xl font-bold ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-primary"
-            }`}
-            disabled={loading}
-            type="submit"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
           >
-            {loading ? "Updating..." : "Update My Information"}
-          </button>
+            <button
+              className={`w-full py-2 bg-primary text-white cursor-pointer rounded-xl font-bold hover:bg-secondary transition-all duration-500 ${
+                loading ? "bg-gray-400 cursor-not-allowed" : "bg-primary"
+              }`}
+              disabled={loading}
+              type="submit"
+            >
+              {loading ? "Updating..." : "Update My Information"}
+            </button>
+          </motion.div>
         </form>
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn">Close</button>
+            <button className="btn" onClick={onClose}>
+              Close
+            </button>
           </form>
         </div>
-      </div>
+      </motion.div>
     </dialog>
   );
 };

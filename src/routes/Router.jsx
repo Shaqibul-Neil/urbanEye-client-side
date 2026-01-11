@@ -31,6 +31,10 @@ import InvoicePaymentHistory from "../pages/dashboard/admin/InvoicePaymentHistor
 import BoostPaymentSuccess from "../pages/boost/BoostPaymentSuccess";
 import BoostPaymentPage from "../pages/boost/BoostPaymentPage";
 import HomeLayout from "../layout/HomeLayout";
+import TermsAndConditions from "../pages/terms privacy cookie/TermsAndConditions";
+import PrivacyPolicy from "../pages/terms privacy cookie/PrivacyPolicy";
+import CookiePolicy from "../pages/terms privacy cookie/CookiePolicy";
+import JobPortal from "../pages/job portal/JobPortal";
 
 const router = createBrowserRouter([
   {
@@ -85,10 +89,42 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/career",
+        element: (
+          <RouteTitle title="Career Opportunities">
+            <JobPortal />
+          </RouteTitle>
+        ),
+      },
+      {
         path: "/contact",
         element: (
           <RouteTitle title="Contact">
             <Contact />
+          </RouteTitle>
+        ),
+      },
+      {
+        path: "/terms",
+        element: (
+          <RouteTitle title="Terms & Conditions">
+            <TermsAndConditions />
+          </RouteTitle>
+        ),
+      },
+      {
+        path: "/privacy-policy",
+        element: (
+          <RouteTitle title="Privacy Policy">
+            <PrivacyPolicy />
+          </RouteTitle>
+        ),
+      },
+      {
+        path: "/cookie-policy",
+        element: (
+          <RouteTitle title="Cookie Policy">
+            <CookiePolicy />
           </RouteTitle>
         ),
       },

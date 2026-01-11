@@ -1,7 +1,11 @@
 const SubHeading = ({ className, label }) => {
   return (
     <div>
-      <h1 className={`text-xl font-medium text-ghost ${className}`}>{label}</h1>
+      <h1
+        className={`md:text-xl text-lg font-medium text-gray-600 ${className}`}
+      >
+        {label}
+      </h1>
     </div>
   );
 };

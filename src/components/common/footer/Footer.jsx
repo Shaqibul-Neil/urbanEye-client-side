@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../../../assets/logo.png";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
@@ -28,23 +29,34 @@ const Footer = () => {
             <div className="grid lg:grid-cols-3 grid-cols-2 md:gap-10 gap-6">
               <nav className="text-white flex flex-col">
                 <h6 className="footer-title">What You Can Do</h6>
-                <a className="link link-hover">Post Issue</a>
-                <a className="link link-hover">Track Issue</a>
-                <a className="link link-hover">Upvote</a>
-                <a className="link link-hover">Comment</a>
+                <p>Post Issue</p>
+                <p>Track Issue</p>
+                <p>Upvote</p>
+                <p>Comment</p>
               </nav>
               <nav className="text-white flex flex-col">
                 <h6 className="footer-title">About URBANi</h6>
-                <a className="link link-hover">About us</a>
-                <a className="link link-hover">Contact</a>
-                <a className="link link-hover">Jobs</a>
-                <a className="link link-hover">Press kit</a>
+                <Link to={"/about"} className="link link-hover">
+                  About us
+                </Link>
+                <Link to={"/contact"} className="link link-hover">
+                  Contact
+                </Link>
+                <Link to={"/all-issues"} className="link link-hover">
+                  All Issues
+                </Link>
+                <Link to={"/terms"} className="link link-hover">
+                  Terms & Conditions
+                </Link>
               </nav>
               <nav className="text-white flex flex-col">
                 <h6 className="footer-title">Transparency</h6>
-                <a className="link link-hover">Terms of use</a>
-                <a className="link link-hover">Privacy policy</a>
-                <a className="link link-hover">Cookie policy</a>
+                <Link to={"/privacy-policy"} className="link link-hover">
+                  Privacy Policy
+                </Link>
+                <Link to={"/cookie-policy"} className="link link-hover">
+                  Cookie Policy
+                </Link>
               </nav>
             </div>
             <div className="mt-10 border-t border-white/20 pt-6 text-sm flex flex-col lg:flex-row justify-between lg:items-center text-white/70">

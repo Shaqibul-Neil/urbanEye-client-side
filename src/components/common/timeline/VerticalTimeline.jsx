@@ -32,7 +32,7 @@ const VerticalTimeline = ({ issue }) => {
   const reversedTimeline = [...(timeline || [])].sort(
     (a, b) => new Date(b.at) - new Date(a.at)
   );
-  console.log(timeline);
+  //console.log(timeline);
   return (
     <ul className="steps steps-vertical">
       {reversedTimeline.map((item, index) => {

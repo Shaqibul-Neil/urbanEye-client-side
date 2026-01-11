@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-const CTA = ({ text = "Explore Issue", link = "/all-issues" }) => {
+const CTA = ({ text = "Explore Issues", link = "/all-issues" }) => {
   return (
     <div className="mx-auto w-48 md:mx-0">
       <Link
@@ -10,7 +10,7 @@ const CTA = ({ text = "Explore Issue", link = "/all-issues" }) => {
           w-48 px-4 py-2 rounded-full overflow-hidden
           border-2 border-gray-50
           bg-gray-50 backdrop-blur-md
-          text-primary text-lg lg:font-semibold
+          text-gray-800 text-lg lg:font-semibold
           shadow-xl isolation-auto
           hover:text-white
           group
