@@ -5,19 +5,29 @@ import GoogleLogin from "../../components/socialLogin/GoogleLogin";
 //import { useQueryClient } from "@tanstack/react-query";
 import useRole from "../../hooks/auth & role/useRole";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const SignIn = () => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
   const { signInUser, setUser, setUserLoading, refreshUserToken } = useAuth();
+  const [loginRole, setLoginRole] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   //const queryClient = useQueryClient();
   const { refetchRole } = useRole();
+
+  const credentials = {
+    admin: { email: "admin@urbani.com", password: "adMin123#" },
+    staff: { email: "jon-staff@urbani.com", password: "stAff123#" },
+    citizen: { email: "kamal@gmail.com", password: "Abc1230#" },
+  };
 
   const handleSignIn = async (data) => {
     try {
@@ -140,6 +150,39 @@ const SignIn = () => {
               </button>
             </div>
           </form>
+          {/* Demo Login Button Admin, Citizen and Staff */}
+          <div>
+            <div className="mb-4 flex items-center justify-between">
+              <label className="text-secondary font-semibold">Login as</label>
+              <div className="relative">
+                <select
+                  className="appearance-none w-32 border border-gray-300 rounded-lg pl-3 pr-3 py-2 bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                  value={loginRole}
+                  onChange={(e) => setLoginRole(e.target.value)}
+                >
+                  <option value="">Select Role</option>
+                  <option value="admin">Admin</option>
+                  <option value="staff">Staff</option>
+                  <option value="citizen">Citizen</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                  <ChevronDown className="w-5 h-5 text-gray-400" />
+                </div>{" "}
+              </div>
+            </div>
+            <button
+              type="button"
+              className="btn btn-outline btn-primary w-full mb- rounded-xl"
+              onClick={() => {
+                if (loginRole && credentials[loginRole]) {
+                  setValue("email", credentials[loginRole].email);
+                  setValue("password", credentials[loginRole].password);
+                }
+              }}
+            >
+              Fill Credentials
+            </button>
+          </div>
 
           {/* Divider */}
           <div className="flex items-center justify-center gap-2 my-3">

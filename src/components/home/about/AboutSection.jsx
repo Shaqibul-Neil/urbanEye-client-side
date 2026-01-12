@@ -159,8 +159,8 @@ const AboutSection = () => {
       .filter(Boolean)
       .join(" ");
   };
-  console.log("mainHeading styles:", aboutData.styles.mainHeading);
-  console.log("Generated className:", getClassName("mainHeading"));
+  //console.log("mainHeading styles:", aboutData.styles.mainHeading);
+  //console.log("Generated className:", getClassName("mainHeading"));
 
   // Store data and functions in window for AboutSectionEditor access
   useEffect(() => {
