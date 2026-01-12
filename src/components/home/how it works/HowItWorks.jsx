@@ -19,6 +19,8 @@ const HowItWorks = () => {
       mainHeading: {
         fontSize: "text-4xl md:text-5xl",
         fontWeight: "font-extrabold",
+        gradient:
+          "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent",
         color: "text-primary",
       },
       highlightText: {
@@ -122,11 +124,18 @@ const HowItWorks = () => {
     const style = howItWorksData.styles[element];
     if (!style) return "";
 
+    // Priority: gradient > color > default
+    let colorClass = "";
+    if (style.gradient) {
+      colorClass = style.gradient;
+    } else if (style.color) {
+      colorClass = style.color;
+    }
     return [
       style.fontSize,
       style.fontWeight,
       style.textAlign,
-      style.color,
+      colorClass,
       style.padding,
       style.margin,
     ]
@@ -229,7 +238,7 @@ const HowItWorks = () => {
                 <div className="absolute top-5 right-9 w-6 h-6 lg:w-8 lg:h-8 lg:right-14 rounded-full bg-primary flex justify-center items-center">
                   <p className="text-white text-xs">{index + 1}</p>
                 </div>
-                <h3 className="lg:text-lg text-base font-extrabold text-primary mb-1 text-center">
+                <h3 className="lg:text-lg text-base font-bold text-secondary mb-1 text-center">
                   {item.title}
                 </h3>
                 <p className="lg:text-sm text-xs text-gray-600 text-center">

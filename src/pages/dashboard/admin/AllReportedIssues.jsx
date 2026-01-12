@@ -6,6 +6,7 @@ import useGetIssues from "../../../hooks/citizen related/useGetIssues";
 import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 import AdminIssuesTable from "../../../components/dashboard/admin/AdminIssuesTable";
+import { motion } from "framer-motion";
 
 const AllReportedIssues = () => {
   const [searchText, setSearchText] = useState("");
@@ -70,25 +71,38 @@ const AllReportedIssues = () => {
   if (isError) return <ErrorComponent />;
 
   return (
-    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
-      <div className="space-y-12">
-        {/* Title Section */}
-        <div className="space-y-2">
-          <Heading
-            className={"text-4xl md:text-5xl"}
-            label={"All Reported Issues"}
-          />
-          <SubHeading
-            label={
-              "View and manage all reported issues across the platform. Track status, priority, and take necessary actions as an administrator."
-            }
-          />
-        </div>
+    <div className="p-5 bg-white max-w-[95%] mx-auto rounded-3xl">
+      <div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex items-center gap-4 mb-12"
+        >
+          <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+          {/* Title Section */}
+          <div className="space-y-2">
+            <Heading
+              className={"text-4xl md:text-5xl"}
+              label={"All Reported Issues"}
+            />
+            <SubHeading
+              label={
+                "View and manage all reported issues across the platform. Track status, priority, and take necessary actions as an administrator."
+              }
+            />
+          </div>
+        </motion.div>
 
         {/* Filter Section - 4 Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 lg:px-5">
           {/* Search Bar - 2 Grids */}
-          <div className="lg:col-span-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="lg:col-span-2"
+          >
             <div className="relative">
               <input
                 type="search"
@@ -110,10 +124,15 @@ const AllReportedIssues = () => {
                 </button>
               )}
             </div>
-          </div>
+          </motion.div>
 
           {/* Status Filter - 1 Grid */}
-          <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="relative"
+          >
             <select
               value={selectedStatus}
               onChange={(e) => handleStatusChange(e.target.value)}
@@ -131,10 +150,15 @@ const AllReportedIssues = () => {
               size={20}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
             />
-          </div>
+          </motion.div>
 
           {/* Sort Filter - 1 Grid */}
-          <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="relative"
+          >
             <select
               value={sortBy}
               onChange={(e) => handleSortChange(e.target.value)}
@@ -152,18 +176,23 @@ const AllReportedIssues = () => {
               size={20}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
             />
-          </div>
+          </motion.div>
         </div>
 
         {/* Results Summary */}
-        <div className="flex justify-between items-center text-sm text-gray-600">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="flex justify-between items-center text-sm text-gray-600 lg:px-5"
+        >
           <span>
             Showing {issues.length} of {pagination.totalIssues} issues
           </span>
           <span>
             Page {currentPage + 1} of {pagination.totalPages}
           </span>
-        </div>
+        </motion.div>
 
         {/* Table Section */}
         <AdminIssuesTable

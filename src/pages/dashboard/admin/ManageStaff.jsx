@@ -11,6 +11,7 @@ import UpdateStuffModal from "../../../components/modals/UpdateStuffModal";
 import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const ManageStaff = () => {
   const staffModalRef = useRef();
@@ -72,27 +73,41 @@ const ManageStaff = () => {
   return (
     <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
       <div className="space-y-12">
-        {/* Title Section */}
-        <div className="flex justify-between items-center gap-10 md:flex-row flex-col">
-          <div className="space-y-2">
-            <Heading
-              label={"Staff Management"}
-              className={"text-4xl md:text-5xl pb-1"}
-            />
-            <SubHeading
-              label={
-                "Monitor, manage, and add new employees. Assign roles, update profiles, and remove accounts—all from one centralized dashboard."
-              }
-            />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex items-center gap-4 mb-4"
+        >
+          <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+          {/* Title Section */}
+          <div className="flex justify-between items-center gap-10 md:flex-row flex-col">
+            <div className="space-y-2">
+              <Heading
+                label={"Staff Management"}
+                className={"text-4xl md:text-5xl pb-1"}
+              />
+              <SubHeading
+                label={
+                  "Monitor, manage, and add new employees. Assign roles, update profiles, and remove accounts—all from one centralized dashboard."
+                }
+              />
+            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <button
+                className="btn btn-md btn-primary text-white rounded-3xl w-32 md:mt-0 mt-4 flex items-center justify-center gap-2 transition-transform duration-200 hover:bg-secondary"
+                onClick={handleAddStuffModal}
+              >
+                <PlusCircle className="w-5 h-5" />
+                Add Staff
+              </button>
+            </motion.div>
           </div>
-          <button
-            className="btn btn-md btn-primary text-white rounded-3xl w-32 md:mt-0 mt-4 flex items-center justify-center gap-2 transition-transform duration-200 hover:bg-secondary"
-            onClick={handleAddStuffModal}
-          >
-            <PlusCircle className="w-5 h-5" />
-            Add Staff
-          </button>
-        </div>
+        </motion.div>
         {/* Table Section */}
         {staffs.length === 0 ? (
           <p className="text-lg text-bold text-gray-500">
@@ -100,7 +115,12 @@ const ManageStaff = () => {
             here.
           </p>
         ) : (
-          <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="overflow-x-auto rounded-lg shadow-lg border border-gray-200"
+          >
             {" "}
             <table className="table table-zebra w-full min-w-[700px]">
               {/* head */}
@@ -130,7 +150,7 @@ const ManageStaff = () => {
                 {staffs.map((staff, i) => (
                   <tr
                     key={staff?._id}
-                    className={`transition-all duration-300 hover:shadow-md ${
+                    className={`transition-all duration-800 hover:scale-[1.01] hover:shadow-md ${
                       staff.workStatus !== "available"
                         ? "bg-yellow-50/40 hover:bg-yellow-100/40"
                         : "bg-green-50 hover:bg-green-100/40"
@@ -217,7 +237,7 @@ const ManageStaff = () => {
                 ))}
               </tbody>
             </table>
-          </div>
+          </motion.div>
         )}
         {/* Modal Section */}
         {/* Add Stuff Modal */}

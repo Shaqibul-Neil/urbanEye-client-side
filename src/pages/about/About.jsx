@@ -1,6 +1,8 @@
+import { Users } from "lucide-react";
 import about from "../../assets/about.webp";
 import hand from "../../assets/hand.jpg";
 import ppl from "../../assets/ppl.jpg";
+import { motion } from "framer-motion";
 const About = () => {
   const topImages = [hand, ppl];
 
@@ -14,21 +16,58 @@ const About = () => {
   return (
     <section className="text-secondary py-20 px-5 md:px-10 lg:px-20 scroll-section bg-gray-50">
       <div className="max-w-7xl mx-auto space-y-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="relative"
+        >
+          <div className="absolute left-0 -top-6 h-24 w-24 opacity-20">
+            <svg viewBox="0 0 100 100" className="h-full w-full">
+              {Array.from({ length: 100 }).map((_, i) => (
+                <circle
+                  key={i}
+                  cx={(i % 10) * 10}
+                  cy={Math.floor(i / 10) * 10}
+                  r="1.5"
+                  fill="#2563eb"
+                />
+              ))}
+            </svg>
+          </div>
+          <p className="section-title text-primary">
+            <Users />
+            Know URBANi Better
+          </p>
+          <h2 className="font-extrabold text-4xl md:text-5xl tracking-tight">
+            <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              Explore
+            </span>{" "}
+            <span className="text-secondary">Our Story</span>
+          </h2>
+        </motion.div>
         {/* MISSION SECTION */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* LEFT COLUMN */}
-          <div className="flex flex-col">
-            <div className="mb-8">
-              <p className="text-sm font-medium tracking-widest uppercase text-gray-500 border-t border-gray-300 pt-2 w-24">
-                OUR MISSION
+          <div className="flex flex-col lg:order-2">
+            <motion.div
+              className="mb-8"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <p className="text-sm font-medium tracking-widest uppercase text-gray-500 border-t border-gray-300 pt-2 w-24 mb-2">
+                OUR MISION
               </p>
-              <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mt-1">
-                Empower Citizens to Improve{" "}
-                <span className="text-blue-600">Their Community</span>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-secondary leading-tight mt-1">
+                Empower Citizens to Improve Their Community
               </h1>
-            </div>
+            </motion.div>
 
-            <img
+            <motion.img
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
               src={about}
               alt="Community volunteering"
               className="w-full h-auto object-cover rounded-lg shadow-lg"
@@ -39,7 +78,10 @@ const About = () => {
           <div className="flex flex-col">
             <div className="flex space-x-4 mb-8">
               {topImages.map((imgSrc, i) => (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.2, duration: 0.6 }}
                   key={i}
                   className="flex-1 relative overflow-hidden rounded-lg"
                 >
@@ -56,7 +98,7 @@ const About = () => {
                       Community
                     </span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -92,17 +134,19 @@ const About = () => {
         </div>
 
         {/* VISION SECTION */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* LEFT COLUMN TEXT */}
-          <div className="flex flex-col">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="flex flex-col"
+          >
             <p className="text-sm font-medium tracking-widest uppercase text-gray-500 border-t border-gray-300 pt-2 w-24 mb-2">
               OUR VISION
             </p>
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mt-1 mb-6">
-              Build a{" "}
-              <span className="text-blue-600">
-                Connected & Accountable Community
-              </span>
+            <h1 className="text-3xl md:text-4xl text-secondary font-extrabold leading-tight mt-1 mb-6">
+              Build a Connected & Accountable Community
             </h1>
             <p className="leading-relaxed text-gray-600">
               URBANi envisions a city where citizens, local authorities, and
@@ -112,16 +156,21 @@ const About = () => {
               goal is to make civic participation intuitive, rewarding, and
               impactful.
             </p>
-          </div>
+          </motion.div>
 
           {/* RIGHT COLUMN IMAGE */}
-          <div className="flex justify-center lg:justify-end">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="flex justify-center lg:justify-end"
+          >
             <img
               src={ppl}
               alt="Community planning"
               className="w-full max-w-md h-auto object-cover rounded-lg shadow-lg"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

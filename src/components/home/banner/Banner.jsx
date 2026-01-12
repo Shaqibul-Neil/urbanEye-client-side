@@ -52,7 +52,7 @@ const Banner = () => {
         textAlign: "leading-tight",
       },
       highlightText1: {
-        color: "text-indigo-400",
+        color: "text-blue-400",
       },
       highlightText2: {
         color: "text-purple-400",
@@ -241,9 +241,12 @@ const Banner = () => {
                 text={bannerData.content.primaryButtonText || "Explore Issues"}
               />
 
-              <button className="px-4 py-2 rounded-full w-48 border border-gray-700 text-gray-300 hover:border-indigo-500 transition">
+              <a
+                href="#city-pulse"
+                className="px-4 py-2 rounded-full w-48 border border-gray-700 text-gray-300 hover:border-indigo-500 transition flex justify-center items-center"
+              >
                 {bannerData.content.secondaryButtonText || "Report an Issue"}
-              </button>
+              </a>
             </motion.div>
 
             {/* Micro Stats */}

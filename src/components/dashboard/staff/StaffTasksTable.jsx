@@ -1,4 +1,5 @@
 import { formatDate } from "../../../utilities/formatDate";
+import { motion } from "framer-motion";
 
 const StaffTasksTable = ({
   title,
@@ -32,7 +33,15 @@ const StaffTasksTable = ({
     <div
       className={`w-full overflow-x-auto bg-white p-4 rounded-3xl ${className}`}
     >
-      <h3 className="text-lg text-secondary font-bold mb-4">{title}</h3>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
+        className="flex items-center gap-4 mb-4"
+      >
+        <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+        <h3 className="text-lg text-secondary font-bold">{title}</h3>
+      </motion.div>
 
       {data.length === 0 ? (
         <p className="text-center py-6 text-gray-500">No tasks found</p>
@@ -53,11 +62,9 @@ const StaffTasksTable = ({
           </thead>
           <tbody>
             {data.map((task, index) => (
-              <tr 
+              <tr
                 key={task._id}
-                className={`${
-                  index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
-                }`}
+                className={`${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
               >
                 <td>{index + 1}</td>
 

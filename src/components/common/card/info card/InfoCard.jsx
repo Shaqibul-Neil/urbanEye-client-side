@@ -1,25 +1,27 @@
 import { easeInOut, motion } from "framer-motion";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
+  hidden: { opacity: 0, y: 10 },
+  visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.5,
       ease: easeInOut,
+      delay: delay,
     },
-  },
+  }),
   hover: {
     scale: 1.05,
     y: -6,
   },
 };
 
-const InfoCard = ({ icon, title, children }) => {
+const InfoCard = ({ icon, title, children, delay = 0 }) => {
   return (
     <motion.div
       variants={fadeUp}
+      custom={delay}
       initial="hidden"
       whileInView="visible"
       whileHover="hover"

@@ -5,6 +5,20 @@ import ResolutionRateChart from "../shared/ResolutionRateChart";
 import TopUpvotedIssue from "../shared/TopUpvotedChart";
 import PaymentAreaChart from "../shared/PaymentAreaChart";
 import ReusableIssuesTable from "../shared/ReusableIssuesTable";
+import { motion, easeOut } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: easeOut,
+      delay: 0.3,
+    },
+  },
+};
 
 const CitizenDashboardLayout = ({
   // Metrics data
@@ -56,7 +70,15 @@ const CitizenDashboardLayout = ({
     <div className="space-y-6 max-w-[95%] mx-auto">
       {/* Section 1: Issue Metrics (4 Grid Layout) */}
       <div className="bg-white p-6 rounded-3xl">
-        <h2 className="text-lg text-secondary font-bold mb-4">Issue Metrics</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex items-center gap-4 mb-4"
+        >
+          <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+          <h2 className="text-lg text-secondary font-bold">Issue Metrics</h2>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left 2 Grids: Cards in 2x2 Layout */}
@@ -69,9 +91,11 @@ const CitizenDashboardLayout = ({
               textColor="text-blue-600"
               bgColor="bg-blue-100"
               badgeColor="bg-blue-100 border-blue-200"
+              delay={0.2}
             />
 
             {/* Resolved Issues */}
+
             <MetricCard
               title="Resolved"
               count={resolvedIssues}
@@ -79,9 +103,11 @@ const CitizenDashboardLayout = ({
               textColor="text-green-600"
               bgColor="bg-green-100"
               badgeColor="bg-green-100 border-green-200"
+              delay={0.4}
             />
 
             {/* Pending Issues */}
+
             <MetricCard
               title="Pending"
               count={pendingIssues}
@@ -89,6 +115,7 @@ const CitizenDashboardLayout = ({
               textColor="text-yellow-600"
               bgColor="bg-yellow-100"
               badgeColor="bg-yellow-100 border-yellow-200"
+              delay={0.6}
             />
 
             {/* Rejected Issues */}
@@ -99,31 +126,58 @@ const CitizenDashboardLayout = ({
               textColor="text-red-600"
               bgColor="bg-red-100"
               badgeColor="bg-red-100 border-red-200"
+              delay={0.8}
             />
           </div>
 
           {/* Status Distribution Pie Chart (1 Grid) */}
-          <StatusPieChart data={pieChartData} title="Status Distribution" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.5 }}
+          >
+            {" "}
+            <StatusPieChart data={pieChartData} title="Status Distribution" />
+          </motion.div>
 
           {/* Resolution Rate Chart (1 Grid) */}
-          <ResolutionRateChart
-            totalIssues={totalIssues}
-            resolvedIssues={resolvedIssues}
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
+          >
+            <ResolutionRateChart
+              totalIssues={totalIssues}
+              resolvedIssues={resolvedIssues}
+            />
+          </motion.div>
         </div>
       </div>
 
       {/* Section 2: Payment Analytics + Upvotes */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Payment Chart (3 columns) */}
-        <div className="lg:col-span-3">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="lg:col-span-3"
+        >
           {paymentStats && <PaymentAreaChart paymentStats={paymentStats} />}
-        </div>
+        </motion.div>
 
         {/* Top Upvoted Issues (1 column) */}
-        <div className="lg:col-span-2">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.4 }}
+          className="lg:col-span-2"
+        >
           <TopUpvotedIssue data={topUpvotedIssues} title="Top Upvoted Issue" />
-        </div>
+        </motion.div>
       </div>
 
       {/* Section 3: Latest Posted Issues (Full Width) */}

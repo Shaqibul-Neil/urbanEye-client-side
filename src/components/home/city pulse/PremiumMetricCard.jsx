@@ -50,7 +50,7 @@ const PremiumMetricCard = ({
       {/* Glass Morphism Card with Subtle Shadow */}
       <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl md:p-4 p-2 shadow-sm border border-white/30 overflow-hidden group-hover:shadow-md transition-all duration-500">
         {/* Floating Background Pattern */}
-        <div className="absolute top-0 right-0 w-40 h-40 opacity-[0.03] transform rotate-12 group-hover:rotate-45 transition-transform duration-1000">
+        <div className="absolute top-0 right-0 w-40 h-40 opacity-[0.06] transform rotate-12 group-hover:rotate-45 transition-transform duration-1000">
           <Icon size={100} className="text-gray-900" />
         </div>
 

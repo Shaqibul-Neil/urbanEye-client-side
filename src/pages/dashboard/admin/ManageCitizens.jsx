@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
 import useAuth from "../../../hooks/auth & role/useAuth";
 import Heading from "../../../components/common/heading/Heading";
@@ -30,16 +31,24 @@ const ManageCitizens = () => {
   return (
     <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
       {/* Title Section */}
-      <div className="space-y-2 mb-6">
-        <Heading
-          label="Citizen Oversight"
-          className="text-4xl md:text-5xl pb-1"
-        />
-        <SubHeading
-          label="Monitor and manage all registered citizens. Block or unblock users, view their profiles, and remove accounts as needed—all from one place."
-          className="text-gray-600 animate-fadeInLeft delay-100"
-        />
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
+        className="flex items-center gap-4 mb-4"
+      >
+        <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+        <div className="space-y-2">
+          <Heading
+            label="Citizen Oversight"
+            className="text-4xl md:text-5xl pb-1"
+          />
+          <SubHeading
+            label="Monitor and manage all registered citizens. Block or unblock users, view their profiles, and remove accounts as needed—all from one place."
+            className="text-gray-600 animate-fadeInLeft delay-100"
+          />
+        </div>
+      </motion.div>
 
       {/* Table Section */}
       <AdminCitizenTable

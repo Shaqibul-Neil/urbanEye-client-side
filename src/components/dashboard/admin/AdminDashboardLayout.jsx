@@ -1,4 +1,5 @@
 import { FaChartBar, FaCheckCircle, FaClock, FaTimes } from "react-icons/fa";
+import { motion, easeOut } from "framer-motion";
 import MetricCard from "../shared/MetricCard";
 import StatusPieChart from "../shared/StatusPieChart";
 import ResolutionRateChart from "../shared/ResolutionRateChart";
@@ -6,6 +7,19 @@ import TopUpvotedIssue from "../shared/TopUpvotedChart";
 import PaymentAreaChart from "../shared/PaymentAreaChart";
 import AdminIssuesTable from "./AdminIssuesTable";
 import AdminCitizenTable from "./AdminCitizenTable";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: easeOut,
+      delay: 0.3,
+    },
+  },
+};
 
 const AdminDashboardLayout = ({
   // Metrics data
@@ -55,7 +69,15 @@ const AdminDashboardLayout = ({
     <div className="px-5 space-y-6">
       {/* Section 1: Issue Metrics (4 Grid Layout) */}
       <div className="bg-white p-6 rounded-3xl">
-        <h2 className="text-lg text-secondary font-bold mb-4">Issue Metrics</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex items-center gap-4 mb-4"
+        >
+          <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+          <h2 className="text-lg text-secondary font-bold">Issue Metrics</h2>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left 2 Grids: Cards in 2x2 Layout */}
@@ -100,33 +122,57 @@ const AdminDashboardLayout = ({
               badgeColor="bg-red-100 border-red-200"
             />
           </div>
-
-          {/* Status Distribution Pie Chart (1 Grid) */}
-          <StatusPieChart
-            data={pieChartData}
-            title="Status Distribution"
-            totalIssues={totalIssues}
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            {/* Status Distribution Pie Chart (1 Grid) */}
+            <StatusPieChart
+              data={pieChartData}
+              title="Status Distribution"
+              totalIssues={totalIssues}
+            />
+          </motion.div>
 
           {/* Resolution Rate Chart (1 Grid) */}
-          <ResolutionRateChart
-            totalIssues={totalIssues}
-            resolvedIssues={resolvedIssues}
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          >
+            <ResolutionRateChart
+              totalIssues={totalIssues}
+              resolvedIssues={resolvedIssues}
+            />
+          </motion.div>
         </div>
       </div>
 
       {/* Section 2: Payment Analytics + Upvotes */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Payment Chart (3 columns) */}
-        <div className="lg:col-span-3">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="lg:col-span-3"
+        >
           {paymentStats && <PaymentAreaChart paymentStats={paymentStats} />}
-        </div>
+        </motion.div>
 
         {/* Top Upvoted Issues (1 column) */}
-        <div className="lg:col-span-2">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.4 }}
+          className="lg:col-span-2"
+        >
           <TopUpvotedIssue data={topUpvotedIssues} title="Top Upvoted Issue" />
-        </div>
+        </motion.div>
       </div>
 
       {/* Section 3: Latest Issues (Full Width) */}

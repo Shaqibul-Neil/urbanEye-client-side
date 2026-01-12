@@ -2,6 +2,7 @@ import useBlockUnblockUser from "../../../hooks/admin related/useBlockUnblockUse
 import Swal from "sweetalert2";
 import { CircleCheckBig, PencilOff } from "lucide-react";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const AdminCitizenTable = ({
   title,
@@ -66,15 +67,30 @@ const AdminCitizenTable = ({
   }
 
   return (
-    <div className={`w-full bg-white p-4 rounded-3xl ${className}`}>
-      {title && (
-        <h3 className="text-lg text-secondary font-bold mb-4">{title}</h3>
-      )}
+    <div className={`w-full bg-white p-5 rounded-3xl ${className}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
+        className="flex items-center gap-4 mb-4"
+      >
+        {title && (
+          <>
+            <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+            <h3 className="text-lg text-secondary font-bold">{title}</h3>
+          </>
+        )}
+      </motion.div>
 
       {displayData.length === 0 ? (
         <p className="text-center py-6 text-gray-500">No citizens found</p>
       ) : (
-        <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="overflow-x-auto rounded-lg shadow-lg border border-gray-200"
+        >
           <table className="table table-zebra w-full min-w-[700px]">
             <thead className="bg-gray-50">
               <tr>
@@ -99,7 +115,7 @@ const AdminCitizenTable = ({
               {displayData.map((user, i) => (
                 <tr
                   key={user?._id}
-                  className={`transition-all duration-300 hover:shadow-md ${
+                  className={`transition-all duration-800 hover:scale-[1.01] hover:shadow-md ${
                     i % 2 === 0 ? "bg-gray-100" : "bg-white"
                   }`}
                 >
@@ -182,7 +198,7 @@ const AdminCitizenTable = ({
               ))}
             </tbody>
           </table>
-        </div>
+        </motion.div>
       )}
     </div>
   );

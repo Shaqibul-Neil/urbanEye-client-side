@@ -130,7 +130,10 @@ export default function CityPulseDashboard() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-3xl md:text-5xl font-black text-gray-900 mb-2 leading-none"
           >
-            City <span className="text-primary">Pulse</span>
+            City{" "}
+            <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              Pulse
+            </span>
           </motion.h2>
           <motion.p
             initial={{ y: 40, opacity: 0 }}
@@ -153,34 +156,35 @@ export default function CityPulseDashboard() {
             title="Open Issues"
             count={pulseData.open}
             icon={AlertTriangle}
-            gradient="bg-gradient-to-r from-red-400/80 to-red-500/60"
+            gradient="bg-gradient-to-r from-red-400 to-red-500"
             delay={0}
           />
           <PremiumMetricCard
             title="In Progress"
             count={pulseData.inProgress}
             icon={Clock}
-            gradient="bg-gradient-to-r from-amber-400/80 to-orange-500/60"
+            gradient="bg-gradient-to-r from-amber-400 to-orange-400"
             delay={300}
           />
           <PremiumMetricCard
             title="Working"
             count={pulseData.working}
             icon={Settings}
-            gradient="bg-gradient-to-r from-blue-400/80 to-blue-600/60"
+            gradient="bg-gradient-to-r from-blue-400 to-blue-600"
             delay={600}
           />
           <PremiumMetricCard
             title="Resolved"
             count={pulseData.resolved}
             icon={CheckCircle2}
-            gradient="bg-gradient-to-r from-green-400/80 to-emerald-600/60"
+            gradient="bg-gradient-to-r from-green-400 to-emerald-600"
             delay={900}
           />
         </div>
-
+        {/* Section 3: Interactive Heat Map */}
+        <InteractiveHeatMap />
         {/* Section 2: Premium Analytics Grid (lg:grid-cols-4) */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-6 md:mb-20 mb-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-6 md:mt-16 mt-12 items-center">
           {/* Premium Top Categories - 2 Grids */}
           <motion.div
             initial={{ y: 40, opacity: 0 }}
@@ -193,8 +197,8 @@ export default function CityPulseDashboard() {
 
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-10 h-10 bg-indigo-50 rounded-2xl flex items-center justify-center shadow-lg">
-                  <BarChart3 size={20} className="text-indigo-800" />
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <BarChart3 size={20} className="text-white" />
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-gray-800">
@@ -235,9 +239,6 @@ export default function CityPulseDashboard() {
             />
           </motion.div>
         </div>
-
-        {/* Section 3: Interactive Heat Map */}
-        <InteractiveHeatMap />
       </div>
     </section>
   );

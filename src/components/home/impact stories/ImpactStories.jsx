@@ -59,8 +59,11 @@ export default function ImpactStories() {
           animate={isInView ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-none">
-            Transforming <span className="text-primary">Communities</span>
+          <h1 className="text-3xl md:text-5xl font-black text-secondary mb-6 leading-none">
+            Transforming{" "}
+            <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              Communities
+            </span>
           </h1>
           <p className="text-gray-600 max-w-5xl leading-relaxed font-medium">
             Witness the power of civic engagement through real before-and-after

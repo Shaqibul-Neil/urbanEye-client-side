@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { Edit, Eye, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 import EditIssueModal from "../../modals/EditIssueModal";
@@ -19,6 +19,8 @@ const ReusableIssuesTable = ({
 }) => {
   const [currentIssue, setCurrentIssue] = useState({});
   const editIssueRef = useRef();
+  const location = useLocation();
+  //console.log(location);
 
   // Delete mutation
   const { mutateAsync: deleteIssue } = useDeleteIssue();
@@ -89,7 +91,8 @@ const ReusableIssuesTable = ({
       <div
         className={`w-full overflow-x-auto bg-white p-4 rounded-3xl ${className}`}
       >
-        <h3 className="text-lg text-secondary font-bold mb-4">{title}</h3>
+        <h3 className="text-lg text-secondary font-bold">{title}</h3>
+
         <div className="animate-pulse space-y-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex items-center gap-4 p-2">
@@ -107,10 +110,22 @@ const ReusableIssuesTable = ({
 
   return (
     <div
-      className={`w-full bg-white md:px-4 pt-2 pb-4 rounded-3xl ${className}`}
+      className={`w-full bg-white rounded-3xl ${className} ${
+        location.pathname !== "/dashboard" ? "lg:p-6" : "p-6"
+      }`}
     >
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg text-secondary font-bold">{title}</h3>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex items-center gap-4 mb-4"
+        >
+          {location.pathname === "/dashboard" && (
+            <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+          )}
+          <h3 className="text-lg text-secondary font-bold">{title}</h3>
+        </motion.div>
         {viewAllLink && (
           <Link
             to={viewAllLink}

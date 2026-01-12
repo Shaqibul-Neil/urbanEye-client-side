@@ -6,7 +6,7 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import { PieChart } from "lucide-react";
+import { PieChart, TrendingUp } from "lucide-react";
 
 const CityPulseResolutionRateChart = ({ totalIssues, resolvedIssues }) => {
   const resolvedCount = resolvedIssues || 0;
@@ -43,8 +43,8 @@ const CityPulseResolutionRateChart = ({ totalIssues, resolvedIssues }) => {
 
       <div className="relative z-10">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-indigo-50 rounded-2xl flex items-center justify-center shadow-lg">
-            <PieChart size={20} className="text-indigo-800" />
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+            <TrendingUp size={20} className="text-white" />
           </div>
           <div>
             <h3 className="text-lg font-black text-gray-800">

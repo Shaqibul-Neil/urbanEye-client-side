@@ -6,7 +6,6 @@ import {
   ChevronDown,
   ArrowUpDown,
   AlertTriangle,
-  Clock,
   CheckCircle2,
   TrendingUp,
   Lightbulb,
@@ -218,8 +217,13 @@ const AllIssues = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 min-h-screen">
       {/* Page Header */}
-      <div className="relative mb-8">
-        <div className="absolute -left-6 -top-6 h-24 w-24 opacity-20 hidden sm:block">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.6 }}
+        className="relative mb-8 mt-6"
+      >
+        <div className="absolute left-0 -top-6 h-24 w-24 opacity-20">
           <svg viewBox="0 0 100 100" className="h-full w-full">
             {Array.from({ length: 100 }).map((_, i) => (
               <circle
@@ -227,23 +231,26 @@ const AllIssues = () => {
                 cx={(i % 10) * 10}
                 cy={Math.floor(i / 10) * 10}
                 r="1.5"
-                fill="#6b7280"
+                fill="#2563eb"
               />
             ))}
           </svg>
         </div>
-        <p className="section-title">
+        <p className="section-title text-primary">
           <LuNewspaper />
           Issues Dashboard
         </p>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1E2631] mt-2">
-          Explore Public <span className="text-primary">Issues</span>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-secondary mt-2">
+          Explore Public{" "}
+          <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+            Issues
+          </span>
         </h2>
         <SubHeading
           label="Browse through the latest issues reported by the community. Upvote the ones you care about, check priorities, and stay informed about your area."
           className="mt-4 max-w-3xl"
         />
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Left Column: Issues */}
@@ -251,7 +258,12 @@ const AllIssues = () => {
           {/* Search and Filters Row */}
           <div className="flex flex-col gap-4 mb-6">
             {/* Search Bar */}
-            <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="relative"
+            >
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
@@ -268,10 +280,15 @@ const AllIssues = () => {
                   ✕
                 </button>
               )}
-            </div>
+            </motion.div>
 
             {/* Filters and Sort Row */}
-            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+            >
               <h3 className="text-2xl font-semibold text-gray-800">
                 All Issues
                 {totalIssue > 0 && (
@@ -326,7 +343,7 @@ const AllIssues = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Issues Grid */}
@@ -423,7 +440,12 @@ const AllIssues = () => {
 
             <div className="space-y-4">
               {/* Total Issues */}
-              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                     <ListChecks size={16} className="text-white" />
@@ -435,10 +457,15 @@ const AllIssues = () => {
                 <span className="text-xl font-bold text-blue-600">
                   {quickStats.total}
                 </span>
-              </div>
+              </motion.div>
 
               {/* Pending Issues */}
-              <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-100"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
                     <AlertTriangle size={16} className="text-white" />
@@ -450,10 +477,15 @@ const AllIssues = () => {
                 <span className="text-xl font-bold text-yellow-600">
                   {quickStats.pending}
                 </span>
-              </div>
+              </motion.div>
 
               {/* In Progress */}
-              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+                className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                     <Loader size={16} className="text-white" />
@@ -465,10 +497,15 @@ const AllIssues = () => {
                 <span className="text-xl font-bold text-blue-600">
                   {quickStats.inProgress}
                 </span>
-              </div>
+              </motion.div>
 
               {/* Working */}
-              <div className="flex items-center justify-between p-3 bg-cyan-50 rounded-lg border border-cyan-100">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+                className="flex items-center justify-between p-3 bg-cyan-50 rounded-lg border border-cyan-100"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center">
                     <Target size={16} className="text-white" />
@@ -480,10 +517,15 @@ const AllIssues = () => {
                 <span className="text-xl font-bold text-cyan-600">
                   {quickStats.working}
                 </span>
-              </div>
+              </motion.div>
 
               {/* Resolved Issues */}
-              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1, duration: 0.6 }}
+                className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
                     <CheckCircle2 size={16} className="text-white" />
@@ -495,10 +537,15 @@ const AllIssues = () => {
                 <span className="text-xl font-bold text-green-600">
                   {quickStats.resolved}
                 </span>
-              </div>
+              </motion.div>
 
               {/* Closed Issues */}
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2, duration: 0.6 }}
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-gray-500 rounded-lg flex items-center justify-center">
                     <Lock size={16} className="text-white" />
@@ -510,10 +557,15 @@ const AllIssues = () => {
                 <span className="text-xl font-bold text-gray-600">
                   {quickStats.closed}
                 </span>
-              </div>
+              </motion.div>
 
               {/* Rejected Issues */}
-              <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-100">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.4, duration: 0.6 }}
+                className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-100"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
                     <SearchX size={16} className="text-white" />
@@ -525,10 +577,15 @@ const AllIssues = () => {
                 <span className="text-xl font-bold text-red-600">
                   {quickStats.rejected}
                 </span>
-              </div>
+              </motion.div>
 
               {/* Completion Rate */}
-              <div className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg border border-primary/20">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.6, duration: 0.6 }}
+                className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg border border-primary/20"
+              >
                 <div className="text-center">
                   <div className="text-2xl font-black text-primary mb-1">
                     {quickStats.resolutionRate}%
@@ -540,7 +597,7 @@ const AllIssues = () => {
                     ({quickStats.completed} completed out of {quickStats.total})
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 

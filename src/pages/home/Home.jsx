@@ -30,7 +30,7 @@ const Home = () => {
       </div>
 
       {/* City Pulse Dashboard Section */}
-      <section>
+      <section id="city-pulse">
         <CityPulseDashboard />
       </section>
 

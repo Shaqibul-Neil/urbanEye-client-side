@@ -31,7 +31,7 @@ const LatestResolved = () => {
           whileInView={{ y: 0, opacity: 1 }} // Automatic trigger
           viewport={{ once: true, amount: 0.3 }} // 30% screen trigger
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-extrabold text-primary tracking-tight text-4xl md:text-5xl"
+          className="font-extrabold bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent tracking-tight text-4xl md:text-5xl"
         >
           Latest <span className="text-secondary">Resolved</span> Issues
         </motion.h2>

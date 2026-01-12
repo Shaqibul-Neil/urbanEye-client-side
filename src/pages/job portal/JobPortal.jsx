@@ -4,6 +4,7 @@ import { HiOutlineBriefcase } from "react-icons/hi";
 import { FiUsers, FiStar, FiFileText } from "react-icons/fi";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoMdArrowForward } from "react-icons/io";
+import { Target } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -94,9 +95,36 @@ const JobPortal = () => {
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto py-16 px-4 space-y-12">
-      <h2 className="font-extrabold text-primary text-4xl md:text-5xl tracking-tight">
-        Career <span className="text-secondary">Opportunities</span>
-      </h2>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.6 }}
+        className="relative"
+      >
+        <div className="absolute left-0 -top-6 h-24 w-24 opacity-20">
+          <svg viewBox="0 0 100 100" className="h-full w-full">
+            {Array.from({ length: 100 }).map((_, i) => (
+              <circle
+                key={i}
+                cx={(i % 10) * 10}
+                cy={Math.floor(i / 10) * 10}
+                r="1.5"
+                fill="#2563eb"
+              />
+            ))}
+          </svg>
+        </div>
+        <p className="section-title text-primary">
+          <Target />
+          Job Portal
+        </p>
+        <h2 className="font-extrabold text-4xl md:text-5xl tracking-tight">
+          <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+            Career
+          </span>{" "}
+          <span className="text-secondary">Opportunities</span>
+        </h2>
+      </motion.div>
       <div className="grid lg:grid-cols-4 gap-8">
         {/* Jobs Grid */}
         <div className="lg:col-span-3 grid gap-6">
@@ -136,7 +164,12 @@ const JobPortal = () => {
 
         {/* Stats / Right Grid */}
         <div className="lg:col-span-1 flex flex-col gap-4">
-          <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100"
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <FiUsers size={16} className="text-white" />
@@ -146,8 +179,13 @@ const JobPortal = () => {
               </span>
             </div>
             <span className="text-xl font-bold text-primary">120+</span>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100"
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-success rounded-lg flex items-center justify-center">
                 <FiStar size={16} className="text-white" />
@@ -157,8 +195,13 @@ const JobPortal = () => {
               </span>
             </div>
             <span className="text-xl font-bold text-success">80+</span>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-cyan-50 rounded-lg border border-cyan-100">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="flex items-center justify-between p-3 bg-cyan-50 rounded-lg border border-cyan-100"
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
                 <FiFileText size={16} className="text-white" />
@@ -168,8 +211,13 @@ const JobPortal = () => {
               </span>
             </div>
             <span className="text-xl font-bold text-accent">500+</span>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-100"
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-warning rounded-lg flex items-center justify-center">
                 <AiOutlineClockCircle size={16} className="text-white" />
@@ -179,7 +227,7 @@ const JobPortal = () => {
               </span>
             </div>
             <span className="text-xl font-bold text-warning">24/7</span>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -192,7 +240,7 @@ const JobPortal = () => {
             exit={{ opacity: 0, y: 50 }}
             className="bg-white p-8 rounded-xl max-w-2xl w-full overflow-y-auto max-h-[90vh] space-y-6"
           >
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-start relative">
               <div>
                 <h3 className="text-2xl font-bold text-secondary">
                   {selectedJob.title}
@@ -203,7 +251,7 @@ const JobPortal = () => {
               </div>
               <button
                 onClick={() => setSelectedJob(null)}
-                className="text-gray-500 hover:text-secondary font-bold text-xl"
+                className="text-red-500 hover:text-secondary cursor-pointer font-bold text-4xl absolute -top-5 -right-5"
               >
                 &times;
               </button>

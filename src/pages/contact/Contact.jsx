@@ -2,20 +2,54 @@ import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FiPhone, FiMail } from "react-icons/fi";
 import { BsWhatsapp } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
+import { Phone } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Contact = () => {
   return (
     <div>
-      <div className="max-w-6xl mx-auto py-16 space-y-12">
+      <div className="md:px-5 px-3 max-w-7xl mx-auto py-16 space-y-12">
         {/* Heading */}
-        <h2 className="font-extrabold text-primary tracking-tight text-4xl md:text-5xl">
-          Contact <span className="text-secondary">Us</span>
-        </h2>
+        <motion.div
+          className="relative"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+        >
+          <div className="absolute left-0 -top-6 h-24 w-24 opacity-20">
+            <svg viewBox="0 0 100 100" className="h-full w-full">
+              {Array.from({ length: 100 }).map((_, i) => (
+                <circle
+                  key={i}
+                  cx={(i % 10) * 10}
+                  cy={Math.floor(i / 10) * 10}
+                  r="1.5"
+                  fill="#2563eb"
+                />
+              ))}
+            </svg>
+          </div>
+          <p className="section-title text-primary">
+            <Phone />
+            Talk to URBANi
+          </p>
+          <h2 className="font-extrabold text-4xl md:text-5xl">
+            <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              Contact
+            </span>{" "}
+            <span className="text-secondary">Us</span>
+          </h2>
+        </motion.div>
 
         {/* Contact Content */}
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Left: Form */}
-          <div className="lg:w-7/12 bg-white md:p-8 p-4 sm:p-12 rounded-xl shadow-xl space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="lg:w-7/12 bg-white md:p-8 p-4 sm:p-12 rounded-xl shadow-xl space-y-6"
+          >
             <h2 className="text-2xl font-bold text-secondary mb-2">
               Send us a message
             </h2>
@@ -63,10 +97,15 @@ const Contact = () => {
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
 
           {/* Right: Contact Info */}
-          <div className="lg:w-5/12 bg-base-200 p-8 sm:p-12 text-white rounded-xl shadow-xl flex flex-col justify-between space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="lg:w-5/12 bg-base-200 p-8 sm:p-12 text-white rounded-xl shadow-xl flex flex-col justify-between space-y-8"
+          >
             <div className="space-y-6">
               <h3 className="text-2xl font-bold mb-4 text-secondary">
                 We're here to help!
@@ -124,7 +163,7 @@ const Contact = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

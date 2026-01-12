@@ -40,7 +40,7 @@ const MyPayments = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="overflow-x-auto rounded-lg shadow-lg border border-gray-200"
+          className="overflow-x-auto rounded-lg shadow-lg border border-gray-200 lg:mx-5"
         >
           <table className="table table-zebra w-full min-w-[800px]">
             <thead className="bg-gray-50">

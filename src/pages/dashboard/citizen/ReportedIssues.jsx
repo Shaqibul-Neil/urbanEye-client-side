@@ -91,13 +91,13 @@ const ReportedIssues = () => {
 
   return (
     <div className="p-5 bg-white max-w-[95%] mx-auto rounded-3xl">
-      <div className="space-y-12">
+      <div>
         {/* Title Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="flex items-center gap-4"
+          className="flex items-center gap-4 mb-12"
         >
           <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
           <div className="space-y-2">
@@ -114,7 +114,7 @@ const ReportedIssues = () => {
         </motion.div>
 
         {/* Filter Section - Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4 lg:px-5">
           {/* Search Bar - 3 Grids */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -200,7 +200,7 @@ const ReportedIssues = () => {
 
         {/* Results Summary */}
         <motion.div
-          className="flex justify-between items-center text-sm text-gray-600"
+          className="flex justify-between items-center text-sm text-gray-600 lg:px-5"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}

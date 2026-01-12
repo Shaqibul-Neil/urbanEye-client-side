@@ -17,24 +17,30 @@ const CitizenFeedback = () => {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl"
+                className="font-extrabold bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 bg-clip-text text-transparent tracking-tight text-3xl md:text-5xl"
               >
                 See What Our
               </motion.h2>
             </div>
             <div className="bg-white md:w-96 w-60 px-2 rounded-r-2xl py-2 absolute top-1 md:top-6 md:-left-6 -left-6 z-10 second">
-              <motion.h2 initial={{ y: 40, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl">
+              <motion.h2
+                initial={{ y: 40, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                className="font-extrabold text-secondary tracking-tight text-3xl md:text-5xl"
+              >
                 Satisfied Clients
               </motion.h2>
             </div>
             <div className="bg-white md:w-80 w-56 px-2 py-2 absolute md:top-20 top-10.5 -left-6 rounded-br-3xl">
-              <motion.h2 initial={{ y: 40, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl">
+              <motion.h2
+                initial={{ y: 40, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                className="font-extrabold text-primary tracking-tight text-3xl md:text-5xl"
+              >
                 Have To Say
               </motion.h2>
             </div>

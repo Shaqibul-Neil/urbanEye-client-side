@@ -4,9 +4,9 @@ import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
 import { useState } from "react";
 import { Link } from "react-router";
-
+import { motion } from "framer-motion";
 import useGetAllPayments from "../../../hooks/payment related/useGetAllPayments";
-import { Download } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 
 const PaymentsHistory = () => {
   const [filterType, setFilterType] = useState("");
@@ -17,45 +17,69 @@ const PaymentsHistory = () => {
   if (isError) return <ErrorComponent />;
   return (
     <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
-      <div className="space-y-12">
+      <div className="space-y-8">
         {/* Title Section */}
-        <div className="space-y-2">
-          <div className="flex justify-between items-center w-full gap-4">
-            <Heading
-              label={"Payments History"}
-              className={"text-4xl md:text-5xl pb-1"}
-            />
-            <Link
+
+        <div className="flex justify-between items-center w-full gap-4 flex-col md:flex-row">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="flex items-center gap-4 mb-4"
+          >
+            <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+            <div className="space-y-2">
+              <Heading
+                label={"Payments History"}
+                className={"text-4xl md:text-5xl pb-1"}
+              />
+              <SubHeading
+                label={
+                  "Track all user payments from one centralized dashboard."
+                }
+              />
+            </div>
+          </motion.div>
+          <div className="flex justify-between items-center gap-4 md:flex-row flex-col">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="relative"
+            >
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="w-full py-3 px-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none appearance-none cursor-pointer"
+              >
+                <option value="">All Types</option>
+                <option value="subscription">Subscription</option>
+                <option value="upvote">Upvote</option>
+              </select>
+              <ChevronDown
+                size={20}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+              />
+            </motion.div>{" "}
+            <motion.Link
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
               to={"/dashboard/invoice-payment-history"}
               className="cursor-pointer btn-primary w-8 h-8 flex justify-center items-center rounded-full"
             >
-              <Download className="w-6 h-6 text-primary" />
-            </Link>
-          </div>
-
-          <SubHeading
-            label={
-              "Track all user payments, view details, and manage transactions—all from one centralized dashboard."
-            }
-          />
-        </div>
-
-        <div className="flex gap-4 items-center justify-center md:ml-auto md:flex-row flex-col">
-          <div className="w-48">
-            <select
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className="select select-bordered w-48 py-2 px-3 bg-base-200 border border-primary rounded-xl focus:ring-1 focus:ring-primary outline-none"
-            >
-              <option value="">All Types</option>
-              <option value="subscription">Subscription</option>
-              <option value="upvote">Upvote</option>
-            </select>
+              <Download className="w-6 h-6 text-primary" />{" "}
+            </motion.Link>
           </div>
         </div>
 
         {/* Table Section */}
-        <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="overflow-x-auto rounded-lg shadow-lg border border-gray-200 lg:mx-5"
+        >
           <table className="table table-zebra w-full min-w-[800px]">
             <thead className="bg-gray-50">
               <tr>
@@ -116,7 +140,7 @@ const PaymentsHistory = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

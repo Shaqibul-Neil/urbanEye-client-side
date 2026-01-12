@@ -21,6 +21,10 @@
 * {
   font-family: "Urbanist", sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
+
 .sonar-core {
   width: 14px;
   height: 14px;

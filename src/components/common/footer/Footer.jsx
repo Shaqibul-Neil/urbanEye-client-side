@@ -5,7 +5,7 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <div className="relative z-10 bg-primary text-white px-5 overflow-hidden py-8">
-      <div className="absolute inset-0 bg-linear-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 pointer-events-none"></div>
       <div className="footer sm:footer-horizontal text-base-content lg:p-10 md:p-8 p-6">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 lg:gap-20 gap-10 md:gap-16">
           <aside className="lg:col-span-2 col-span-1 relative">
@@ -13,7 +13,7 @@ const Footer = () => {
               <p className="text-3xl text-blue-900 font-black">
                 Your Voice. Your City. Our Effort
               </p>
-              <p className="text-sm opacity-70 text-white">
+              <p className="text-sm text-white">
                 Join citizens nationwide to report, track, and improve local
                 issues with
               </p>
@@ -25,7 +25,7 @@ const Footer = () => {
               className="w-full object-cover -ml-4 md:ml-0"
             />
           </aside>
-          <div className="lg:col-span-2 col-span-1">
+          <div className="lg:col-span-2 col-span-1 relative z-20">
             <div className="grid lg:grid-cols-3 grid-cols-2 md:gap-10 gap-6">
               <nav className="text-white flex flex-col">
                 <h6 className="footer-title">What You Can Do</h6>

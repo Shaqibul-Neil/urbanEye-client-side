@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
-import { getStatusBadge } from "../../../utilities/getStatusBadge";
 import { MdArrowOutward } from "react-icons/md";
 import { ThumbsUp } from "lucide-react";
 import useAuth from "../../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
+import StatusBadge from "../../common/card/issue card/StatusBadge";
+import { motion, scale, useInView } from "framer-motion";
 
 const TopUpvotedIssue = ({ data, title = "Top Upvoted Issue" }) => {
   const navigate = useNavigate();
@@ -38,10 +38,16 @@ const TopUpvotedIssue = ({ data, title = "Top Upvoted Issue" }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-      <h3 className="text-lg font-bold mb-4 text-secondary text-center">
-        {title}
-      </h3>
+    <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
+        className="flex items-center gap-4 mb-4"
+      >
+        <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+        <h3 className="text-lg font-bold text-secondary">{title}</h3>
+      </motion.div>
 
       {!topIssue ? (
         <div className="flex items-center justify-center h-64 text-gray-500">
@@ -50,12 +56,24 @@ const TopUpvotedIssue = ({ data, title = "Top Upvoted Issue" }) => {
       ) : (
         <div className="flex flex-col items-center">
           {/* Issue Card */}
-          <div className="w-full max-w-xs transform duration-300 hover:scale-105">
+          <motion.div
+            whileHover={{
+              y: -1,
+              scale: 1.01,
+              transition: { duration: 1, ease: "easeInOut" },
+            }}
+            className="w-full max-w-sm transform duration-300 hover:scale-105"
+          >
             <div className="card-inner relative w-full h-52 bg-white rounded-2xl overflow-hidden border border-gray-200">
               <div className="box w-full h-full bg-white rounded-2xl overflow-hidden relative">
                 {/* Image Box */}
-                <div
-                  className={`absolute inset-0 before:absolute before:inset-0 transform duration-300 hover:scale-110 ${
+                <motion.div
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.3, ease: "easeOut" },
+                  }}
+                  transition={{ duration: 0.6 }}
+                  className={`absolute inset-0 before:absolute before:inset-0 ${
                     topIssue.status === "closed" ? "before:bg-black/60" : ""
                   }`}
                 >
@@ -64,7 +82,7 @@ const TopUpvotedIssue = ({ data, title = "Top Upvoted Issue" }) => {
                     alt={topIssue?.title}
                     className="w-full h-full object-cover"
                   />
-                </div>
+                </motion.div>
 
                 {/* Priority Badge */}
                 <p
@@ -78,24 +96,19 @@ const TopUpvotedIssue = ({ data, title = "Top Upvoted Issue" }) => {
                 </p>
 
                 {/* Issue Status */}
-                <p
-                  className={`px-2 py-1 text-xs font-bold rounded-full uppercase absolute bottom-2 left-2 ${getStatusBadge(
-                    topIssue?.status
-                  )}`}
-                >
-                  {topIssue?.status}
-                </p>
-
+                <StatusBadge status={topIssue?.status} />
                 {/* View Details Button */}
                 <div className="icon absolute flex items-center justify-center w-16 h-16 rounded-tl-[50%]">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
                     onClick={() => handleViewDetails(topIssue)}
                     className="iconBox bg-primary rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 group z-50 cursor-pointer w-12 h-12"
                   >
                     <span className="text-white text-lg">
                       <MdArrowOutward className="w-6 h-6 group-hover:rotate-30 transition-all" />
                     </span>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
             </div>
@@ -112,13 +125,14 @@ const TopUpvotedIssue = ({ data, title = "Top Upvoted Issue" }) => {
                     {topIssue?.location?.split(",")[0]}
                   </p>
                 </div>
-                <button className="btn btn-primary btn-outline group flex items-center gap-1 rounded-3xl">
-                  <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
-                  <span>{topIssue?.totalUpvoteCount || 0}</span>
-                </button>
+                <div className=" group flex items-center gap-1 rounded-3xl text-blue-500">
+                  <ThumbsUp className="w-4 h-4" />
+                  <span>Total Upvote</span>
+                  <span>({topIssue?.totalUpvoteCount || 0})</span>{" "}
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>

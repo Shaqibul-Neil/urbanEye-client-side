@@ -20,7 +20,9 @@ export default function FeaturesSection() {
       mainHeading: {
         fontSize: "text-4xl md:text-5xl",
         fontWeight: "font-extrabold",
-        color: "text-primary",
+        gradient:
+          "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent",
+        color: "",
       },
       highlightText: {
         color: "text-secondary",
@@ -120,12 +122,18 @@ export default function FeaturesSection() {
   const getClassName = (element) => {
     const style = featuresData.styles[element];
     if (!style) return "";
-
+    // Priority: gradient > color > default
+    let colorClass = "";
+    if (style.gradient) {
+      colorClass = style.gradient;
+    } else if (style.color) {
+      colorClass = style.color;
+    }
     return [
       style.fontSize,
       style.fontWeight,
       style.textAlign,
-      style.color,
+      colorClass,
       style.padding,
       style.margin,
     ]

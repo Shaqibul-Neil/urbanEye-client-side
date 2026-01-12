@@ -13,6 +13,8 @@ import {
 } from "../../../utilities/getStatusBadge";
 import Loading from "../../../components/loading/Loading";
 import ErrorComponent from "../../../components/error/error page/ErrorComponent";
+import { motion } from "framer-motion";
+import { useLocation } from "react-router";
 
 const AssignedIssues = () => {
   const [searchText, setSearchText] = useState("");
@@ -21,6 +23,7 @@ const AssignedIssues = () => {
   const [sortBy, setSortBy] = useState("date-desc");
   const [filters, setFilters] = useState({ status: "" });
   const [selectedIssue, setSelectedIssue] = useState({});
+  const location = useLocation();
   const limit = 5;
 
   const statusModalRef = useRef();
@@ -92,24 +95,37 @@ const AssignedIssues = () => {
 
   return (
     <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
-      <div className="space-y-8">
-        {/* Title */}
-        <div className="space-y-2">
-          <Heading
-            className={"text-4xl md:text-5xl pb-1"}
-            label={"Assigned Issues"}
-          />
-          <SubHeading
-            label={
-              "View and manage all issues assigned to you. Boosted issues are prioritized automatically to ensure faster resolution."
-            }
-          />
-        </div>
+      <div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex items-center gap-4 mb-12"
+        >
+          <div className="w-1 h-8 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+          {/* Title */}
+          <div className="space-y-2">
+            <Heading
+              className={"md:text-4xl text-3xl lg:text-5xl  pb-1"}
+              label={"Assigned Issues"}
+            />
+            <SubHeading
+              label={
+                "View and manage all issues assigned to you. Boosted issues are prioritized automatically to ensure faster resolution."
+              }
+            />
+          </div>
+        </motion.div>
 
         {/* Search and Filter Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:px-5 mb-4">
           {/* Search Bar - 2 Grids */}
-          <div className="lg:col-span-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="lg:col-span-2"
+          >
             <div className="relative">
               <input
                 type="search"
@@ -131,10 +147,15 @@ const AssignedIssues = () => {
                 </button>
               )}
             </div>
-          </div>
+          </motion.div>
 
           {/* Status Filter - 1 Grid */}
-          <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="relative"
+          >
             <select
               className="w-full py-3 px-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none appearance-none cursor-pointer"
               value={filters.status}
@@ -153,10 +174,15 @@ const AssignedIssues = () => {
               size={20}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
             />
-          </div>
+          </motion.div>
 
           {/* Sort Filter - 1 Grid */}
-          <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="relative"
+          >
             <select
               value={sortBy}
               onChange={(e) => handleSortChange(e.target.value)}
@@ -173,21 +199,28 @@ const AssignedIssues = () => {
               size={20}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
             />
-          </div>
+          </motion.div>
         </div>
 
         {/* Results Summary */}
-        <div className="flex justify-between items-center text-sm text-gray-600">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex justify-between items-center text-sm text-gray-600 lg:px-5"
+        >
           <span>
             Showing {assignedIssues.length} of {pagination.totalIssues} issues
           </span>
           <span>
             Page {currentPage + 1} of {pagination.totalPages}
           </span>
-        </div>
+        </motion.div>
 
         {/* Table */}
-        <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+        <div
+          className={`overflow-x-auto rounded-lg shadow-lg border border-gray-200 mx-5 mt-4`}
+        >
           <table className="table table-zebra w-full min-w-[900px]">
             {/* Head */}
             <thead className="bg-gray-50">

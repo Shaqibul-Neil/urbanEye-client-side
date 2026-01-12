@@ -3,16 +3,32 @@ import toast from "react-hot-toast";
 import useAuth from "../../../hooks/auth & role/useAuth";
 import MyLinks from "./MyLinks";
 import { Building2 } from "lucide-react";
+import Swal from "sweetalert2";
 
 const HomeNavbar = () => {
   const { user, setUser, signOutUser } = useAuth();
   const navigate = useNavigate();
-  const handleLogout = () => {
+  const handleLogout = async () => {
     try {
-      signOutUser();
-      setUser(null);
-      toast.success("Successfully Logged Out");
-      navigate("/");
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+        confirmButtonText: "Yes",
+      });
+      if (result.isConfirmed) {
+        signOutUser();
+        setUser(null);
+        Swal.fire({
+          title: "Logged Out!",
+          text: "Successfully Logged Out",
+          icon: "success",
+        });
+
+        navigate("/signIn");
+      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -68,8 +84,7 @@ const HomeNavbar = () => {
         >
           <Building2 size={24} className="text-base-200" />
           <span className="text-white font-extrabold leading-tight">
-            URBAN
-            <span className="text-primary">i</span>
+            URBANi
           </span>
         </Link>
       </div>

@@ -18,19 +18,48 @@ import {
 import toast from "react-hot-toast";
 import useRole from "../hooks/auth & role/useRole";
 import Loading from "../components/loading/Loading";
+import { motion, easeOut } from "framer-motion";
+import Swal from "sweetalert2";
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: easeOut,
+      delay: 0.3,
+    },
+  },
+};
 const DashboardLayout = () => {
   const { user, signOutUser, setUser } = useAuth();
   const { role, roleLoading } = useRole();
   const navigate = useNavigate();
   const location = useLocation();
   //console.log(location);
-  const handleLogout = () => {
+  const handleLogout = async () => {
     try {
-      signOutUser();
-      setUser(null);
-      toast.success("Successfully Logged Out");
-      navigate("/signIn");
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#ef4444",
+        confirmButtonText: "Yes",
+      });
+      if (result.isConfirmed) {
+        signOutUser();
+        setUser(null);
+        Swal.fire({
+          title: "Logged Out!",
+          text: "Successfully Logged Out",
+          icon: "success",
+        });
+
+        navigate("/signIn");
+      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -43,7 +72,13 @@ const DashboardLayout = () => {
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Navbar */}
-          <nav className="navbar md:px-6 px-3 rounded-3xl mt-8 bg-[linear-gradient(90deg,#020024_0%,#090979_35%,#00D4FF_100%)] p-6 md:p-8 shadow-sm border border-gray-100 max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4">
+          <motion.nav
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            className="navbar md:px-6 px-3 rounded-3xl mt-8 bg-[linear-gradient(90deg,#020024_0%,#090979_35%,#00D4FF_100%)] p-6 md:p-8 shadow-sm border border-gray-100 max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4"
+          >
             {/* LEFT: Header Text */}
             <div className="flex-1 space-y-4 lg:items-start items-center">
               <div className="relative">
@@ -106,7 +141,7 @@ const DashboardLayout = () => {
               {location.pathname !== "/dashboard/my-profile" && (
                 <Link
                   to="/dashboard/my-profile"
-                  className="px-5 h-10 flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-300"
+                  className="px-5 h-10 flex items-center justify-center gap-2 bg-white hover:bg-secondary text-secondary hover:text-white font-bold text-xs rounded-3xl shadow-lg transition-all duration-800"
                 >
                   <Eye className="w-5 h-5" /> View Profile
                 </Link>
@@ -122,7 +157,7 @@ const DashboardLayout = () => {
                 </Link>
               )}
             </div>
-          </nav>
+          </motion.nav>
 
           {/* Page content here */}
           <main className="my-6">

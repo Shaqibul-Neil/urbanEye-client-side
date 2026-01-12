@@ -1,5 +1,5 @@
-import { MdEmail } from "react-icons/md";
-import { MapPin, ThumbsUp } from "lucide-react";
+import { MdDetails, MdEmail } from "react-icons/md";
+import { Eye, MapPin, ThumbsUp } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -15,6 +15,32 @@ import { FaTasks } from "react-icons/fa";
 import Heading from "../../heading/Heading";
 import StatusCard from "../status card/StatusCard";
 import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
+import { motion, AnimatePresence } from "framer-motion";
+
+const fadeUp = (delay = 0) => ({
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeInOut",
+      delay: delay,
+    },
+  },
+  hover: {
+    scale: 1.03,
+  },
+});
+const slideUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+  exit: { opacity: 0, y: 30, transition: { duration: 0.4, ease: "easeInOut" } },
+};
 
 const IssueDetailsCard = ({ issue, refetch }) => {
   const { user } = useAuth();
@@ -208,30 +234,55 @@ const IssueDetailsCard = ({ issue, refetch }) => {
 
   return (
     <div className="container mx-auto px-3 md:px-5 lg:px-0">
-      {/* Top Heading */}
-      <div className="text-center space-y-3 py-6 mt-12">
-        <Heading
-          className={"text-4xl md:text-5xl pb-2"}
-          label={"Issue Details & Tracking"}
-        />
-
-        <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto">
-          Explore the complete journey of this issue, track its status, see the
-          reporter and staff info, and interact with it in real-time.
+      {/* Page Header */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp(0.1)}
+        className="relative mb-8 mt-16"
+      >
+        <div className="absolute left-0 -top-6 h-24 w-24 opacity-20">
+          <svg viewBox="0 0 100 100" className="h-full w-full">
+            {Array.from({ length: 100 }).map((_, i) => (
+              <circle
+                key={i}
+                cx={(i % 10) * 10}
+                cy={Math.floor(i / 10) * 10}
+                r="1.5"
+                fill="#2563eb"
+              />
+            ))}
+          </svg>
+        </div>
+        <p className="section-title text-primary">
+          <Eye />
+          Issue Insights
         </p>
-      </div>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-secondary mt-2">
+          Issue Details
+          <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+            & Tracking
+          </span>
+        </h2>
+      </motion.div>
+
       {/* Issue Details */}
       <div className="md:py-12 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT SIDE - IMAGE */}
           <div>
-            <div className="rounded-3xl overflow-hidden lg:shadow-md">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp(0.3)}
+              className="rounded-3xl overflow-hidden lg:shadow-md"
+            >
               <img
                 src={issue?.photoURL}
                 alt={issue?.title}
                 className="rounded-3xl w-full lg:h-84 md:h-72 object-cover hover:scale-105 transition-transform duration-300"
               />
-            </div>
+            </motion.div>
           </div>
 
           {/* RIGHT SIDE - TABS */}
@@ -261,171 +312,202 @@ const IssueDetailsCard = ({ issue, refetch }) => {
 
               {/* issue DESCRIPTION TAB */}
               <TabPanel>
-                <div className="space-y-4 mt-4 text-left">
-                  <h2 className="text-2xl font-bold text-secondary">
-                    {issue?.title}
-                  </h2>
-                  <div className="flex gap-2">
-                    <span
-                      className={`badge badge-outline capitalize ${
-                        issue?.priority === "high"
-                          ? "text-green-700"
-                          : "text-yellow-700"
-                      }`}
-                    >
-                      {issue?.priority}
-                    </span>
-                    <span
-                      className={`badge badge-outline capitalize ${getStatusBadge(
-                        issue?.status
-                      )}`}
-                    >
-                      {issue?.status}
-                    </span>
-                  </div>
-
-                  <div className="space-y-2 mt-2 text-gray-600">
-                    <p className="text-sm font-semibold">
-                      Description :{" "}
-                      <span className=" text-gray-600 font-normal">
-                        {issue?.description}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={issue?._id + "desc"} // make key unique per tab and issue
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={slideUp}
+                    className="space-y-4 mt-4 text-left"
+                  >
+                    <h2 className="text-2xl font-bold text-secondary">
+                      {issue?.title}
+                    </h2>
+                    <div className="flex gap-2">
+                      <span
+                        className={`badge badge-outline capitalize ${
+                          issue?.priority === "high"
+                            ? "text-green-700"
+                            : "text-yellow-700"
+                        }`}
+                      >
+                        {issue?.priority}
                       </span>
-                    </p>
-                    <p className="text-sm">
-                      <span className="font-semibold">Reported At :</span>{" "}
-                      {new Date(issue?.createdAt).toLocaleDateString()}
-                    </p>
-                    <p className="text-sm mt-2 font-semibold">
-                      Reported by :{" "}
-                      <span className="font-normal">{issue?.userEmail}</span>
-                    </p>
-                    <div className="flex md:items-center gap-2 flex-col md:flex-row">
-                      <div className="flex items-center gap-2">
-                        <MapPin color="red" size={18} />{" "}
-                        <span>{issue?.location}</span>
+                      <span
+                        className={`badge badge-outline capitalize ${getStatusBadge(
+                          issue?.status
+                        )}`}
+                      >
+                        {issue?.status}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 mt-2 text-gray-600">
+                      <p className="text-sm font-semibold">
+                        Description :{" "}
+                        <span className=" text-gray-600 font-normal">
+                          {issue?.description}
+                        </span>
+                      </p>
+                      <p className="text-sm">
+                        <span className="font-semibold">Reported At :</span>{" "}
+                        {new Date(issue?.createdAt).toLocaleDateString()}
+                      </p>
+                      <p className="text-sm mt-2 font-semibold">
+                        Reported by :{" "}
+                        <span className="font-normal">{issue?.userEmail}</span>
+                      </p>
+                      <div className="flex md:items-center gap-2 flex-col md:flex-row">
+                        <div className="flex items-center gap-2">
+                          <MapPin color="red" size={18} />{" "}
+                          <span>{issue?.location}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {user?.email === issue?.userEmail ? (
-                    <div className="flex gap-2 items-center">
-                      {/* boost btn */}
-                      {issue?.priority === "normal" && (
-                        <button
-                          className="magicBtn"
-                          onClick={() => handleBoost(issue)}
-                          style={{
-                            "--btn-text": "'Boost'",
-                            "--btn-bg": "white",
-                            "--btn-text-color": "#10b981",
-                            "--btn-border": "#10b981",
-                          }}
-                        />
-                      )}
-                      {/* edit and delete btn */}
-                      {issue?.status === "pending" && (
-                        <>
-                          {" "}
+                    {user?.email === issue?.userEmail ? (
+                      <div className="flex gap-2 items-center">
+                        {/* boost btn */}
+                        {issue?.priority === "normal" && (
                           <button
                             className="magicBtn"
-                            onClick={() => handleEditIssues(issue)}
+                            onClick={() => handleBoost(issue)}
                             style={{
-                              "--btn-text": "'Edit'",
+                              "--btn-text": "'Boost'",
                               "--btn-bg": "white",
-                              "--btn-text-color": "#2563eb",
-                              "--btn-border": "#2563eb",
+                              "--btn-text-color": "#10b981",
+                              "--btn-border": "#10b981",
                             }}
                           />
-                          <button
-                            className="magicBtn"
-                            onClick={() => handleDeleteIssue(issue._id)}
-                            style={{
-                              "--btn-text": "'Delete'",
-                              "--btn-bg": "white",
-                              "--btn-text-color": "#ef4444",
-                              "--btn-border": "#ef4444",
-                            }}
-                          />
-                        </>
-                      )}
-                    </div>
-                  ) : (
-                    <button
-                      className="btn btn-primary btn-outline group flex items-center gap-1 rounded-3xl"
-                      onClick={() => handleUpvote(issue)}
-                    >
-                      <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
-                      <span>Upvote {issue?.totalUpvoteCount || 0}</span>
-                    </button>
-                  )}
-                </div>
+                        )}
+                        {/* edit and delete btn */}
+                        {issue?.status === "pending" && (
+                          <>
+                            {" "}
+                            <button
+                              className="magicBtn"
+                              onClick={() => handleEditIssues(issue)}
+                              style={{
+                                "--btn-text": "'Edit'",
+                                "--btn-bg": "white",
+                                "--btn-text-color": "#2563eb",
+                                "--btn-border": "#2563eb",
+                              }}
+                            />
+                            <button
+                              className="magicBtn"
+                              onClick={() => handleDeleteIssue(issue._id)}
+                              style={{
+                                "--btn-text": "'Delete'",
+                                "--btn-bg": "white",
+                                "--btn-text-color": "#ef4444",
+                                "--btn-border": "#ef4444",
+                              }}
+                            />
+                          </>
+                        )}
+                      </div>
+                    ) : (
+                      <button
+                        className="btn btn-primary btn-outline group flex items-center gap-1 rounded-3xl"
+                        onClick={() => handleUpvote(issue)}
+                      >
+                        <ThumbsUp className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
+                        <span>Upvote {issue?.totalUpvoteCount || 0}</span>
+                      </button>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </TabPanel>
 
               {/* REPORTER INFORMATION TAB */}
               <TabPanel>
-                <div className="space-y-4 mt-4 text-left">
-                  <div className="flex gap-4 md:items-center flex-col md:flex-row">
-                    <div>
-                      <p className="text-secondary">
-                        <span className="font-semibold">Reporter Email : </span>
-                        {issue?.userEmail}
-                      </p>
-                      {/* Other information about reporter like his image and details */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={issue?._id + "title"} // make key unique per tab and issue
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={slideUp}
+                    className="space-y-4 mt-4 text-left"
+                  >
+                    <div className="flex gap-4 md:items-center flex-col md:flex-row">
+                      <div>
+                        <p className="text-secondary">
+                          <span className="font-semibold">
+                            Reporter Email :{" "}
+                          </span>
+                          {issue?.userEmail}
+                        </p>
+                        {/* Other information about reporter like his image and details */}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3 mt-3">
-                    <button
-                      className="btn"
-                      onClick={() =>
-                        (window.location.href = `mailto:${issue?.userEmail}`)
-                      }
-                    >
-                      <span className="flex items-center gap-1">
-                        <MdEmail size={18} /> <span>Contact Reporter</span>
-                      </span>
-                    </button>
-                  </div>
-                </div>
+                    <div className="flex flex-col sm:flex-row gap-3 mt-3">
+                      <button
+                        className="btn"
+                        onClick={() =>
+                          (window.location.href = `mailto:${issue?.userEmail}`)
+                        }
+                      >
+                        <span className="flex items-center gap-1">
+                          <MdEmail size={18} /> <span>Contact Reporter</span>
+                        </span>
+                      </button>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </TabPanel>
 
               {/* STAFF INFORMATION TAB */}
               <TabPanel>
-                <div className="space-y-4 mt-4 text-left">
-                  <div className="">
-                    {issue?.isAssignedStaff ? (
-                      <>
-                        <p className="text-secondary">
-                          <span className="font-semibold">Staff Name : </span>{" "}
-                          {issue?.assignedStaff?.staffName}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={issue?._id + "priority"} // make key unique per tab and issue
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={slideUp}
+                    className="space-y-4 mt-4 text-left"
+                  >
+                    <div className="">
+                      {issue?.isAssignedStaff ? (
+                        <>
+                          <p className="text-secondary">
+                            <span className="font-semibold">Staff Name : </span>{" "}
+                            {issue?.assignedStaff?.staffName}
+                          </p>
+                          <p className="text-secondary">
+                            <span className="font-semibold">
+                              Staff Email :{" "}
+                            </span>
+                            {issue?.assignedStaff?.staffEmail}
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-base text-secondary font-semibold">
+                          No Staff Assigned Yet
                         </p>
-                        <p className="text-secondary">
-                          <span className="font-semibold">Staff Email : </span>
-                          {issue?.assignedStaff?.staffEmail}
-                        </p>
-                      </>
-                    ) : (
-                      <p className="text-base text-secondary font-semibold">
-                        No Staff Assigned Yet
-                      </p>
-                    )}
-                  </div>
+                      )}
+                    </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3 mt-3">
-                    {issue?.isAssignedStaff && (
-                      <button
-                        className="btn"
-                        onClick={() =>
-                          (window.location.href = `mailto:${issue?.assignedStaff?.staffEmail}`)
-                        }
-                      >
-                        <span className="flex items-center gap-1">
-                          <MdEmail size={18} /> <span>Contact Staff</span>
-                        </span>
-                      </button>
-                    )}
-                  </div>
-                </div>
+                    <div className="flex flex-col sm:flex-row gap-3 mt-3">
+                      {issue?.isAssignedStaff && (
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            (window.location.href = `mailto:${issue?.assignedStaff?.staffEmail}`)
+                          }
+                        >
+                          <span className="flex items-center gap-1">
+                            <MdEmail size={18} /> <span>Contact Staff</span>
+                          </span>
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </TabPanel>
             </Tabs>
           </div>
