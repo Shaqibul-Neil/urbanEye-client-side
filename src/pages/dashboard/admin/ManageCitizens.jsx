@@ -29,7 +29,7 @@ const ManageCitizens = () => {
   if (isError) return <ErrorComponent />;
 
   return (
-    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
+    <div className="lg:px-5 px-3 py-6 bg-white mx-5 rounded-3xl">
       {/* Title Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -41,7 +41,7 @@ const ManageCitizens = () => {
         <div className="space-y-2">
           <Heading
             label="Citizen Oversight"
-            className="text-4xl md:text-5xl pb-1"
+            className="text-3xl md:text-4xl pb-1"
           />
           <SubHeading
             label="Monitor and manage all registered citizens. Block or unblock users, view their profiles, and remove accounts as needed—all from one place."

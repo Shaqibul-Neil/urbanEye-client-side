@@ -32,7 +32,6 @@ const AppProviders = ({ children }) => {
   return (
     <>
       {loadingOnLoad && <Loading />}
-
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <PaymentProvider>

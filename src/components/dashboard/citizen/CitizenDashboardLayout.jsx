@@ -67,7 +67,7 @@ const CitizenDashboardLayout = ({
   }
 
   return (
-    <div className="space-y-6 max-w-[95%] mx-auto">
+    <div className="space-y-6 px-5">
       {/* Section 1: Issue Metrics (4 Grid Layout) */}
       <div className="bg-white p-6 rounded-3xl">
         <motion.div

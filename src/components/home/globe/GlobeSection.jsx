@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import globe from "../../../assets/globe.png";
+import globe from "../../../assets/globe.webp";
 import CTA from "../banner/CTA";
 import useEditorMode from "../../../hooks/page builder/useEditorMode";
 import useAxios from "../../../hooks/auth & role/useAxios";

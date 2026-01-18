@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination, Autoplay } from "swiper/modules";
 import SliderCard from "./SliderCard";
+import { useEffect, useState } from "react";
 
 const testimonials = [
   {
@@ -47,12 +48,23 @@ const testimonials = [
 ];
 
 const FeedbackSlider = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <Swiper
-        direction="vertical"
-        slidesPerView={3}
-        spaceBetween={10}
+        key={isMobile ? "mobile" : "desktop"}
+        direction={isMobile ? "horizontal" : "vertical"}
+        slidesPerView={isMobile ? 1 : 3}
+        spaceBetween={30}
         pagination={{
           clickable: true,
         }}
@@ -62,11 +74,11 @@ const FeedbackSlider = () => {
           disableOnInteraction: false,
         }}
         modules={[Pagination, Autoplay]}
-        className="mySwiper h-full"
+        className="mySwiper lg:h-[560px] h-60"
       >
         {" "}
         {testimonials.map((testimony, i) => (
-          <SwiperSlide key={i}>
+          <SwiperSlide key={i} className="h-52 flex justify-center">
             <SliderCard testimony={testimony} />
           </SwiperSlide>
         ))}

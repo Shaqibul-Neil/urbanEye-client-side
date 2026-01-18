@@ -16,7 +16,7 @@ const PaymentsHistory = () => {
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
   return (
-    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
+    <div className="lg:px-5 px-3 py-6 bg-white mx-5 rounded-3xl">
       <div className="space-y-8">
         {/* Title Section */}
 
@@ -31,7 +31,7 @@ const PaymentsHistory = () => {
             <div className="space-y-2">
               <Heading
                 label={"Payments History"}
-                className={"text-4xl md:text-5xl pb-1"}
+                className={"text-3xl md:text-4xl pb-1"}
               />
               <SubHeading
                 label={
@@ -61,15 +61,18 @@ const PaymentsHistory = () => {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
               />
             </motion.div>{" "}
-            <motion.Link
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              to={"/dashboard/invoice-payment-history"}
-              className="cursor-pointer btn-primary w-8 h-8 flex justify-center items-center rounded-full"
             >
-              <Download className="w-6 h-6 text-primary" />{" "}
-            </motion.Link>
+              <Link
+                to={"/dashboard/invoice-payment-history"}
+                className="cursor-pointer btn-primary w-8 h-8 flex justify-center items-center rounded-full"
+              >
+                <Download className="w-6 h-6 text-primary" />{" "}
+              </Link>
+            </motion.div>
           </div>
         </div>
 

@@ -5,10 +5,10 @@ import { Link } from "react-router";
 const SliderCard = ({ testimony }) => {
   const { rating, desc, image, name, company } = testimony || {};
   return (
-    <div className="w-full lg:max-w-md">
-      <div className="testimony-inner relative w-full h-48 bg-white rounded-3xl overflow-hidden">
+    <div className="max-w-md mx-auto lg:mx-0">
+      <div className="testimony-inner relative w-full h-full bg-white rounded-3xl overflow-hidden">
         <div className="testimony-box w-full h-full bg-white rounded-3xl overflow-hidden relative">
-          <div className="bg-blue-100 p-4 rounded-3xl hover:bg-blue-300 transition-colors duration-300">
+          <div className="bg-blue-100 p-4 rounded-3xl hover:bg-blue-300 transition-colors duration-300 h-full">
             {" "}
             {/* Rating */}
             <div className="flex mb-4">
@@ -20,7 +20,9 @@ const SliderCard = ({ testimony }) => {
               ))}
             </div>
             {/* Description */}
-            <p className="text-gray-700 md:text-sm text-xs mb-6">{desc}</p>
+            <p className="text-gray-700 md:text-sm text-xs mb-6 line-clamp-2">
+              {desc}
+            </p>
             {/* User Info */}
             <div className="flex items-center mt-auto">
               <img

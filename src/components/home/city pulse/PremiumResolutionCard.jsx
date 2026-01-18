@@ -37,7 +37,7 @@ const PremiumResolutionCard = ({ avgTime }) => {
 
       <div className="relative z-10">
         <div className="flex items-center gap-4 mb-8">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
             <Clock size={20} className="text-white" />
           </div>
           <div>

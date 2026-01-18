@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router";
-import { getBar, getStatusBadge } from "../../../../utilities/getStatusBadge";
 import { MdArrowOutward } from "react-icons/md";
-import { CheckCircle2, ThumbsUp } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import useAuth from "../../../../hooks/auth & role/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/auth & role/useAxiosSecure";
 import StatusBadge from "./StatusBadge";
-import { useRef, useState } from "react";
-import { motion, scale, useInView } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
-const IssueCard = ({ issue, onUpvoteSuccess, delay }) => {
+const IssueCard = React.memo(({ issue, onUpvoteSuccess, delay }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -237,6 +236,6 @@ const IssueCard = ({ issue, onUpvoteSuccess, delay }) => {
       </div>
     </motion.div>
   );
-};
+});
 
 export default IssueCard;

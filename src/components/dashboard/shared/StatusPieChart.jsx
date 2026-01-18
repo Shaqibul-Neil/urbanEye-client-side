@@ -73,7 +73,7 @@ const StatusPieChart = ({
           <Legend
             verticalAlign="bottom"
             height={64}
-            wrapperStyle={{ fontSize: "12px", marginTop: "-10px" }}
+            wrapperStyle={{ fontSize: "11px", marginTop: "-10px" }}
           />
         </PieChart>
       </ResponsiveContainer>

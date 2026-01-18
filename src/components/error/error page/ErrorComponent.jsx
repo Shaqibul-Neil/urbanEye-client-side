@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import error from "../../../assets/error.jpg";
+import error from "../../../assets/error.webp";
 const ErrorComponent = () => {
   return (
     <>

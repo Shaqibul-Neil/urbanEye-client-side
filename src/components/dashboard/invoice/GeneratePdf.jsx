@@ -1,11 +1,4 @@
-import {
-  Document,
-  Page,
-  PDFDownloadLink,
-  PDFViewer,
-  Text,
-  View,
-} from "@react-pdf/renderer";
+import { useState, useEffect } from 'react';
 import { Table, TR, TH, TD } from "@ag-media/react-pdf-table";
 import styles from "./styles";
 import useAuth from "../../../hooks/auth & role/useAuth";
@@ -20,58 +13,69 @@ const TableHeader = () => (
   </TH>
 );
 
-const PaymentHistoryPDF = ({ paymentsPDF, user, total }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      {/* Header – every page */}
-      <View style={styles.header} fixed>
-        <View>
-          <Text style={[styles.title, styles.titleBold]}>INVOICE</Text>
-          <Text>Payments History</Text>
-        </View>
-        <View style={styles.spaceY}>
-          <Text style={styles.titleBold}>URBANi</Text>
-          <Text>123 Business Street</Text>
-          <Text>Earth, State - Mars</Text>
-        </View>
-      </View>
-
-      {/* Bill To */}
-      <View style={[styles.spaceY]}>
-        <Text style={[styles.titleBold, styles.billTo]}>Bill To :</Text>
-        <Text>Name : {user?.displayName}</Text>
-        <Text>Email : {user?.email}</Text>
-        <Text>Address : Earth, State - Mars</Text>
-      </View>
-
-      {/* Table */}
-      <Table style={styles.tableMargin}>
-        <TableHeader />
-
-        {paymentsPDF.map((payment, i) => (
-          <TR key={payment._id} wrap={false}>
-            <TD style={styles.tableNoStyle}>{i + 1}</TD>
-            <TD style={styles.tableEmailStyle}>{payment.citizenEmail}</TD>
-            <TD style={styles.tableCellStyle}>{payment.paymentType}</TD>
-            <TD style={styles.tableCellStyle}>${payment.amount}</TD>
-            <TD style={styles.tableCellStyle}>
-              {new Date(payment.paidAt).toLocaleDateString()}
-            </TD>
-          </TR>
-        ))}
-      </Table>
-
-      {/* Total */}
-      <View style={styles.totals} wrap={false}>
-        <Text style={[styles.title, styles.titleBold]}>Total : ${total}</Text>
-      </View>
-    </Page>
-  </Document>
-);
-
 export default function GeneratePdf({ paymentsPDF }) {
   const { user } = useAuth();
   const total = paymentsPDF.reduce((sum, p) => sum + p.amount, 0);
+  const [PDFLib, setPDFLib] = useState(null);
+
+  useEffect(() => {
+    import('@react-pdf/renderer').then((lib) => {
+      setPDFLib(lib);
+    });
+  }, []);
+
+  if (!PDFLib) return <div>Loading PDF...</div>;
+
+  const { Document, Page, PDFDownloadLink, PDFViewer, Text, View } = PDFLib;
+
+  const PaymentHistoryPDF = ({ paymentsPDF, user, total }) => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Header – every page */}
+        <View style={styles.header} fixed>
+          <View>
+            <Text style={[styles.title, styles.titleBold]}>INVOICE</Text>
+            <Text>Payments History</Text>
+          </View>
+          <View style={styles.spaceY}>
+            <Text style={styles.titleBold}>URBANi</Text>
+            <Text>123 Business Street</Text>
+            <Text>Earth, State - Mars</Text>
+          </View>
+        </View>
+
+        {/* Bill To */}
+        <View style={[styles.spaceY]}>
+          <Text style={[styles.titleBold, styles.billTo]}>Bill To :</Text>
+          <Text>Name : {user?.displayName}</Text>
+          <Text>Email : {user?.email}</Text>
+          <Text>Address : Earth, State - Mars</Text>
+        </View>
+
+        {/* Table */}
+        <Table style={styles.tableMargin}>
+          <TableHeader />
+
+          {paymentsPDF.map((payment, i) => (
+            <TR key={payment._id} wrap={false}>
+              <TD style={styles.tableNoStyle}>{i + 1}</TD>
+              <TD style={styles.tableEmailStyle}>{payment.citizenEmail}</TD>
+              <TD style={styles.tableCellStyle}>{payment.paymentType}</TD>
+              <TD style={styles.tableCellStyle}>${payment.amount}</TD>
+              <TD style={styles.tableCellStyle}>
+                {new Date(payment.paidAt).toLocaleDateString()}
+              </TD>
+            </TR>
+          ))}
+        </Table>
+
+        {/* Total */}
+        <View style={styles.totals} wrap={false}>
+          <Text style={[styles.title, styles.titleBold]}>Total : ${total}</Text>
+        </View>
+      </Page>
+    </Document>
+  );
 
   return (
     <div className="max-w-2xl mx-auto">

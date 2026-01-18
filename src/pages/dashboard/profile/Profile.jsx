@@ -55,8 +55,8 @@ const Profile = () => {
   if (isError) return <ErrorComponent />;
 
   return (
-    <div className="min-h-screen md:px-8 px-3 py-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen md:px-8 lg:px-6 px-3">
+      <div className="space-y-8">
         {/* Profile Header Section - 2 Grid + 1 Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Identity Card - Takes 2 columns */}

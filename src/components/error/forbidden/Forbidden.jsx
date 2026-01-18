@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import forbidden from "../../../assets/forbidden.jpg";
+import forbidden from "../../../assets/forbidden.webp";
 import { Home, ListChecks } from "lucide-react";
 const Forbidden = () => {
   return (
@@ -19,10 +19,16 @@ const Forbidden = () => {
               logging in again.
             </h2>
             <div className="flex justify-center md:flex-row flex-col items-center gap-4">
-              <Link to="/" className="btn btn-primary rounded-3xl hover:btn-secondary transition-all duration-300">
+              <Link
+                to="/"
+                className="btn btn-primary rounded-3xl hover:btn-secondary transition-all duration-300"
+              >
                 <Home className="w-4 h-4" /> Go Home
               </Link>
-              <Link to="/all-issues" className="btn btn-secondary rounded-3xl hover:btn-primary transition-all duration-300">
+              <Link
+                to="/all-issues"
+                className="btn btn-secondary rounded-3xl hover:btn-primary transition-all duration-300"
+              >
                 <ListChecks className="w-4 h-4" /> Show All issues
               </Link>
             </div>

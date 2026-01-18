@@ -43,7 +43,7 @@ const CityPulseResolutionRateChart = ({ totalIssues, resolvedIssues }) => {
 
       <div className="relative z-10">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
             <TrendingUp size={20} className="text-white" />
           </div>
           <div>

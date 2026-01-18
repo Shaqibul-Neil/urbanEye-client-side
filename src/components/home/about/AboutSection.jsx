@@ -1,8 +1,14 @@
-import { useEffect, useState, createContext, useContext } from "react";
-import ppl from "../../../assets/ppl.jpg";
-import hand from "../../../assets/hand.jpg";
-import student from "../../../assets/student.jpg";
-import skyline from "../../../assets/skyline.jpg";
+import {
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  useCallback,
+} from "react";
+import ppl from "../../../assets/ppl.webp";
+import hand from "../../../assets/hand.webp";
+import student from "../../../assets/student.webp";
+import skyline from "../../../assets/skyline.webp";
 import useEditorMode from "../../../hooks/page builder/useEditorMode";
 import useAxios from "../../../hooks/auth & role/useAxios";
 import useAxiosSecure from "../../../hooks/auth & role/useAxiosSecure";
@@ -66,6 +72,17 @@ const AboutSection = () => {
   const { editMode } = useEditorMode();
   const axiosInstance = useAxios();
   const axiosSecure = useAxiosSecure();
+
+  const fetchAboutSection = useCallback(async () => {
+    try {
+      const { data } = await axiosInstance.get("/contents/about-section");
+      if (data?.message) {
+        setAboutData(data.message);
+      }
+    } catch (err) {
+      toast.error("Failed to fetch about section:", err);
+    }
+  }, [axiosInstance]);
 
   useEffect(() => {
     const fetchAboutSection = async () => {
@@ -188,21 +205,33 @@ const AboutSection = () => {
           {[
             {
               src: skyline,
+              alt: "skyline",
+              loading: "lazy",
+              fetchpriority: "low",
               className:
                 "w-44 h-40 object-cover absolute top-40 right-20 border-12 border-white z-10",
             },
             {
               src: ppl,
+              alt: "ppl",
+              loading: "lazy",
+              fetchpriority: "low",
               className:
                 "w-96 h-96 object-cover overflow-hidden border-white border-12",
             },
             {
               src: hand,
+              alt: "hand",
+              loading: "eager",
+              fetchpriority: "high",
               className:
                 "w-64 h-64 absolute -top-20 right-50 border-12 border-white object-cover",
             },
             {
               src: student,
+              alt: "student",
+              loading: "lazy",
+              fetchpriority: "low",
               className:
                 "w-48 h-48 absolute top-20 right-40 border-12 border-white object-cover",
             },

@@ -94,7 +94,7 @@ const AssignedIssues = () => {
   if (issuesError) return <ErrorComponent />;
 
   return (
-    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
+    <div className="lg:px-5 px-3 py-6 bg-white mx-5 rounded-3xl">
       <div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -106,7 +106,7 @@ const AssignedIssues = () => {
           {/* Title */}
           <div className="space-y-2">
             <Heading
-              className={"md:text-4xl text-3xl lg:text-5xl  pb-1"}
+              className={"text-3xl lg:text-4xl  pb-1"}
               label={"Assigned Issues"}
             />
             <SubHeading

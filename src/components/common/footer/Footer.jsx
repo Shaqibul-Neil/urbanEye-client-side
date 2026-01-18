@@ -1,12 +1,12 @@
 import React from "react";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo.webp";
 import { Link } from "react-router";
 
 const Footer = () => {
   return (
     <div className="relative z-10 bg-primary text-white px-5 overflow-hidden py-8">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 pointer-events-none"></div>
-      <div className="footer sm:footer-horizontal text-base-content lg:p-10 md:p-8 p-6">
+      <div className="footer sm:footer-horizontal text-base-content lg:p-10 md:py-8 py-6 mx-auto max-w-[1440px]">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 lg:gap-20 gap-10 md:gap-16">
           <aside className="lg:col-span-2 col-span-1 relative">
             <div className="lg:translate-y-20 lg:translate-x-8 md:translate-y-9 md:translate-x-4 translate-y-6">

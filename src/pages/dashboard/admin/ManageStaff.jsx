@@ -71,7 +71,7 @@ const ManageStaff = () => {
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
   return (
-    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
+    <div className="lg:px-5 px-3 py-6 bg-white mx-5 rounded-3xl">
       <div className="space-y-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -85,7 +85,7 @@ const ManageStaff = () => {
             <div className="space-y-2">
               <Heading
                 label={"Staff Management"}
-                className={"text-4xl md:text-5xl pb-1"}
+                className={"text-3xl md:text-4xl pb-1"}
               />
               <SubHeading
                 label={

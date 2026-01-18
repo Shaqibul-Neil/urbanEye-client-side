@@ -12,7 +12,7 @@ const MyPayments = () => {
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
   return (
-    <div className="p-5 bg-white max-w-[95%] mx-auto rounded-3xl">
+    <div className="p-5 bg-white mx-5 rounded-3xl">
       <div className="space-y-12">
         {/* Title Section */}
         <motion.div
@@ -25,7 +25,7 @@ const MyPayments = () => {
           <div className="space-y-2">
             <Heading
               label={"My Payment History"}
-              className={"md:text-4xl text-3xl lg:text-5xl pb-1"}
+              className={"md:text-4xl text-3xl pb-1"}
             />
             <SubHeading
               label={

@@ -1,10 +1,10 @@
 import FeedbackSlider from "./FeedbackSlider";
-import skyline from "../../../assets/skyline.jpg";
+import skyline from "../../../assets/skyline.webp";
 import { motion } from "framer-motion";
 const CitizenFeedback = () => {
   return (
     <section>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center lg:ml-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center lg:ml-4 md:mb-16 lg:mb-0">
         {/* Left Content */}
         <div
           className="w-full lg:h-160 h-96 space-y-4 bg-cover bg-center p-6 rounded-2xl relative z-5"
@@ -56,7 +56,7 @@ const CitizenFeedback = () => {
         </div>
         {/* Right Feedback */}
         <div>
-          <div className="h-screen w-full mx-auto">
+          <div className="w-full mx-auto">
             <FeedbackSlider />
           </div>
         </div>

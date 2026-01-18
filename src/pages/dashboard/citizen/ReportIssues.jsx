@@ -96,7 +96,7 @@ const ReportIssues = () => {
   };
 
   return (
-    <div className="lg:px-5 px-3 py-6 bg-white max-w-[95%] mx-auto rounded-3xl">
+    <div className="lg:px-5 px-3 py-6 bg-white mx-5 rounded-3xl">
       <div>
         {/* Title Section */}
         <motion.div
@@ -109,7 +109,7 @@ const ReportIssues = () => {
           <div className="space-y-2">
             <Heading
               label={"Report a Public Infrastructure Issue"}
-              className={"md:text-4xl text-3xl lg:text-5xl pb-1"}
+              className={"md:text-4xl text-3xl pb-1"}
             />
             <SubHeading
               label={

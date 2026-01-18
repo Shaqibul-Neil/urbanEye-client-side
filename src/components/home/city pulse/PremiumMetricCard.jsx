@@ -56,7 +56,7 @@ const PremiumMetricCard = ({
 
         {/* Premium Floating Orb */}
         <div
-          className={`absolute top-6 right-6 w-10 h-10 ${gradient} rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500`}
+          className={`absolute top-6 right-6 w-10 h-10 ${gradient} rounded-xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500`}
         >
           <Icon size={18} className="text-white" />
         </div>

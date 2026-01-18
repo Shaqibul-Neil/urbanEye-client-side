@@ -1,7 +1,7 @@
 import { Users } from "lucide-react";
 import about from "../../assets/about.webp";
-import hand from "../../assets/hand.jpg";
-import ppl from "../../assets/ppl.jpg";
+import hand from "../../assets/hand.webp";
+import ppl from "../../assets/ppl.webp";
 import { motion } from "framer-motion";
 const About = () => {
   const topImages = [hand, ppl];

@@ -130,12 +130,14 @@ export default function ImpactBeforeAfter({
           <div className="relative z-10">
             {/* Title & Location */}
             <div className="mb-4">
-              <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
+              <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-gray-700 transition-colors line-clamp-1">
                 {title}
               </h3>
               <div className="flex items-center gap-2 text-gray-500">
                 <MapPin size={14} className="text-gray-400" />
-                <span className="text-sm font-medium">{location}</span>
+                <span className="text-sm font-medium line-clamp-1">
+                  {location}
+                </span>
               </div>
             </div>
 

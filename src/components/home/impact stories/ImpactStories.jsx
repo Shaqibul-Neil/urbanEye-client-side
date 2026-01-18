@@ -72,7 +72,7 @@ export default function ImpactStories() {
         </motion.div>
 
         {/* Impact Stories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 xl:gap-8">
           {impactData.map((story, index) => (
             <ImpactBeforeAfter
               key={index}

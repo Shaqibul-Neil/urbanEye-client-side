@@ -71,7 +71,7 @@ const AllReportedIssues = () => {
   if (isError) return <ErrorComponent />;
 
   return (
-    <div className="p-5 bg-white max-w-[95%] mx-auto rounded-3xl">
+    <div className="p-5 bg-white mx-5 rounded-3xl">
       <div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -83,7 +83,7 @@ const AllReportedIssues = () => {
           {/* Title Section */}
           <div className="space-y-2">
             <Heading
-              className={"text-4xl md:text-5xl"}
+              className={"text-3xl md:text-4xl"}
               label={"All Reported Issues"}
             />
             <SubHeading

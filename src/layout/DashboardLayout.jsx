@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import { MdLogout, MdOutlineDashboard } from "react-icons/md";
 import SideBarLinks from "../components/common/sidebarLinks/SideBarLinks";
 import useAuth from "../hooks/auth & role/useAuth";
-import avatarImg from "../assets/placeholder.jpg";
+import avatarImg from "../assets/placeholder.webp";
 import {
   Bell,
   CreditCard,
@@ -104,7 +104,7 @@ const DashboardLayout = () => {
                 {/* Drawer Toggle */}
                 <label
                   htmlFor="my-drawer-4"
-                  className="btn bg-white btn-sm btn-square rounded-full flex items-center justify-center w-8 h-8 p-0 lg:hidden"
+                  className="btn bg-white btn-sm btn-square rounded-full flex items-center justify-center w-8 h-8 p-0 xl:hidden"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@ const DashboardLayout = () => {
           </motion.nav>
 
           {/* Page content here */}
-          <main className="my-6">
+          <main className="my-6 2xl:mx-5 xl:mx-2">
             <Outlet />
           </main>
         </div>

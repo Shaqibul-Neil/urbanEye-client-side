@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import error from "../../../assets/error.jpg";
+import error from "../../../assets/error.webp";
 import Navbar from "../../common/navbar/Navbar";
 import Footer from "../../common/footer/Footer";
 const ErrorPage = () => {
